@@ -1,0 +1,18 @@
+<header>
+  <div class="bg-slate-950 text-white">
+    <div class="shell flex items-center justify-between py-3">
+      <a class="font-bold text-white" href="{{ '/' | url }}">ShiftStart KB</a>
+      <nav class="flex gap-4 text-sm">
+        <a class="text-slate-200 hover:text-white" href="{{ '/#wizard' | url }}">Symptom wizard</a>
+        <a class="text-slate-200 hover:text-white" href="{{ '/procedures/' | url }}">Procedures</a>
+      </nav>
+    </div>
+  </div>
+  <div class="search-panel">
+    <div class="shell relative">
+      <label class="sr-only" for="kb-search">Search the knowledge base</label>
+      <input id="kb-search" class="search-input" type="search" autocomplete="off" placeholder="Search symptoms, error codes, commands…  Press /">
+      <div id="search-results" class="search-results hidden" role="listbox" aria-label="Search results"></div>
+    </div>
+  </div>
+</header>

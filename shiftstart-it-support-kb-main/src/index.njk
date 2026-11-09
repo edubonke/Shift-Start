@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: Technician dashboard
+description: Search, diagnose and resolve common internal IT issues quickly.
+---
+<section class="shell py-10">
+  <div class="grid items-start gap-8 lg:grid-cols-[1.2fr_.8fr]">
+    <div>
+      <p class="font-semibold text-blue-700">Your first tab for every shift</p>
+      <h1 class="mt-2">Solve the issue. Verify the outcome. Escalate with evidence.</h1>
+      <p class="mt-5 max-w-3xl text-lg text-slate-600">Use search when you know the symptom. Use the wizard when the report is vague. Every procedure starts with the fastest safe fix.</p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-3">
+        <a class="card" href="{{ '/procedures/' | url }}"><strong>Browse procedures</strong><p class="mt-2 text-sm text-slate-600">Known fixes, expected results and escalation paths.</p></a>
+        <a class="card" href="{{ '/symptoms/' | url }}"><strong>Browse symptoms</strong><p class="mt-2 text-sm text-slate-600">Start from what the user can see.</p></a>
+        <a class="card" href="#wizard"><strong>I’m not sure</strong><p class="mt-2 text-sm text-slate-600">Let the decision tree narrow it down.</p></a>
+      </div>
+    </div>
+    <aside class="card">
+      <h2 class="!mt-0 text-xl">Shift checklist</h2>
+      <ol class="mt-4 list-decimal space-y-3 pl-5 text-sm text-slate-700">
+        <li>Confirm user, device and business impact.</li>
+        <li>Capture the exact error and time observed.</li>
+        <li>Use the least disruptive diagnostic first.</li>
+        <li>Record commands, results and changes.</li>
+      </ol>
+    </aside>
+  </div>
+</section>
+<section id="wizard" class="border-y border-slate-200 bg-white py-12">
+  <div class="shell"><div class="mx-auto max-w-3xl"><p class="font-semibold text-blue-700">Interactive symptom wizard</p><h2 class="!mt-1">What is the user experiencing?</h2><div id="wizard-root" class="card mt-6" data-source="{{ '/data/wizard-data.json' | url }}"><p>Loading diagnostic questions…</p></div></div></div>
+</section>
+<section class="shell py-12">
+  <h2 class="!mt-0">Common procedures</h2>
+  <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {% for item in collections.procedures | reverse %}{% if loop.index <= 6 %}<a class="card" href="{{ item.url | url }}"><div class="flex items-start justify-between gap-3"><strong>{{ item.data.title }}</strong><span class="badge">{{ item.data.severity }}</span></div><p class="mt-3 text-sm text-slate-600">{{ item.data.description }}</p></a>{% endif %}{% endfor %}
+  </div>
+</section>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ description or site.description }}">
+  <meta name="theme-color" content="#0f172a">
+  <title>{{ title }}{% if title %} · {% endif %}{{ site.name }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | url }}">
+  <script>window.KB_CONFIG={{ site | json | safe }};window.KB_BASE='{{ '/' | url }}';</script>
+</head>
+<body data-required-role="{{ required_role or 'technician' }}">
+  {% include "partials/header.njk" %}
+  <main>{{ content | safe }}</main>
+  {% include "partials/footer.njk" %}
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+  <script defer src="{{ '/assets/js/app.js' | url }}"></script>
+  <script defer src="{{ '/assets/js/search.js' | url }}"></script>
+</body>
+</html>

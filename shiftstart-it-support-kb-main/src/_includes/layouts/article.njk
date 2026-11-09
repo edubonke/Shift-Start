@@ -1,0 +1,39 @@
+---
+layout: layouts/base.njk
+---
+<article class="shell py-10">
+  <div class="mx-auto max-w-4xl">
+    <div class="mb-4 flex flex-wrap gap-2">
+      <span class="badge">{{ content_type }}</span>
+      {% if category %}<span class="badge">{{ category }}</span>{% endif %}
+      {% if severity %}<span class="badge">Severity: {{ severity }}</span>{% endif %}
+      {% for tag in tags %}<span class="badge">{{ tag }}</span>{% endfor %}
+    </div>
+    <h1>{{ title }}</h1>
+    {% if description %}<p class="mt-3 text-lg text-slate-600">{{ description }}</p>{% endif %}
+    {% if tldr %}<section class="tldr"><h2 class="!mt-0 text-lg">TL;DR</h2><p>{{ tldr }}</p></section>{% endif %}
+    <div class="article-body">{{ content | safe }}</div>
+
+    {% if related_symptoms or related_causes or related_procedures %}
+    <section class="mt-10 border-t border-slate-200 pt-8">
+      <h2 class="!mt-0">Related knowledge</h2>
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+      {% for slug in related_symptoms %}{% set item = collections.kb | bySlug(slug) %}{% if item %}<a class="card" href="{{ item.url | url }}"><strong>{{ item.data.title }}</strong><p class="text-sm text-slate-600">Symptom</p></a>{% endif %}{% endfor %}
+      {% for slug in related_causes %}{% set item = collections.kb | bySlug(slug) %}{% if item %}<a class="card" href="{{ item.url | url }}"><strong>{{ item.data.title }}</strong><p class="text-sm text-slate-600">Cause</p></a>{% endif %}{% endfor %}
+      {% for slug in related_procedures %}{% set item = collections.kb | bySlug(slug) %}{% if item %}<a class="card" href="{{ item.url | url }}"><strong>{{ item.data.title }}</strong><p class="text-sm text-slate-600">Procedure</p></a>{% endif %}{% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if escalation %}<section class="escalation"><h2 class="!mt-0 text-xl">Escalation path</h2><p>{{ escalation }}</p></section>{% endif %}
+
+    {% if content_type == 'procedure' %}
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a class="btn" data-ticket-link href="#">Create pre-filled ITSM ticket</a>
+      <button class="btn-secondary" type="button" data-feedback="up">👍 Helpful</button>
+      <button class="btn-secondary" type="button" data-feedback="down">👎 Not helpful</button>
+    </div>
+    <p id="feedback-status" class="mt-3 text-sm text-slate-500" aria-live="polite"></p>
+    {% endif %}
+  </div>
+</article>

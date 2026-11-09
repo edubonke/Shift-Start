@@ -1,0 +1,16 @@
+{
+  "name": "ShiftStart IT Support KB",
+  "description": "Fast, trusted troubleshooting guidance for internal IT technicians.",
+  "ticketUrlTemplate": "https://itsm.example.com/new?title={title}&category={category}&article={url}",
+  "feedbackEndpoint": "",
+  "zeroResultEndpoint": "",
+  "diagnostics": {
+    "enabled": false,
+    "endpoint": "",
+    "method": "POST"
+  },
+  "access": {
+    "enabled": false,
+    "defaultRole": "technician"
+  }
+}

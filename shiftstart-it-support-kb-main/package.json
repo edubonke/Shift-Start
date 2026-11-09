@@ -1,0 +1,28 @@
+{
+  "name": "shiftstart-it-support-kb",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Technician-first internal IT support knowledge base for GitHub Pages.",
+  "scripts": {
+    "clean": "rimraf _site src/generated",
+    "generate": "node scripts/generate-wizard.js && node scripts/generate-search-data.js",
+    "css": "tailwindcss -i ./src/assets/css/tailwind.css -o ./src/assets/css/site.css --minify",
+    "build": "npm run clean && npm run generate && npm run css && eleventy",
+    "dev": "npm run generate && concurrently \"tailwindcss -i ./src/assets/css/tailwind.css -o ./src/assets/css/site.css --watch\" \"eleventy --serve\"",
+    "check": "node scripts/validate-content.js",
+    "test": "npm run check && npm run build"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-navigation": "^1.0.4",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
+    "lunr": "^2.3.9",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^3.4.17"
+  }
+}
