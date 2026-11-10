@@ -26,7 +26,7 @@ State impact, permissions, risk and prerequisites.
 
    <div class="expected"><strong>Expected result:</strong> Describe exactly what success looks like.</div>
 
-{% command "powershell" "PowerShell" "Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion" %}
+{% command "powershell", "PowerShell", "Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion" %}
 
 2. Continue based on the result.
 
