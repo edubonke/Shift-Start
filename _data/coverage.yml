@@ -1,0 +1,31 @@
+generated_at: '2026-08-02'
+edition: 3.0.0
+procedure_count: 421
+symptom_count: 446
+categories:
+  Service Desk & ITSM: 20
+  Identity & Access Management: 28
+  Windows Endpoints: 45
+  macOS Endpoints: 18
+  Mobile Devices & MDM: 18
+  Network & Connectivity: 31
+  Microsoft 365 & Collaboration: 40
+  Google Workspace & Web Collaboration: 10
+  Printing & Scanning: 15
+  Hardware & Peripherals: 20
+  Security & Compliance: 22
+  Remote Access, VDI & DaaS: 15
+  Servers & Core Infrastructure: 25
+  Cloud & Virtualisation: 14
+  Business Applications & Browsers: 22
+  Voice, Telephony & Meeting Rooms: 16
+  Data Protection, Backup & Recovery: 15
+  Lifecycle & Asset Management: 18
+  Linux & Developer Workstations: 18
+guarantees:
+- Existing procedure files preserved
+- All procedure Markdown files rendered by Jekyll
+- All procedures exported to search index
+- All procedures exported to symptom matcher
+- No catalogue pagination or hard-coded display limit
+- Build fails on broken symptom-procedure relationships

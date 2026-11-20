@@ -1,0 +1,154 @@
+schema_version: 2
+risk_model: impact-v1
+verification_priority_model: mvv-v1
+verified_target_percent: 80
+verified_target_count: 337
+
+authoritative_public_status_field: verification_governance_state
+
+governance_states:
+  verified:
+    label: Verified
+    definition: Evidence-complete, within review SLA, and formally promoted.
+  revalidation_required:
+    label: Revalidation Required
+    definition: Stored verified status exists, but verification-v2 evidence is incomplete or the review SLA has expired.
+  live_validation_pending:
+    label: Live Validation Pending
+    definition: Documentation is structurally ready, but operational evidence is incomplete or promotion is still pending.
+  under_review:
+    label: Under Review
+    definition: Documentation or technical review is still incomplete.
+  draft:
+    label: Draft
+    definition: Work in progress and not approved for operational use.
+  deprecated:
+    label: Deprecated
+    definition: Withdrawn guidance that should not normally be used.
+
+risk_levels:
+  critical:
+    default_priority: P0
+    definition: System down, boot failure, data loss/corruption, confirmed or suspected security breach, or broad outage.
+  high:
+    default_priority: P1
+    definition: Service degradation, a user unable to perform core work, privileged/security-sensitive change, or sensitive-data exposure risk.
+  medium:
+    default_priority: P2
+    definition: Intermittent or degraded service, workaround available, peripheral problem, or limited small-group impact.
+  low:
+    default_priority: P3
+    definition: Minor inconvenience, routine request, or simple self-service correction.
+
+priority_levels:
+  P0:
+    name: Critical
+    review_sla_days: 90
+    minimum_test_records: 3
+    minimum_distinct_environments: 3
+    minimum_peer_reviewers: 2
+    minimum_sme_reviewers: 2
+    negative_path_required: true
+  P1:
+    name: High
+    review_sla_days: 120
+    minimum_test_records: 2
+    minimum_distinct_environments: 2
+    minimum_peer_reviewers: 2
+    minimum_sme_reviewers: 2
+    negative_path_required: true
+  P2:
+    name: Medium
+    review_sla_days: 180
+    minimum_test_records: 2
+    minimum_distinct_environments: 1
+    minimum_peer_reviewers: 1
+    minimum_sme_reviewers: 1
+    negative_path_required: false
+  P3:
+    name: Low
+    review_sla_days: 365
+    minimum_test_records: 1
+    minimum_distinct_environments: 1
+    minimum_peer_reviewers: 1
+    minimum_technical_reviewers: 1
+    negative_path_required: false
+  P4:
+    name: Informational / self-service
+    review_sla_days: 365
+    minimum_test_records: 1
+    minimum_distinct_environments: 1
+    minimum_peer_reviewers: 1
+    minimum_technical_reviewers: 1
+    negative_path_required: false
+    allow_zero_test_records_when_execution_required_false: true
+
+verification_gate:
+  common_controls:
+    - diagnostic_tested
+    - remediation_tested
+    - rollback_or_irreversibility_confirmed
+    - escalation_confirmed
+    - time_validated
+    - expected_result_confirmed
+    - owner_signoff
+    - authoritative_source_provenance
+    - tested_platforms
+    - last_tested
+    - peer_review_requirement
+    - test_environment_requirement
+  conditional_controls:
+    negative_path_tested:
+      priorities: [P0, P1]
+
+  rollback_rule:
+    accepted_paths:
+      - rollback_confirmed
+      - irreversible_change_with_approval_and_stop_conditions
+
+required_metadata:
+  - owner_team
+  - support_tier
+  - estimated_time
+  - last_tested
+  - tested_platforms
+
+source_provenance_required_fields:
+  - publisher
+  - title
+  - retrieved_at
+  - authoritative
+source_provenance_location:
+  require_one_of:
+    - url
+    - document_ref
+
+test_record_required_fields:
+  - environment
+  - platform
+  - result
+  - tested_at
+test_record_pass_value: passed
+
+reviewer_object:
+  supported_fields:
+    - name
+    - role
+    - sme
+    - technical
+    - organisation
+
+promotion:
+  allow_content_status_verified_without_complete_v2_evidence: false
+  auto_promote: false
+  promotion_command: npm run readiness:promote
+  expired_verified_state: revalidation_required
+
+enterprise_runbook:
+  version: enterprise-v1
+  body_section_order:
+    - Diagnostic Steps
+    - Remediation Steps
+    - Rollback Steps
+    - Verification Steps
+    - Escalation Path

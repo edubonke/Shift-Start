@@ -1,0 +1,528 @@
+{
+  "schema_version": 1,
+  "batch": "B-3",
+  "audit_date": "2026-08-13",
+  "source": "Pasted markdown(4).md",
+  "corrected_summary": {
+    "keep_p1": 8,
+    "demote_p2": 19,
+    "demote_p3": 3,
+    "promote_p0": 0,
+    "blocked": 10,
+    "critical_mapping_groups": 1,
+    "duplicate_merge_groups": 3
+  },
+  "procedures": {
+    "configure-corporate-email-on-ios": {
+      "number": 1,
+      "title": "Configure corporate email on iOS",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the device is enrolled in Intune/MDM (Company Portal) and compliant.",
+        "Confirm the user's license includes Exchange Online/Outlook mobile access.",
+        "Check that the iOS version meets the corporate minimum OS policy."
+      ],
+      "rollback": "If the configuration fails, remove the account via the Company Portal and re-enrol. Document the enrolment steps.",
+      "symptom_match": "\"Mobile device is not working\", \"Cannot sign in\".",
+      "duplication": "Related to Batch B-2 #30 (Android config). Keep distinct for platform-specific steps.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "correct-a-broken-file-association": {
+      "number": 2,
+      "title": "Correct a broken file association",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3",
+      "prechecks": [
+        "Verify the application is installed and functional.",
+        "Check if the file extension is correct (e.g.,\u00a0`.docx`\u00a0vs\u00a0`.doc`).",
+        "Use Windows \"Set Default Programs\" or\u00a0`assoc`/`ftype`\u00a0commands."
+      ],
+      "rollback": "Export the current file association registry key (`HKEY_CLASSES_ROOT\\.ext`) before changing it. If the change fails, re-import the registry.",
+      "symptom_match": "\"Application is not working\", \"File will not open\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "deprovision-a-departing-user-account": {
+      "number": 3,
+      "title": "Deprovision a departing user account",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: verify the offboarding request, effective termination time and authorisation through the approved HR/identity-lifecycle record.",
+        "Check for legal hold, retention, investigation or preservation requirements before deleting or altering user data.",
+        "At the authorised effective time, block sign-in/revoke sessions promptly; preserve the account/object while mailbox, OneDrive and business-data ownership/retention are transferred under policy."
+      ],
+      "rollback": "Re-enable access only through an explicit HR/manager-approved reversal. If the account was only disabled, re-enable and restore approved licensing/access; if an object was deleted, use the organisation's supported directory recovery process. Do not bypass legal/retention controls.",
+      "symptom_match": "\"Access is denied or missing\" (if not done, or if done incorrectly).",
+      "duplication": "Unique. Consolidate with \"Provision a new user account\" (#15) into a unified lifecycle management module.",
+      "final_verdict": "Blocked."
+    },
+    "document-a-ticket-to-enterprise-standard": {
+      "number": 4,
+      "title": "Document a ticket to enterprise standard",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3",
+      "prechecks": [
+        "Confirm the ticket contains the user's affected service, steps taken, and resolution.",
+        "Ensure the proper category/CI (Configuration Item) is selected."
+      ],
+      "rollback": "N/A \u2013 documentation is immutable. Do not delete resolved tickets.",
+      "symptom_match": "Indirect \u2013 supports all symptoms.",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "escalate-a-legal-hold-or-retention-request": {
+      "number": 5,
+      "title": "Escalate a legal-hold or retention request",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: verify a formal Legal/Compliance instruction or authorised case/ticket before placing, changing or releasing a hold.",
+        "Identify custodians, workloads/data locations, matter/case reference and required date range.",
+        "Record existing holds/retention policies and escalate conflicts to Legal/Compliance rather than overriding them."
+      ],
+      "rollback": "A hold/retention action is not removed as an ordinary rollback. Release or change it only on formal written Legal/Compliance instruction, preserving the case/audit trail.",
+      "symptom_match": "\"A security or compliance concern is reported\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "grant-shared-mailbox-access": {
+      "number": 6,
+      "title": "Grant shared mailbox access",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the requestor has manager approval (or is the mailbox owner).",
+        "Confirm the shared mailbox exists and is licensed correctly.",
+        "Determine if the user needs Full Access, Send As, or Send on Behalf permissions."
+      ],
+      "rollback": "Immediately revoke the permission via Exchange Admin Center if the user's access is mistakenly granted. Document the removal.",
+      "symptom_match": "\"Access is denied or missing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "handle-a-sensitive-data-misdelivery": {
+      "number": 7,
+      "title": "Handle a sensitive-data misdelivery",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: contain the exposure immediately using approved controls: revoke external sharing, disable the affected link/session or use authorised mail/security containment while preserving evidence.",
+        "Identify recipients, internal/external scope, delivery time and whether the content/link was accessed.",
+        "Check DLP/Purview/audit evidence and data classification; engage Privacy/Legal/Security according to policy."
+      ],
+      "rollback": "Containment actions are restored only after Security/Privacy approval. A message recall or purge is not treated as reversible; if legitimate access must be restored, re-share/re-send through an approved controlled path.",
+      "symptom_match": "\"Reported suspected data leakage\", \"A security or compliance concern is reported\".",
+      "duplication": "Related to Batch A \"Respond to suspected data leakage\" \u2013 this is the specific misdelivery branch.",
+      "final_verdict": "Blocked."
+    },
+    "install-or-renew-a-mobile-certificate": {
+      "number": 8,
+      "title": "Install or renew a mobile certificate",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify device ownership/enrolment/compliance and the user's identity before certificate issuance.",
+        "Check CA/NDES/SCEP or equivalent certificate service health and the intended certificate template/profile.",
+        "Confirm current certificate subject, expiry, EKU and trust chain without exporting private keys."
+      ],
+      "rollback": "Do not export or restore private keys as a rollback shortcut. If the new certificate/profile causes regression, revoke the incorrect certificate where authorised and redeploy the previous approved profile or issue a fresh valid certificate through the CA/MDM workflow.",
+      "symptom_match": "\"Mobile device is not compliant\", \"Cannot sign in\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "install-or-update-a-printer-driver": {
+      "number": 9,
+      "title": "Install or update a printer driver",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default)",
+      "prechecks": [
+        "Check the print server's disk space (Rule E) before downloading/extracting drivers.",
+        "Verify the driver version is compatible with the OS and printer model.",
+        "Check if the driver is signed and from a trusted source."
+      ],
+      "rollback": "Export the current driver configuration (`Printbrm -B -f backup.printerexport`) before installing the new one. If the new driver breaks printing, use Print Management to roll back to the previous driver.",
+      "symptom_match": "\"Printing or scanning is not working\".",
+      "duplication": "Child of #25 (\"Remove and reinstall a printer cleanly\") \u2013 merge these two workflows. #9 is the update branch, #25 is the reinstall branch.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "investigate-an-antivirus-or-edr-alert": {
+      "number": 10,
+      "title": "Investigate an antivirus or EDR alert",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: for a credible active or high-severity threat, isolate the affected endpoint through approved EDR/network controls before ordinary investigation.",
+        "Review alert evidence including file hash, process tree, command line, network connections, affected user and timeline.",
+        "Correlate with allowlists/software inventory/threat intelligence before declaring a false positive."
+      ],
+      "rollback": "Release isolation only after Security Operations confirms the alert is benign or containment/eradication criteria are met. Record the release and verify normal management/security telemetry.",
+      "symptom_match": "\"Reported a security or compliance concern\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "investigate-repeated-account-lockouts": {
+      "number": 11,
+      "title": "Investigate repeated account lockouts",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Use\u00a0`LockoutStatus.exe`\u00a0or the AD event logs (Event ID 4740) to identify the source IP/workstation.",
+        "Check for scheduled tasks, mapped drives, or mobile devices using stale credentials.",
+        "Verify the user has changed their password recently."
+      ],
+      "rollback": "Unlock the account. If the source is found (e.g., a mobile phone), remove the cached credentials and advise the user to update all saved passwords.",
+      "symptom_match": "\"Cannot sign in\", \"Access is denied\".",
+      "duplication": "Related to Batch B-1 #21 (\"Trace an Active Directory account lockout source\"). Merge these two \u2013 they are effectively the same procedure.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "migrate-a-user-profile": {
+      "number": 12,
+      "title": "Migrate a user profile",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the source and destination drives have sufficient space.",
+        "Use USMT (User State Migration Tool) or a similar enterprise tool for a structured migration.",
+        "Ensure the user is logged off during the migration."
+      ],
+      "rollback": "Keep the original profile intact for at least 7 days. If the new profile is corrupted, re-point the user to the old profile and document the failure.",
+      "symptom_match": "\"Windows device is not working correctly\" (indirect).",
+      "duplication": "Related to Batch B-3 #26 (\"Repair a corrupted Windows user profile\") \u2013 #26 is troubleshooting, #12 is migration. Keep distinct but cross-reference.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "perform-an-approved-remote-wipe": {
+      "number": 13,
+      "title": "Perform an approved remote wipe",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: verify the exact device, ownership, serial/asset ID, user and formal wipe authorisation; require the organisation's second-person/dual-control approval where policy requires it.",
+        "Confirm corporate-owned versus BYOD. Use only the approved selective-wipe scope on BYOD; do not issue a full personal-device wipe outside policy.",
+        "Capture last management check-in, encryption/compliance state and required incident/asset evidence before issuing the command."
+      ],
+      "rollback": "Remote wipe is irreversible. There is no technical rollback. If identity, ownership, scope or approval is uncertain, abort the command. Recovery is reprovisioning/restoration from approved backups after the wipe completes.",
+      "symptom_match": "\"Reported a lost or stolen computer/mobile device\", \"A security or compliance concern is reported\".",
+      "duplication": "Related to Batch A #5 and #6 (Lost/Stolen Computer/Mobile). Use this as the central \"execute wipe\" procedure, called by those.",
+      "final_verdict": "Blocked."
+    },
+    "provision-a-device-with-windows-autopilot": {
+      "number": 14,
+      "title": "Provision a device with Windows Autopilot",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the device is registered in Windows Autopilot/Intune with the expected hardware identity and ownership.",
+        "Confirm the correct deployment profile, user assignment, licensing and required apps/policies.",
+        "Confirm supported network/internet access and no unresolved hardware/TPM issue before reprovisioning."
+      ],
+      "rollback": "If provisioning fails, preserve user/business data and use the organisation's supported Intune/Autopilot reset or reprovisioning workflow. Do not use arbitrary sysprep/reset actions without authorisation and a data-protection plan.",
+      "symptom_match": "\"Windows device is not working correctly\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "provision-a-new-user-account": {
+      "number": 15,
+      "title": "Provision a new user account",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the HR ticket/request has been approved and contains all required details (name, manager, department, start date).",
+        "Check that the requested licenses are available (budget/quota).",
+        "Confirm the manager and required groups/permissions are correctly identified."
+      ],
+      "rollback": "Immediately disable the account if the user's start date is postponed or the request is canceled. Log all actions for audit.",
+      "symptom_match": "\"Access is denied or missing\" (before provisioning).",
+      "duplication": "Pair with #3 (Deprovision) \u2013 create a unified Identity Lifecycle management module.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "provision-external-guest-access": {
+      "number": 16,
+      "title": "Provision external guest access",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the guest user's email address and identity.",
+        "Confirm the sponsor/manager has approved the access request.",
+        "Check the required sharing policy and group permissions to avoid over-privileging."
+      ],
+      "rollback": "Immediately remove the guest user from Entra ID/B2B if access is no longer required or was granted in error.",
+      "symptom_match": "\"Access is denied or missing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "provision-or-change-a-phone-extension": {
+      "number": 17,
+      "title": "Provision or change a phone extension",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the user's identity and approval for the extension change.",
+        "Check the Teams Admin Center or SBC for available DIDs.",
+        "Confirm the user's license includes the calling plan/Direct Routing."
+      ],
+      "rollback": "If the new extension fails, revert to the original extension or temporary number immediately. Document the change.",
+      "symptom_match": "\"Voice/Telephony is degraded\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "recover-a-deleted-email": {
+      "number": 18,
+      "title": "Recover a deleted email",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Step 0:\u00a0Check the user's \"Deleted Items\" folder and \"Recoverable Items\" (Purview) for the email.",
+        "If the email was deleted >30 days ago, check the eDiscovery hold or backup.",
+        "Rule D enforcement:\u00a0Check for suspicious inbox forwarding rules in case the deletion was part of a compromise."
+      ],
+      "rollback": "N/A \u2013 recovery is forward-only. No undo needed.",
+      "symptom_match": "\"Business data is missing, corrupted or requires recovery\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "recover-a-device-requesting-a-bitlocker-recovery-key": {
+      "number": 19,
+      "title": "Recover a device requesting a BitLocker recovery key",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default)",
+      "prechecks": [
+        "Step 0: verify the user's identity and the exact managed device before disclosing or using any BitLocker recovery secret.",
+        "Retrieve the key only from the organisation's authorised directory/MDM/escrow source.",
+        "Confirm the displayed recovery-key ID/device identity matches the escrowed record before use."
+      ],
+      "rollback": "Recovery-key use is not an undoable configuration change. After recovery, investigate why recovery was triggered and rotate/re-escrow protection material where policy requires it; never expose the recovery key in tickets or chat logs.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Cannot sign in\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "recover-a-mac-requesting-a-filevault-recovery-key": {
+      "number": 20,
+      "title": "Recover a Mac requesting a FileVault recovery key",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Step 0: verify the user's identity and exact managed Mac before disclosing or using a FileVault recovery secret.",
+        "Retrieve the recovery key only from the authorised MDM/escrow service.",
+        "Confirm the device/escrow record and recovery-key context match before use."
+      ],
+      "rollback": "Recovery-key use is not a normal rollback action. After recovery, rotate/re-escrow the FileVault personal recovery key where supported/policy requires and confirm MDM escrow health; never copy the key into tickets.",
+      "symptom_match": "\"Apple macOS device is not working correctly\".",
+      "duplication": "Mac-specific child of BitLocker (#19). Keep distinct for Mac-specific commands.",
+      "final_verdict": "Blocked."
+    },
+    "recover-access-after-a-lost-security-key": {
+      "number": 21,
+      "title": "Recover access after a lost security key",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Step 0:\u00a0Verify the user's identity via out-of-band methods (e.g., manager approval, video call).",
+        "Revoke the lost key from Entra ID to prevent its use by a finder.",
+        "Register a new authentication method (Authenticator app, SMS, etc.) for the user."
+      ],
+      "rollback": "If the newly registered MFA method fails, remove it and re-register. Document the revocation of the lost key.",
+      "symptom_match": "\"Cannot sign in\", \"MFA approval is failing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "recover-data-from-a-failing-drive-safely": {
+      "number": 22,
+      "title": "Recover data from a failing drive safely",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: stop normal use immediately if the drive shows physical-failure signs, repeated I/O errors or serious SMART/media faults; escalate physical failure to approved data-recovery specialists.",
+        "Verify whether an approved backup/synchronised copy already contains the needed data before attempting recovery.",
+        "For logical recovery on a readable drive, work from an image/clone created with approved recovery tooling where feasible; never write recovery output back to the failing source."
+      ],
+      "rollback": "There is no safe rollback for additional media damage. Preserve the source read-only, work from an image/clone and restore business data from verified backups or recovered copies to a separate healthy destination.",
+      "symptom_match": "\"Business data is missing, corrupted or requires recovery\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "release-a-legitimate-email-from-quarantine": {
+      "number": 23,
+      "title": "Release a legitimate email from quarantine",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Validate sender, authentication results, message headers/content and the exact quarantine reason before release.",
+        "Check whether the message was classified as phishing/malware or blocked by a mandatory policy; do not release solely because the user expects it.",
+        "Use Security/Messaging approval for high-risk quarantine reasons or policy exceptions."
+      ],
+      "rollback": "If a released message is later determined malicious, invoke the approved phishing/malware containment workflow to purge/quarantine it, block indicators as appropriate and assess user interaction. Do not rely on sender blocking alone.",
+      "symptom_match": "\"Microsoft 365 feature is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "remove-an-unauthorised-browser-extension": {
+      "number": 24,
+      "title": "Remove an unauthorised browser extension",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3",
+      "prechecks": [
+        "Inventory the extension ID/source and confirm it is unauthorised or malicious under policy.",
+        "Check whether the extension is centrally installed by browser policy/MDM/GPO and remediate the authoritative policy source.",
+        "Check for associated malicious activity or enterprise-wide deployment before treating it as a local browser issue."
+      ],
+      "rollback": "Do not re-enable an unauthorised extension merely because a site stops working. If the extension is later approved as legitimate and business-required, restore it only through the authorised browser-management policy after Security/owner approval.",
+      "symptom_match": "\"Application is not accessible\" (if blocking access).",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "remove-and-reinstall-a-printer-cleanly": {
+      "number": 25,
+      "title": "Remove and reinstall a printer cleanly",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Stop the Print Spooler service before removal.",
+        "Delete the printer from Devices & Printers and the driver from Print Management.",
+        "Check disk space before reinstalling (Rule E)."
+      ],
+      "rollback": "Before removing, export the current printer configuration (`Printbrm -B -f backup.printerexport`). If the reinstall fails, restore the backup.",
+      "symptom_match": "\"Printing or scanning is not working\".",
+      "duplication": "**Merge with #9**\u00a0(\"Install or update a printer driver\"). Keep one definitive \"Printer Driver & Device Management\" procedure.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "repair-a-corrupted-windows-user-profile": {
+      "number": 26,
+      "title": "Repair a corrupted Windows user profile",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Boot into Safe Mode and check the event logs for profile load errors (Event ID 1511, 1521).",
+        "Check disk space and file system integrity (`chkdsk`).",
+        "Try renaming the profile folder (`C:\\Users\\username.old`) and rebooting to force a new profile creation."
+      ],
+      "rollback": "Before renaming/deleting the profile, ensure the user's data (Desktop, Documents, Downloads) is backed up to OneDrive/network. If the new profile fails, restore the old profile folder.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Cannot sign in\".",
+      "duplication": "Related to #12 (Migrate user profile) \u2013 #12 is proactive, #26 is reactive. Keep distinct.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "repair-a-macos-keychain-issue": {
+      "number": 27,
+      "title": "Repair a macOS Keychain issue",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Confirm date/time, account password state and whether the login keychain is merely locked versus damaged.",
+        "Inspect Keychain Access/system logs for the specific failing item without exposing stored secrets.",
+        "Confirm managed certificates/SSO/MDM profiles are healthy before resetting the keychain."
+      ],
+      "rollback": "Do not bulk-export user passwords/private keys as a routine rollback. Preserve the original keychain/database through approved backup mechanisms where possible; if reset is required, restore only from an approved secure backup or reissue managed credentials/certificates.",
+      "symptom_match": "\"Apple macOS device is not working correctly\", \"Cannot sign in\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "replace-a-failed-corporate-device": {
+      "number": 28,
+      "title": "Replace a failed corporate device",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2",
+      "prechecks": [
+        "Verify the old device is backed up (OneDrive, roaming profiles).",
+        "Confirm a spare device is available and is enrolled in Autopilot/MDM.",
+        "Ensure the user's data is transferred to the new device before decommissioning the old one."
+      ],
+      "rollback": "If the new device fails, have the old device repaired and re-issued temporarily. Wipe the old device only after the new one is confirmed working.",
+      "symptom_match": "\"Windows device is not working correctly\" (hardware failure).",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "report-and-contain-a-phishing-email": {
+      "number": 29,
+      "title": "Report and contain a phishing email",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: report and contain immediately using approved mail/security tooling; preserve message/header evidence, quarantine/purge the malicious message where authorised and block confirmed malicious indicators.",
+        "Determine recipients and whether anyone clicked links, opened attachments, entered credentials or approved MFA.",
+        "If compromise is suspected, invoke the compromised-account/endpoint incident runbook immediately rather than relying on password reset alone."
+      ],
+      "rollback": "If the message/indicator was blocked in error, Security/Messaging must validate the false positive before removing the block or restoring mail. Preserve the investigation record and avoid re-delivering suspected malicious content.",
+      "symptom_match": "\"Reported a security or compliance concern\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "resolve-a-conditional-access-block": {
+      "number": 30,
+      "title": "Resolve a Conditional Access block",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1",
+      "prechecks": [
+        "Step 0: check Microsoft Entra service health and active tenant incidents before changing Conditional Access.",
+        "Review sign-in logs and Conditional Access evaluation details to identify the exact blocking policy and reason.",
+        "Verify device compliance, authentication strength, location/risk and user/group targeting before creating an exception."
+      ],
+      "rollback": "Capture/export the current policy configuration before change. If an authorised policy modification causes wider failure, restore the previous approved configuration or disable only the new change under emergency change control; do not bypass security controls with permanent exclusions.",
+      "symptom_match": "\"Access is denied or missing\", \"Cannot sign in\".",
+      "duplication": "Related to Batch B-1 #18 (NAC block) \u2013 Conditional Access is Entra-based, NAC is network-based. Keep distinct.",
+      "final_verdict": "Blocked."
+    }
+  },
+  "merge_policy": {
+    "remove-and-reinstall-a-printer-cleanly": {
+      "canonical": "install-or-update-a-printer-driver",
+      "action": "deprecate_and_redirect"
+    },
+    "investigate-repeated-account-lockouts": {
+      "canonical": "trace-an-active-directory-account-lockout-source",
+      "action": "deprecate_and_redirect"
+    }
+  },
+  "relationship_policy": {
+    "identity_lifecycle": [
+      "deprovision-a-departing-user-account",
+      "provision-a-new-user-account"
+    ]
+  },
+  "symptom_mapping_policy": {
+    "recover-a-device-requesting-a-bitlocker-recovery-key": {
+      "match_terms": [
+        "bitlocker",
+        "recovery-key"
+      ],
+      "target_severity": "high"
+    },
+    "recover-a-mac-requesting-a-filevault-recovery-key": {
+      "match_terms": [
+        "filevault",
+        "recovery-key"
+      ],
+      "target_severity": "high"
+    }
+  }
+}

@@ -1,0 +1,513 @@
+{
+  "schema_version": 1,
+  "batch": "B-5",
+  "audit_date": "2026-08-13",
+  "source": "Pasted markdown(6).md",
+  "corrected_summary": {
+    "keep_p1": 11,
+    "demote_p2": 15,
+    "demote_p3": 4,
+    "promote_p0": 0,
+    "explicit_blocked_individual_verdicts": 3,
+    "source_summary_blocked": 6,
+    "duplicate_merge_groups": 1
+  },
+  "procedures": {
+    "troubleshoot-an-http-404-error": {
+      "number": 1,
+      "title": "Troubleshoot an HTTP 404 error",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Verify the URL is entered correctly (typo, case sensitivity).",
+        "Check if the resource/page has been moved or renamed (confirm with the application owner).",
+        "Test the URL from a different browser/incognito and different user to determine scope."
+      ],
+      "rollback": "If the page was mistakenly moved or deleted, restore it from backup or revert the web.config redirect rule.",
+      "symptom_match": "\"Application is not accessible\", \"Web page not found\".",
+      "duplication": "Unique. Keep distinct from 403 (#30 in B-4) and 500 (#2 in B-5).",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-an-http-500-error": {
+      "number": 2,
+      "title": "Troubleshoot an HTTP 500 error",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check the application/platform provider health and active service incidents before changing the application or server.",
+        "Review application/web-server logs for the exact request timestamp, correlation/request ID and stack trace or error detail.",
+        "Check database, cache, queue, identity and other backend dependencies plus recent deployment/configuration changes."
+      ],
+      "rollback": "Capture the current deployment/configuration and use the approved deployment platform to restore the last known-good application release/configuration if a confirmed recent change caused the 500 response.",
+      "symptom_match": "\"Application is not accessible\", \"Application is unresponsive\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-application-printing": {
+      "number": 3,
+      "title": "Troubleshoot application printing",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Test printing from a different application (e.g., Notepad) to isolate application vs. OS/printer.",
+        "Verify the correct printer is selected and the application's page setup is correct.",
+        "Check the print server/queue for the specific job."
+      ],
+      "rollback": "If an application update broke printing, roll back the application version or reinstall the print module.",
+      "symptom_match": "\"Printing or scanning is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-audio-or-microphone-on-macos": {
+      "number": 4,
+      "title": "Troubleshoot audio or microphone on macOS",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Verify selected input/output device and volume/mute state in macOS Sound settings.",
+        "Check application microphone permission in Privacy & Security and test recording with a built-in supported app.",
+        "Test a known-good headset/microphone or alternate port/device to separate hardware from application configuration."
+      ],
+      "rollback": "Record audio/device/application settings before change. Restore prior approved configuration if an app/MDM change caused regression. Do not attempt unsupported macOS audio-driver rollback; use supported OS/vendor remediation.",
+      "symptom_match": "\"Apple macOS device is not working correctly\", \"Audio or microphone is not working\".",
+      "duplication": "**Duplicate of Batch B-4 #27 (external display on macOS) in terms of category, but for audio.**\u00a0Keep distinct for audio-specific steps.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-blocked-browser-downloads": {
+      "number": 5,
+      "title": "Troubleshoot blocked browser downloads",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Determine whether the block is from browser reputation protection, endpoint security/DLP, web filtering, a managed browser policy or a site/application restriction.",
+        "Verify the requested file type/source and whether corporate policy permits the download.",
+        "Test an approved alternative browser or known-safe test file only to isolate browser-specific behaviour; do not bypass mandatory security controls."
+      ],
+      "rollback": "If an authorised browser/policy change causes wider failure, restore the previous approved policy. If security tooling quarantined or blocked the file, do not release it automatically; route it through the organisation's false-positive/security review process.",
+      "symptom_match": "\"Application is not accessible\", \"File cannot be downloaded\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-bluetooth-devices": {
+      "number": 6,
+      "title": "Troubleshoot Bluetooth devices",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Verify Bluetooth is turned on in Windows/macOS settings.",
+        "Check Device Manager for Bluetooth driver errors.",
+        "Put the Bluetooth device in pairing mode and try re-pairing."
+      ],
+      "rollback": "If a driver update broke Bluetooth, roll back the driver via Device Manager.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Peripheral is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-calendar-permissions": {
+      "number": 7,
+      "title": "Troubleshoot calendar permissions",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Verify the user has the correct permissions on the target calendar (Reviewer, Author, Editor).",
+        "Check if the calendar is published or shared via Exchange Admin Center or Google Workspace Admin.",
+        "Test access from Outlook on the web to isolate client-side issues."
+      ],
+      "rollback": "If a permission change broke access, revert the permissions immediately via the admin console.",
+      "symptom_match": "\"Access is denied or missing\", \"Exchange/M365 feature is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-camera-access-on-macos": {
+      "number": 8,
+      "title": "Troubleshoot camera access on macOS",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Check camera permission for the affected application in macOS Privacy & Security.",
+        "Test the camera in a built-in supported application to separate hardware from application-specific failure.",
+        "Check physical obstruction/cover and whether another application has exclusive camera use."
+      ],
+      "rollback": "Record permission/application/MDM state before change. Restore the previous approved configuration if a managed-policy change caused regression. Do not attempt unsupported camera-driver rollback through Recovery.",
+      "symptom_match": "\"Apple macOS device is not working correctly\", \"Video/Camera is not working\".",
+      "duplication": "**Duplicate of Batch B-4 #16 (webcam on Windows) but for macOS.**\u00a0This is also related to Batch B-2 #23 (Teams camera). Keep as a macOS-specific branch.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-chrome-profile-synchronisation": {
+      "number": 9,
+      "title": "Troubleshoot Chrome profile synchronisation",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Confirm the user is signed into the intended managed Chrome profile and determine which sync data types are failing.",
+        "Check managed Chrome/Google policies and whether sync is paused, disabled or restricted.",
+        "Preserve/export user-recoverable bookmarks or other approved local data before any profile reset or cloud-sync reset."
+      ],
+      "rollback": "Restore the previous approved managed policy/profile configuration if a change caused the failure. Do not clear cloud sync data unless the source of truth and recovery path are confirmed.",
+      "symptom_match": "\"Cannot sign in\", \"Browser is not working correctly\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-citrix-audio-or-microphone": {
+      "number": 10,
+      "title": "Troubleshoot Citrix audio or microphone",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Confirm the local microphone/audio device works outside Citrix before changing the VDI.",
+        "Check Citrix session/VDA health plus applicable HDX audio or real-time media optimisation components where deployed.",
+        "Review Citrix policy for audio redirection, device mapping and bandwidth/quality limits."
+      ],
+      "rollback": "Record VDA/master-image and Citrix policy versions before change. If an approved VDA/media component or policy change causes regression, restore the previous approved image/component/policy through the Citrix change process.",
+      "symptom_match": "\"VDI session is not working\", \"Audio or microphone is not working\".",
+      "duplication": "Related to #4 (macOS audio) but Citrix-specific. Keep distinct.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-citrix-printing": {
+      "number": 11,
+      "title": "Troubleshoot Citrix printing",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Confirm the client printer works locally and determine whether it is mapped into the Citrix session.",
+        "Check VDA Print Spooler, Citrix printing policies and Universal Print Driver/driver mapping where used.",
+        "Check Citrix Workspace/VDA version compatibility and whether the issue affects one session, one host or the whole delivery group."
+      ],
+      "rollback": "Capture Citrix printing policy/master-image driver state before change. Restore the previous approved driver/image/policy if a confirmed update causes regression.",
+      "symptom_match": "\"Printing or scanning is not working\", \"VDI session is not working\".",
+      "duplication": "Distinct from \"application printing\" (#3). Keep Citrix-specific.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-colour-or-duplex-printing": {
+      "number": 12,
+      "title": "Troubleshoot colour or duplex printing",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Verify the printer driver supports colour/duplex (check the device capabilities).",
+        "Check the application's page setup and printer preferences.",
+        "Test from a different application to isolate driver vs. application settings."
+      ],
+      "rollback": "If a driver update broke colour/duplex, roll back to the previous driver via Print Management.",
+      "symptom_match": "\"Printing or scanning is not working\".",
+      "duplication": "Related to \"application printing\" (#3) but specific to hardware capabilities. Keep distinct as a child branch.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-conference-room-audio": {
+      "number": 13,
+      "title": "Troubleshoot conference-room audio",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check room-system service/device health, physical USB/HDMI/audio connections and selected input/output devices.",
+        "Test local playback/recording separately from an online meeting to isolate room hardware from platform/network media.",
+        "Check room audio DSP/soundbar/microphone firmware and recent configuration changes."
+      ],
+      "rollback": "Record room-device configuration and firmware before change. Revert firmware only where the vendor supports rollback; otherwise restore the previous approved configuration or route to vendor support.",
+      "symptom_match": "\"Meeting room system is not working\", \"Audio or microphone is not working\".",
+      "duplication": "Related to Batch B-2 #2 (Teams Room offline) \u2013 #2 is system-level, #13 is audio-specific. Keep distinct.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-directory-synchronisation": {
+      "number": 14,
+      "title": "Troubleshoot directory synchronisation",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1. (Potential P0).",
+      "prechecks": [
+        "Step 0: check Microsoft Entra Connect/Cloud Sync health and active service incidents before changing synchronization configuration.",
+        "Review Sync Service Manager / connector run history and exact import, synchronization or export errors for the incident window.",
+        "Check connectivity to on-premises directory and Entra endpoints, connector credentials/permissions and object conflicts such as duplicate UPN/proxy addresses or immutable-identity mismatches."
+      ],
+      "rollback": "Export/capture synchronization rules and connector configuration before change. If an approved sync-rule/configuration change caused failures, restore the previous known-good configuration. Do not stop or replace a full synchronization solely because it is slow; stop only when an authorised operator confirms it is erroneous and understands the object-impact risk.",
+      "symptom_match": "\"Cannot sign in\", \"Microsoft 365 feature is not working\", \"Access is denied or missing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-disk-encryption-compliance": {
+      "number": 15,
+      "title": "Troubleshoot disk-encryption compliance",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check the authoritative MDM/endpoint-management encryption state and confirm recovery-key escrow is healthy before changing BitLocker/FileVault protection.",
+        "Check TPM/Secure Enclave/secure-chip state, relevant firmware/security settings and current protectors.",
+        "Check for an authorised pending suspend/resume operation and identify why the device is reported non-compliant."
+      ],
+      "rollback": "Do not decrypt the device as routine remediation. If encryption was intentionally suspended for an authorised maintenance action, resume protection after verification. If a policy change causes incorrect compliance reporting, restore the previous approved policy while preserving encryption and recovery escrow.",
+      "symptom_match": "\"A security or compliance concern is reported\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-docker-desktop": {
+      "number": 16,
+      "title": "Troubleshoot Docker Desktop",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check Docker Desktop service status and virtualization (WSL2/Hyper-V) health.",
+        "Verify disk space and memory allocation for Docker images/containers.",
+        "Check Docker daemon logs for specific errors."
+      ],
+      "rollback": "If a Docker Desktop update broke functionality, roll back to the previous version via the Docker installer.",
+      "symptom_match": "\"Developer environment is not working\", \"Application is not accessible\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-endpoint-protection-health": {
+      "number": 17,
+      "title": "Troubleshoot endpoint protection health",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check the EDR/AV management console for device health, last check-in, sensor/service state and active alerts.",
+        "Verify real-time protection, tamper protection, engine/definition/sensor version and management connectivity.",
+        "Determine whether this is a health/configuration issue or an active security alert; active threat evidence must route to the incident/EDR-alert runbook rather than being treated as routine agent repair."
+      ],
+      "rollback": "Record the current approved endpoint-protection policy/sensor version before change. Restore the previous approved policy or vendor-supported sensor version if a confirmed update causes regression. Do not disable protection as a troubleshooting shortcut.",
+      "symptom_match": "\"A security or compliance concern is reported\".",
+      "duplication": "Related to Batch B-3 #10 (EDR alert investigation) \u2013 #10 is reactive, #17 is proactive health checks. Keep distinct.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-gmail-delegation": {
+      "number": 18,
+      "title": "Troubleshoot Gmail delegation",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check Google Workspace Admin console for delegated user permissions.",
+        "Verify the delegate has been granted the correct access level (Send As, Read, Manage).",
+        "Test access from the Gmail web interface."
+      ],
+      "rollback": "If a delegation change broke access, revert the permission immediately via the Google Admin console.",
+      "symptom_match": "\"Access is denied or missing\", \"Google Workspace feature is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-gmail-send-or-receive": {
+      "number": 19,
+      "title": "Troubleshoot Gmail send or receive",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Step 0: check Google Workspace Status Dashboard/admin service alerts before changing Gmail routing or client settings.",
+        "Determine whether the issue affects one user, domain/OU/group or all mail flow; capture message IDs, timestamps and bounce/error details.",
+        "Check mailbox/storage state, sending limits, routing/compliance rules and attachment/message limits relevant to the failure."
+      ],
+      "rollback": "Export/capture the affected routing/compliance policy before change. If an authorised policy change caused mail-flow failure, restore the previous approved policy and verify controlled test messages.",
+      "symptom_match": "\"Email is not being delivered\", \"Google Workspace feature is not working\".",
+      "duplication": "Related to Google Workspace suite. Keep distinct.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-google-drive-synchronisation": {
+      "number": 20,
+      "title": "Troubleshoot Google Drive synchronisation",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check Google Drive for desktop status/errors and verify the user can access the same files in the web interface.",
+        "Check network connectivity, local disk space and managed Drive configuration.",
+        "Identify conflicts, offline state or local/cloud version differences and establish the authoritative copy before reset or relink."
+      ],
+      "rollback": "Preserve local unsynchronised data before client repair. If a managed Drive client rollout causes regression, restore the previous approved managed package/version where supported; do not overwrite cloud data to force a sync.",
+      "symptom_match": "\"Google Workspace feature is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-google-meet-audio-or-video": {
+      "number": 21,
+      "title": "Troubleshoot Google Meet audio or video",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check Google Workspace/Meet service health before local client remediation.",
+        "Test camera/microphone outside the browser and verify browser/site permissions plus selected devices.",
+        "Check network quality and media reachability using approved diagnostics rather than relying only on a generic speed test."
+      ],
+      "rollback": "Restore previous approved browser/managed policy/device configuration if a change caused regression. Avoid downgrading to an unsupported browser version; use a supported alternate client/browser while the regression is remediated.",
+      "symptom_match": "\"Google Workspace feature is not working\", \"Video/Camera is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-high-cpu-utilisation": {
+      "number": 22,
+      "title": "Troubleshoot high CPU utilisation",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine whether the high CPU is a single endpoint or service/server-wide condition and identify the top processes with Task Manager/Performance Monitor or approved tooling.",
+        "Correlate process/service errors, recent deployments/updates and scheduled activity with the high-CPU window.",
+        "Check whether the process is legitimate expected load, a runaway workload or potentially malicious before terminating it."
+      ],
+      "rollback": "Capture process/service and recent-change state. If a confirmed deployment/update caused the load, restore the previous approved version/configuration. Restart or stop a service only under change authority and after checking dependencies.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Application is slow or unresponsive\".",
+      "duplication": "Related to #24 (High memory) \u2013 keep separate as root causes differ.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-high-load-on-linux": {
+      "number": 23,
+      "title": "Troubleshoot high load on Linux",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Use `uptime`, `top`/`ps` and load averages to establish scope and identify consuming/runnable processes.",
+        "Use approved tools such as `vmstat`, `iostat` and filesystem/network checks to separate CPU, memory, I/O wait and blocked-task pressure.",
+        "Check recent deployments/jobs and unexpected connection/process patterns; route suspected attack activity to Security Operations."
+      ],
+      "rollback": "Capture service/deployment state before changes. Restore a confirmed bad deployment/configuration through the approved release process. Restart a leaking/runaway service only after dependencies and business impact are understood.",
+      "symptom_match": "\"Application is slow or unresponsive\", \"Linux device is not working correctly\".",
+      "duplication": "Linux-specific child of #22. Keep distinct.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-high-memory-utilisation": {
+      "number": 24,
+      "title": "Troubleshoot high memory utilisation",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine endpoint versus server/service-wide scope and identify top processes, working set/private memory and commit/pagefile pressure.",
+        "Check for sustained growth/leak patterns, recent deployments and application/service errors.",
+        "Check available memory, paging/swap behaviour and whether memory pressure is causing process termination or service degradation."
+      ],
+      "rollback": "If a confirmed recent deployment/configuration caused the leak, restore the previous approved release/configuration. Restart affected services only under change authority and after checking dependencies and preserving diagnostic evidence.",
+      "symptom_match": "\"Application is slow or unresponsive\", \"Application is not accessible\".",
+      "duplication": "Related to #22 (CPU) \u2013 keep separate.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-known-folder-move": {
+      "number": 25,
+      "title": "Troubleshoot Known Folder Move",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check OneDrive client/Known Folder Move status and exact error plus whether Desktop/Documents/Pictures data is available locally, in OneDrive web or both.",
+        "Check OneDrive storage/quota, sync health, managed KFM policy and conflicting folder redirection.",
+        "Establish the authoritative copy and preserve unsynchronised local data before changing KFM, unlinking OneDrive or moving folders."
+      ],
+      "rollback": "Do not blindly stop sync and move folders. If an approved KFM policy change caused regression, restore the previous managed policy and reconcile local/cloud data only after the source of truth is confirmed.",
+      "symptom_match": "\"Microsoft 365 feature is not working\", \"OneDrive sync is failing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-linux-certificate-trust": {
+      "number": 26,
+      "title": "Troubleshoot Linux certificate trust",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check system time/NTP state and the active CA trust store for the distribution/application.",
+        "Use `openssl s_client` or the application's supported TLS diagnostics to inspect the presented chain, hostname and verification errors.",
+        "Check whether the affected service uses the system trust store, a Java/application-specific trust store or a container/image-specific store."
+      ],
+      "rollback": "Back up trust-store/certificate configuration before change. If an authorised trust/certificate update causes regression, restore the previous approved CA/certificate bundle and restart/reload only the affected service as required.",
+      "symptom_match": "\"Cannot sign in\", \"A security or compliance concern is reported\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-linux-sign-in": {
+      "number": 27,
+      "title": "Troubleshoot Linux sign-in",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Determine local-console versus SSH versus directory/SSO login scope and verify the account is not locked/expired.",
+        "Review SSH/authentication logs for the exact attempt and check authorized keys/home-directory ownership/permissions as relevant.",
+        "Check PAM/SSSD/LDAP/Kerberos or other configured identity-provider health before changing authentication files."
+      ],
+      "rollback": "Back up PAM/SSSD/SSH authentication configuration before change. Restore the previous approved configuration if a confirmed edit causes lockout; keep an authorised recovery session/console path available before remote authentication changes.",
+      "symptom_match": "\"Cannot sign in\", \"Linux device is not working correctly\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-macos-sign-in-failure": {
+      "number": 28,
+      "title": "Troubleshoot macOS sign-in failure",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Verify the exact account type and identity source, account/password state and whether FileVault preboot login is involved.",
+        "Check local account/home-directory ownership and relevant authentication/MDM logs.",
+        "Check whether Keychain symptoms occur after login rather than assuming Keychain corruption is the cause of the login failure."
+      ],
+      "rollback": "Do not use password reset or OS rollback as a generic first response. Preserve FileVault/recovery access and user data; if an approved account/MDM configuration change caused the issue, restore that configuration. Password recovery must follow identity-verification and organisational recovery procedures.",
+      "symptom_match": "\"Apple macOS device is not working correctly\", \"Cannot sign in\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-meeting-updates-or-cancellations": {
+      "number": 29,
+      "title": "Troubleshoot meeting updates or cancellations",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check the applicable Microsoft 365/Exchange or Google Workspace service health before client-side remediation.",
+        "Confirm organizer identity/permissions and whether the issue affects one meeting, one user or multiple recipients.",
+        "Check transport/calendar processing rules, mailbox/calendar delegation and message trace/audit evidence for updates or cancellations."
+      ],
+      "rollback": "Capture affected calendar/transport policy before change. If an authorised rule/policy change caused the issue, restore the previous approved configuration and verify with a controlled test meeting.",
+      "symptom_match": "\"Exchange/M365 feature is not working\", \"Google Workspace feature is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-multiple-monitor-arrangement-or-resolution": {
+      "number": 30,
+      "title": "Troubleshoot multiple-monitor arrangement or resolution",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "This compatibility page must route to the definitive external-monitor runbook established in Batch B-4.",
+        "Preserve the historical URL and symptom mapping while moving arrangement/resolution guidance into the canonical runbook."
+      ],
+      "rollback": "No independent remediation is permitted after deprecation; rollback and verification belong to the canonical external-monitor procedure.",
+      "symptom_match": "\"Display is not working\", \"Windows device is not working correctly\".",
+      "duplication": "**Duplicate of Batch B-4 #27, #28, #29.**\u00a0Merge into one definitive \"Troubleshoot an external monitor\" P2 procedure. This is the generic version, but the specific \"arrangement or resolution\" branch can be a subset.",
+      "final_verdict": "Blocked until merged."
+    }
+  },
+  "merge_policy": {
+    "troubleshoot-multiple-monitor-arrangement-or-resolution": {
+      "canonical": "troubleshoot-an-external-monitor",
+      "action": "deprecate_and_redirect",
+      "priority": "P3"
+    }
+  },
+  "relationship_policy": {
+    "endpoint_protection": {
+      "health": "troubleshoot-endpoint-protection-health",
+      "incident": "investigate-an-antivirus-or-edr-alert"
+    },
+    "citrix": {
+      "audio": "troubleshoot-citrix-audio-or-microphone",
+      "printing": "troubleshoot-citrix-printing"
+    }
+  }
+}

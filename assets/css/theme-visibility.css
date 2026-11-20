@@ -1,0 +1,42 @@
+/* Theme visibility corrections.
+   Keep the approved SVG mark/favicon; adjust contrast without replacing artwork. */
+
+html[data-theme="light"] .site-brand-mark,
+html:not([data-theme]) .site-brand-mark {
+  background: linear-gradient(145deg, #12324f, #0b1f35) !important;
+  border-color: rgba(11, 31, 53, 0.38) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 6px 16px rgba(11, 31, 53, 0.2) !important;
+}
+
+html[data-theme="light"] .site-brand-mark > img,
+html:not([data-theme]) .site-brand-mark > img,
+html[data-theme="dark"] .site-brand-mark > img {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+html[data-theme="dark"] :is(
+  .rd-home-hero-copy h1,
+  .rd-first-response .rd-panel-heading h2,
+  .rd-section-heading h2,
+  .rd-list-heading h1,
+  .rd-tool-heading h1,
+  .rd-article-heading h1,
+  .rd-trust-card h2
+) {
+  color: #f5f9fc !important;
+}
+
+html[data-theme="dark"] :is(
+  .rd-hero-lead,
+  .rd-first-response-list p,
+  .rd-section-heading > p
+) {
+  color: #b7c7d7 !important;
+}
+
+html[data-theme="dark"] .rd-first-response-list strong {
+  color: #eef5fb !important;
+}

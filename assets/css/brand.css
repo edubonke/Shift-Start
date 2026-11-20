@@ -1,0 +1,13 @@
+/* === ShiftStart brand integration === */
+.rd-brand{gap:.62rem}
+.rd-brand-mark{display:grid!important;width:2.3rem!important;height:2.3rem!important;flex:0 0 2.3rem!important;place-items:center;overflow:hidden;border:1px solid rgba(91,201,176,.22)!important;border-radius:.72rem!important;background:radial-gradient(circle at 70% 20%,rgba(35,185,149,.16),transparent 45%),rgba(255,255,255,.045)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 16px rgba(4,18,34,.18);transition:border-color .18s ease,background-color .18s ease,transform .18s ease}
+.rd-brand-mark img{display:block;width:1.72rem;height:1.72rem;object-fit:contain}
+.rd-brand:hover .rd-brand-mark{border-color:rgba(91,201,176,.5)!important;background-color:rgba(35,185,149,.08)!important;transform:translateY(-1px)}
+.rd-brand-copy strong{letter-spacing:-.015em}.rd-brand-copy small{letter-spacing:.025em}
+.rd-footer .rd-brand-mark{width:2.15rem!important;height:2.15rem!important;flex-basis:2.15rem!important;background:radial-gradient(circle at 70% 20%,rgba(35,185,149,.12),transparent 45%),rgba(255,255,255,.035)!important}
+.rd-footer .rd-brand-mark img{width:1.55rem;height:1.55rem}
+@media(max-width:680px){.rd-brand{gap:.5rem}.rd-brand-mark{width:2.05rem!important;height:2.05rem!important;flex-basis:2.05rem!important;border-radius:.64rem!important}.rd-brand-mark img{width:1.48rem;height:1.48rem}}
+@media(prefers-reduced-motion:reduce){.rd-brand-mark{transition:none}.rd-brand:hover .rd-brand-mark{transform:none}}
+@media(forced-colors:active){.rd-brand-mark{border:1px solid CanvasText!important;background:Canvas!important;box-shadow:none!important}.rd-brand-mark img{forced-color-adjust:none}}
+@media print{.rd-brand-mark{border:1px solid #777!important;background:#0b1f35!important;box-shadow:none!important}}
+/* === End ShiftStart brand integration === */

@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shiftstart.example/schemas/verification-evidence-v2.schema.json",
+  "title": "ShiftStart Verification Evidence v2",
+  "description": "Machine-readable evidence structure. The schema validates shape only; risk-specific completeness is enforced by scripts/verification-v2.js.",
+  "type": "object",
+  "properties": {
+    "verification_schema_version": {
+      "const": 2
+    },
+    "verification_evidence": {
+      "type": "object",
+      "properties": {
+        "diagnostic_tested": {
+          "type": "boolean"
+        },
+        "remediation_tested": {
+          "type": "boolean"
+        },
+        "rollback_confirmed": {
+          "type": "boolean"
+        },
+        "irreversible_change": {
+          "type": "boolean"
+        },
+        "irreversibility_approved_by": {
+          "type": "string",
+          "minLength": 2
+        },
+        "stop_conditions_confirmed": {
+          "type": "boolean"
+        },
+        "escalation_confirmed": {
+          "type": "boolean"
+        },
+        "time_validated": {
+          "type": "boolean"
+        },
+        "expected_result_confirmed": {
+          "type": "boolean"
+        },
+        "negative_path_tested": {
+          "type": "boolean"
+        },
+        "owner_signoff": {
+          "type": "string",
+          "minLength": 2
+        },
+        "peer_reviewers": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 2
+              },
+              {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "sme": {
+                    "type": "boolean"
+                  },
+                  "technical": {
+                    "type": "boolean"
+                  },
+                  "organisation": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "test_environments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "environment",
+              "platform",
+              "result",
+              "tested_at"
+            ],
+            "properties": {
+              "environment": {
+                "type": "string",
+                "minLength": 2
+              },
+              "platform": {
+                "type": "string",
+                "minLength": 2
+              },
+              "result": {
+                "type": "string"
+              },
+              "tested_at": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "evidence_ref": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "source_provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "publisher",
+          "title",
+          "retrieved_at",
+          "authoritative"
+        ],
+        "properties": {
+          "publisher": {
+            "type": "string",
+            "minLength": 2
+          },
+          "title": {
+            "type": "string",
+            "minLength": 2
+          },
+          "url": {
+            "type": "string"
+          },
+          "document_ref": {
+            "type": "string"
+          },
+          "retrieved_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "authoritative": {
+            "type": "boolean"
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "url"
+            ]
+          },
+          {
+            "required": [
+              "document_ref"
+            ]
+          }
+        ],
+        "additionalProperties": true
+      }
+    },
+    "tested_platforms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2
+      }
+    },
+    "last_tested": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "next_review_due": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "verification_priority": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    "verification_priority_override": {
+      "enum": [
+        "P4"
+      ]
+    },
+    "verification_governance_state": {
+      "enum": [
+        "verified",
+        "revalidation_required",
+        "live_validation_pending",
+        "under_review",
+        "draft",
+        "deprecated"
+      ]
+    }
+  },
+  "required": [
+    "verification_schema_version"
+  ],
+  "additionalProperties": true
+}

@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "batch": "B-1",
+  "audit_date": "2026-08-13",
+  "summary": {
+    "keep_p1": 14,
+    "p2": 13,
+    "p3": 3,
+    "promote_p0": 0
+  },
+  "classifications": {
+    "respond-to-a-suspected-compromised-account": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-a-cloud-vpn-gateway": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-slow-vpn-performance": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-vpn-certificate-failure": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-vpn-disconnections": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "resolve-a-duplicate-ip-address": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "resolve-a-network-access-control-block": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "respond-to-a-suspected-malware-infection": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "triage-a-dns-service-issue": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "triage-a-wireless-access-point-outage": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-802-1x-authentication": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-a-captive-portal": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-a-default-gateway-failure": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-a-firewall-blocked-application": {
+      "severity": "high",
+      "priority": "P1"
+    },
+    "troubleshoot-linux-vpn": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "troubleshoot-macos-vpn": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "troubleshoot-mobile-vpn": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "password-reset": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "mapped-drive-missing": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "mfa-setup-fails": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "vpn-not-connecting": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "add-or-remove-security-group-membership": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "resolve-an-apipa-address": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "trace-an-active-directory-account-lockout-source": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "troubleshoot-a-mapped-drive-reconnect-failure": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "troubleshoot-a-network-printer-that-is-unreachable": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "troubleshoot-a-network-share-access-failure": {
+      "severity": "medium",
+      "priority": "P2"
+    },
+    "clear-and-rebuild-the-teams-cache": {
+      "severity": "low",
+      "priority": "P3"
+    },
+    "recover-an-outlook-pst-file": {
+      "severity": "low",
+      "priority": "P3"
+    },
+    "repair-an-outlook-profile": {
+      "severity": "low",
+      "priority": "P3"
+    }
+  },
+  "controls": {
+    "respond-to-a-suspected-compromised-account": {
+      "prechecks": [
+        "Contain the identity before ordinary investigation: block or restrict sign-in and revoke active sessions/tokens through the approved identity-incident process.",
+        "Review Entra sign-in/risk evidence, recent MFA/security-info changes, registered authentication methods, privileged-role activity and suspicious OAuth/application consent.",
+        "Immediately after approved credential reset, inspect Exchange Inbox rules and mailbox forwarding using Get-InboxRule and Get-Mailbox ForwardingAddress/ForwardingSmtpAddress."
+      ],
+      "rollback": "Re-enable the identity only after Security/IAM clearance, legitimate MFA methods are restored, malicious sessions/rules/forwarding are removed and the user validates normal access."
+    },
+    "troubleshoot-a-cloud-vpn-gateway": {
+      "prechecks": [
+        "Check the official cloud/provider health source before changing the gateway or internal network.",
+        "Check gateway connection/tunnel counts, platform health and recent configuration changes.",
+        "Confirm BGP peer state and IKE/IPsec tunnel phase/status from gateway logs."
+      ],
+      "rollback": "Export or capture the current gateway configuration before change; revert to the last known-good gateway configuration if connectivity worsens."
+    },
+    "troubleshoot-linux-vpn": {
+      "prechecks": [
+        "Confirm gateway reachability and DNS resolution from the Linux endpoint.",
+        "Review journal/system/client VPN logs before changing the client.",
+        "Confirm system date/time and NTP synchronisation."
+      ],
+      "rollback": "Record the current approved VPN client package/profile and restore the previous approved version/profile through package management or software distribution if the change causes regression."
+    },
+    "troubleshoot-macos-vpn": {
+      "prechecks": [
+        "Check the managed VPN configuration and authentication settings before recreating the profile.",
+        "Check Keychain for the expected VPN certificate/credential objects without exporting secrets.",
+        "Test an approved alternate network to separate local-network failure from corporate VPN failure."
+      ],
+      "rollback": "Preserve the approved VPN profile or MDM payload assignment and restore the original managed profile if the replacement causes regression."
+    },
+    "troubleshoot-mobile-vpn": {
+      "prechecks": [
+        "Check MDM compliance and whether the required VPN profile/app is assigned.",
+        "Confirm the installed VPN app version is organisation-approved.",
+        "Test cellular versus Wi-Fi where policy permits."
+      ],
+      "rollback": "Record the current managed VPN profile/app state and restore/redeploy the previous approved MDM profile if re-enrolment or app changes cause regression."
+    },
+    "troubleshoot-slow-vpn-performance": {
+      "prechecks": [
+        "Determine whether degradation is single-user or multi-user.",
+        "Check gateway utilisation, concurrent connections, packet loss and tunnel statistics.",
+        "Confirm whether split tunnelling, QoS or traffic-shaping changes are involved."
+      ],
+      "rollback": "Capture QoS, split-tunnel and traffic-shaping configuration before change and restore previous known-good values if performance worsens."
+    },
+    "troubleshoot-vpn-certificate-failure": {
+      "prechecks": [
+        "Check VPN gateway/server authentication certificate expiry and chain before changing the client.",
+        "Confirm client and gateway system time are synchronised.",
+        "Check certificate revocation/trust state and required root/intermediate certificates."
+      ],
+      "rollback": "Preserve the previous valid approved certificate/profile where supported; restore it if the replacement breaks authentication."
+    },
+    "troubleshoot-vpn-disconnections": {
+      "prechecks": [
+        "Check gateway logs for IKE/IPsec rekey, Dead Peer Detection and session-timeout failures.",
+        "Check address-pool/session capacity.",
+        "Capture packet-loss/route behaviour during the disconnect window."
+      ],
+      "rollback": "Record existing rekey/DPD/session values and restore previous stable values if disconnect frequency worsens; use the vendor-supported rollback mechanism for remote gateway changes."
+    },
+    "password-reset": {
+      "prechecks": [
+        "Verify the user's identity through the approved out-of-band verification process.",
+        "Check whether the lockout/failed-sign-in pattern indicates brute-force or suspicious activity.",
+        "Confirm required MFA/authentication methods remain available after reset."
+      ],
+      "rollback": "If access fails after the reset, use the organisation's approved temporary-access/recovery method rather than recycling or disclosing old credentials."
+    },
+    "mapped-drive-missing": {
+      "prechecks": [
+        "Confirm corporate network/VPN connectivity.",
+        "Test the approved UNC path directly.",
+        "Check entitlement/group membership and capture current mappings with net use before deleting a mapping."
+      ],
+      "rollback": "If remapping fails, remove only the mapping created during this procedure and restore the previously documented approved mapping."
+    },
+    "mfa-setup-fails": {
+      "prechecks": [
+        "Check identity-provider/service health before changing MFA registration.",
+        "Review registered authentication methods and policy/Conditional Access requirements.",
+        "Confirm mobile device date/time and push-notification capability where relevant."
+      ],
+      "rollback": "Before deleting an authentication method, record the approved recovery path; if re-registration fails, use the organisation's approved temporary-access method."
+    },
+    "vpn-not-connecting": {
+      "prechecks": [
+        "Determine scope first: one endpoint, one platform, multiple users or gateway-wide.",
+        "Check provider/gateway service health before client remediation.",
+        "Check Conditional Access/NAC/identity blocks before deleting profiles or certificates."
+      ],
+      "rollback": "This procedure is a triage parent; do not perform destructive profile/certificate changes here. Route to the child runbook that owns rollback."
+    },
+    "add-or-remove-security-group-membership": {
+      "prechecks": [
+        "Verify approved requester/change authority.",
+        "Confirm group scope/type, nested membership and target entitlement.",
+        "Record existing membership state before the change."
+      ],
+      "rollback": "If the change causes unintended access impact, restore the exact previous membership state and document the reversal."
+    },
+    "clear-and-rebuild-the-teams-cache": {
+      "prechecks": [
+        "Check Microsoft 365/Teams service health.",
+        "Test Teams on the web to prove the issue is local to the desktop client.",
+        "Confirm which Teams client generation is installed before using a cache path."
+      ],
+      "rollback": "Close Teams and preserve/rename relevant client cache/profile data before deletion where supported; restore preserved state or reinstall through the approved channel if rebuild fails."
+    },
+    "recover-an-outlook-pst-file": {
+      "prechecks": [
+        "Make a byte-for-byte copy of the PST before any repair attempt.",
+        "Confirm Outlook is closed and the PST is on a supported local storage path.",
+        "Record file size and available free disk space."
+      ],
+      "rollback": "Never repair the only copy. Restore the untouched backup PST if repair reduces recoverable data or Outlook can no longer open the file."
+    },
+    "repair-an-outlook-profile": {
+      "prechecks": [
+        "Test Outlook on the web.",
+        "Check Microsoft 365 service health and mailbox quota.",
+        "Record the current Outlook profile/account configuration before removal."
+      ],
+      "rollback": "Preserve the existing profile/configuration; restore the previous supported configuration if the new profile fails."
+    },
+    "resolve-a-duplicate-ip-address": {
+      "prechecks": [
+        "Capture ARP/MAC evidence for the duplicate address before changing either device.",
+        "Check DHCP reservations/exclusions/leases.",
+        "Trace the conflicting MAC address to a switch port or managed endpoint where tooling permits."
+      ],
+      "rollback": "Record both devices' original network settings and restore the previous known-good approved configuration if the corrective change causes loss of service."
+    },
+    "resolve-a-network-access-control-block": {
+      "prechecks": [
+        "Review NAC/ISE/ClearPass or equivalent authentication/posture logs.",
+        "Check device compliance/MDM state before bypassing NAC.",
+        "Confirm VLAN/quarantine assignment and authentication result."
+      ],
+      "rollback": "If a NAC policy change causes wider blocking, restore the prior approved policy; for a single device, re-evaluate posture and re-authenticate instead of bypassing controls."
+    },
+    "resolve-an-apipa-address": {
+      "prechecks": [
+        "Confirm the endpoint has a 169.254.0.0/16 address and capture adapter/VLAN information.",
+        "Check DHCP scope availability and relay/helper reachability before assigning a static address.",
+        "Check switch-port/VLAN path if more than one device is affected."
+      ],
+      "rollback": "Record existing adapter configuration and restore the approved DHCP/static configuration if remediation produces a worse network state."
+    },
+    "respond-to-a-suspected-malware-infection": {
+      "prechecks": [
+        "Step 0: isolate the affected endpoint through approved EDR/network controls when active compromise is credible.",
+        "Preserve EDR/AV, process, network and identity evidence before cleanup.",
+        "Check for suspicious outbound/C2 activity and wider scope from the security console."
+      ],
+      "rollback": "Release isolation only after Security Operations confirms containment/eradication criteria; destructive cleanup or restore requires an approved recovery point and incident-owner approval."
+    },
+    "trace-an-active-directory-account-lockout-source": {
+      "prechecks": [
+        "Use domain-controller lockout evidence and approved lockout tooling/logs to identify the source system.",
+        "Check cached credentials on old endpoints/mobile clients and disconnected sessions.",
+        "Check services and scheduled tasks that may still use the old password."
+      ],
+      "rollback": "Do not repeatedly unlock without fixing the source. If a service/task credential is changed, record the previous service configuration and restore only through the approved change path if the service fails."
+    },
+    "triage-a-dns-service-issue": {
+      "prechecks": [
+        "Test resolution against primary and secondary DNS servers from multiple network locations.",
+        "Check authoritative zone/forwarder/replication health before restarting DNS services.",
+        "Check server resource/query-rate anomalies and recent DNS changes."
+      ],
+      "rollback": "Export or record the affected zone/forwarder configuration and restore the previous known-good DNS configuration if resolution worsens."
+    },
+    "triage-a-wireless-access-point-outage": {
+      "prechecks": [
+        "Check wireless controller/cloud registration state before rebooting the AP.",
+        "Check switch-port link/VLAN/trunk and PoE power budget before restart/replacement.",
+        "Check neighbouring APs to determine whether the outage is local or wider."
+      ],
+      "rollback": "Capture AP/controller and switch-port configuration first. For remote Cisco IOS/IOS-XE switch changes, schedule reload in 10 and cancel only after verified recovery; use the vendor-equivalent rollback safety mechanism elsewhere."
+    },
+    "troubleshoot-802-1x-authentication": {
+      "prechecks": [
+        "Check RADIUS/NPS/ISE authentication logs.",
+        "Check client certificate validity, chain and trust where certificate-based authentication is used.",
+        "Check switch/AP 802.1X configuration and RADIUS reachability."
+      ],
+      "rollback": "Capture RADIUS policy and network-device configuration before change; revert the specific policy/configuration if authentication failures increase."
+    },
+    "troubleshoot-a-captive-portal": {
+      "prechecks": [
+        "Check captive-portal/NAC service health.",
+        "Check DNS/HTTP redirect path and portal certificate/URL reachability.",
+        "Check sponsor/guest approval workflow state where applicable."
+      ],
+      "rollback": "Capture portal/NAC configuration before change and restore the previous known-good portal policy/theme/redirect configuration if the change breaks authentication."
+    },
+    "troubleshoot-a-default-gateway-failure": {
+      "prechecks": [
+        "Test the gateway from multiple endpoints on the subnet.",
+        "Check routed/SVI interface state and error counters.",
+        "Check first-hop redundancy state such as HSRP/VRRP/GLBP where implemented."
+      ],
+      "rollback": "Before a remote Cisco IOS/IOS-XE routing/gateway configuration change, capture the current configuration and schedule reload in 10; cancel only after management and forwarding verification. Use the vendor-equivalent rollback mechanism elsewhere."
+    },
+    "troubleshoot-a-firewall-blocked-application": {
+      "prechecks": [
+        "Check firewall logs for the exact source, destination, protocol and port denial.",
+        "Verify the application's documented network requirements before adding a rule.",
+        "Check NAT/PAT and upstream security controls."
+      ],
+      "rollback": "Capture the current ACL/rule state; if the new rule causes unintended access, remove/revert only that change and restore the prior known-good policy."
+    },
+    "troubleshoot-a-mapped-drive-reconnect-failure": {
+      "prechecks": [
+        "Use the canonical mapped-drive procedure instead of maintaining a second reconnect workflow."
+      ],
+      "rollback": "Not applicable after deprecation; the canonical mapped-drive procedure owns rollback."
+    },
+    "troubleshoot-a-network-printer-that-is-unreachable": {
+      "prechecks": [
+        "Test reachability from a client and the print server where present.",
+        "Check printer panel/hardware state and switch-port/network link.",
+        "Confirm printer IP/hostname has not changed before reinstalling drivers."
+      ],
+      "rollback": "Record current port/driver/queue configuration and restore the previous driver/port configuration if the change causes regression."
+    },
+    "troubleshoot-a-network-share-access-failure": {
+      "prechecks": [
+        "Compare another authorised user/device to determine scope.",
+        "Check group membership plus share and NTFS permissions before modifying ACLs.",
+        "Confirm the file server/share is online and the exact UNC path is published."
+      ],
+      "rollback": "Export or record the current ACL before change and restore the previous permission state if access or inheritance worsens."
+    }
+  }
+}

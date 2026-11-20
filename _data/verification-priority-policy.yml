@@ -1,0 +1,120 @@
+schema_version: 1
+model: verification-priority-v1
+
+description: >
+  Ranks verification work without changing technical risk classification.
+  The score prioritises risk, actual/manual demand signals, escalation pressure,
+  business criticality and evidence readiness.
+
+score_range:
+  minimum: 0
+  maximum: 100
+
+components:
+  risk:
+    maximum: 40
+    weights:
+      P0: 40
+      P1: 30
+      P2: 20
+      P3: 10
+      P4: 5
+
+  search_demand:
+    maximum: 30
+    source_order:
+      - procedure_front_matter
+      - verification-demand.yml
+      - temporary_topic_proxy
+      - none
+    tiers:
+      very_high: 30
+      high: 20
+      medium: 10
+      low: 5
+      none: 0
+
+  escalation_frequency:
+    maximum: 15
+    tiers:
+      high: 15
+      medium: 8
+      low: 3
+      none: 0
+
+  business_criticality:
+    maximum: 10
+    tiers:
+      critical: 10
+      high: 8
+      medium: 5
+      low: 2
+      none: 0
+
+  evidence_readiness:
+    maximum: 10
+    rules:
+      - minimum_score_percent: 80
+        points: 10
+      - minimum_score_percent: 60
+        points: 7
+      - minimum_score_percent: 40
+        points: 4
+      - minimum_score_percent: 20
+        points: 2
+      - minimum_score_percent: 0
+        points: 0
+
+queue_bands:
+  immediate:
+    minimum_score: 70
+    label: Immediate verification
+  next:
+    minimum_score: 50
+    label: Next verification batch
+  planned:
+    minimum_score: 30
+    label: Planned
+  backlog:
+    minimum_score: 0
+    label: Backlog
+
+temporary_topic_proxy:
+  enabled: true
+  note: >
+    This is explicitly a temporary demand proxy, not search telemetry.
+    Replace it with real search/incident data as soon as analytics are available.
+  very_high:
+    - ransomware
+    - compromised account
+    - site internet outage
+    - site-wide lan
+    - no boot
+    - boot loop
+    - server unreachable
+    - password reset
+    - mfa
+    - vpn
+  high:
+    - outlook
+    - teams
+    - entra
+    - azure ad
+    - active directory
+    - dns
+    - wi-fi
+    - wifi
+    - mapped drive
+    - authentication
+    - network
+    - defender
+    - malware
+  medium:
+    - printer
+    - printing
+    - docking
+    - microphone
+    - camera
+    - bluetooth
+    - slow windows
+    - performance

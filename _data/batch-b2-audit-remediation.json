@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "batch": "B-2",
+  "audit_date": "2026-08-13",
+  "source": "Pasted markdown(3).md",
+  "corrected_summary": {
+    "keep_p1_individual_verdicts": 9,
+    "demote_p2": 18,
+    "demote_p3": 3,
+    "promote_p0": 0,
+    "active_p1_after_dns_merge": 8,
+    "deprecated_p1_duplicate": 1,
+    "governance_rule_failures": 6,
+    "explicit_blocked_individual_verdicts": 4
+  },
+  "classifications": {
+    "troubleshoot-a-teams-room-system-offline": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-dhcp-address-assignment": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-dns-name-resolution": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-scan-to-network-folder": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-slow-internet-access": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-split-tunnel-application-access": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-teams-calling": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "clear-a-stuck-windows-print-queue": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "collect-security-incident-evidence": {
+      "priority": "P1",
+      "severity": "high"
+    },
+    "troubleshoot-a-teams-phone-device": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-a-web-filter-block": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-a-zero-trust-network-client": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-git-authentication": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-linux-dns-resolution": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-microsoft-teams-sign-in": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-mobile-outlook-synchronisation": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-no-ethernet-connectivity": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-no-wi-fi-connectivity": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-outlook-send-and-receive": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-outlook-that-will-not-open": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-proxy-configuration": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-recurring-outlook-credential-prompts": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-teams-camera": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-teams-meeting-join-failure": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-teams-screen-sharing": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "collect-linux-logs-for-escalation": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "configure-corporate-email-on-android": {
+      "priority": "P2",
+      "severity": "medium"
+    },
+    "troubleshoot-outlook-add-ins": {
+      "priority": "P3",
+      "severity": "low"
+    },
+    "troubleshoot-outlook-search": {
+      "priority": "P3",
+      "severity": "low"
+    },
+    "troubleshoot-teams-presence": {
+      "priority": "P3",
+      "severity": "low"
+    }
+  },
+  "controls": {
+    "troubleshoot-a-teams-phone-device": {
+      "prechecks": [
+        "Check Microsoft 365 / Teams service health before changing the physical device.",
+        "Check the phone's network link and power source, including PoE state where the model uses PoE.",
+        "Check device registration, health and assigned configuration/profile in the Teams Admin Center."
+      ],
+      "rollback": "Record the current device configuration/update state before a change. Revert the assigned profile or firmware/update ring only where the platform supports an approved rollback; otherwise use the vendor-supported recovery path."
+    },
+    "troubleshoot-a-teams-room-system-offline": {
+      "prechecks": [
+        "Check room-system power, network link and console error state.",
+        "Check device registration/health in Teams Rooms management or the Teams Admin Center.",
+        "Check the room resource/mailbox, licensing and sign-in state before resetting the room device."
+      ],
+      "rollback": "Record meeting policy, room configuration and device state before change. Restore the previous approved policy/configuration if the change makes the room less functional."
+    },
+    "troubleshoot-a-web-filter-block": {
+      "prechecks": [
+        "Check the web-filter/security-gateway log for the exact user, URL, category, rule and reason for the block.",
+        "Determine whether the block is a security control for malware/phishing versus a content-category or business-policy restriction.",
+        "Compare another authorised user/device to establish scope before requesting an exception."
+      ],
+      "rollback": "Record the current policy before change. If an approved exception causes wider exposure or incorrect access, remove it and restore the previous policy. Any temporary exception must be authorised, least-privilege and time-bounded."
+    },
+    "troubleshoot-a-zero-trust-network-client": {
+      "prechecks": [
+        "Check client connectivity, posture/compliance state and management-console health.",
+        "Check token/session validity and whether the identity is blocked by policy.",
+        "Check client logs for connectivity to the organisation's ZTNA/control-plane service."
+      ],
+      "rollback": "Record the current managed client/profile version. If an approved client/profile update causes regression, restore the previous approved version/profile through the management platform."
+    },
+    "troubleshoot-dhcp-address-assignment": {
+      "prechecks": [
+        "Check DHCP scope utilisation and available leases before changing the scope.",
+        "Check DHCP service health/event logs and failover state where implemented.",
+        "Check relay/helper configuration and VLAN gateway reachability when clients are on a different subnet."
+      ],
+      "rollback": "Export or otherwise capture the DHCP server/scope configuration before changing leases, exclusions or failover settings. Before remote Cisco IOS/IOS-XE relay/helper changes, use `reload in 10` and cancel only after DHCP and management reachability are verified; use the vendor-equivalent rollback mechanism elsewhere."
+    },
+    "troubleshoot-dns-name-resolution": {
+      "prechecks": [
+        "This page is a duplicate of the canonical DNS service runbook and must route to it.",
+        "Preserve the original symptom mapping and historical URL so existing links do not break."
+      ],
+      "rollback": "No independent remediation is permitted after deprecation; rollback and change controls belong to the canonical DNS service runbook."
+    },
+    "troubleshoot-git-authentication": {
+      "prechecks": [
+        "Determine whether authentication uses SSH, HTTPS/PAT, SSO or an organisation-managed credential helper.",
+        "Check token/key expiry or revocation and repository/group entitlement without exposing secret material.",
+        "Test the web interface or another approved authentication path to distinguish account entitlement from local Git configuration."
+      ],
+      "rollback": "Do not restore revoked or compromised credentials. Record the previous approved credential method/configuration and revert only the client configuration if a new approved credential method causes regression."
+    },
+    "troubleshoot-linux-dns-resolution": {
+      "prechecks": [
+        "Check the active resolver configuration (`resolvectl`, NetworkManager or `/etc/resolv.conf` as appropriate) rather than assuming one static file owns DNS.",
+        "Test `dig`/`nslookup` against the configured DNS server and an explicit known-good server where policy permits.",
+        "Check system time/NTP and DNSSEC-related errors where applicable."
+      ],
+      "rollback": "Back up or record the resolver configuration before change and restore the previous approved resolver settings if name resolution worsens."
+    },
+    "troubleshoot-microsoft-teams-sign-in": {
+      "prechecks": [
+        "Check Microsoft 365 / Teams service health before local client remediation.",
+        "Test Teams on the web to distinguish tenant/account failure from native-client failure.",
+        "Check identity state, Conditional Access and device compliance before clearing tokens or profiles."
+      ],
+      "rollback": "Record any policy or client-state change. If an approved Conditional Access or configuration change causes wider sign-in failure, restore the previous approved policy/configuration through change control."
+    },
+    "troubleshoot-mobile-outlook-synchronisation": {
+      "prechecks": [
+        "Test Outlook on the web to confirm mailbox/service health.",
+        "Check MDM/Intune compliance, application protection policy and account licensing.",
+        "Check the installed Outlook mobile version and managed configuration."
+      ],
+      "rollback": "Record the current managed app/profile state. If an approved app/profile change breaks synchronisation, restore or redeploy the previous approved managed configuration."
+    },
+    "troubleshoot-no-ethernet-connectivity": {
+      "prechecks": [
+        "Check cable/link LEDs, NIC state and physical port before changing software.",
+        "Check switch-port VLAN/access configuration and port-security state.",
+        "Check STP, errors and MAC-learning evidence when the fault points to the switch rather than the endpoint."
+      ],
+      "rollback": "Capture the current switch-port configuration before a change. Restore the prior port configuration if connectivity worsens; use the platform's supported remote rollback safety mechanism for switch changes."
+    },
+    "troubleshoot-no-wi-fi-connectivity": {
+      "prechecks": [
+        "Check Wi-Fi adapter/driver state and whether the expected SSID is visible.",
+        "Check controller/AP association and authentication logs before deleting the client profile.",
+        "Check whether the user/device is blocked by 802.1X, NAC, MAC policy or device compliance."
+      ],
+      "rollback": "Record the existing managed Wi-Fi profile and driver version. Restore the approved profile/driver if an authorised change causes regression."
+    },
+    "troubleshoot-outlook-add-ins": {
+      "prechecks": [
+        "Start Outlook in Safe Mode to determine whether add-ins are involved.",
+        "Record enabled COM/web add-ins and their load state before disabling anything.",
+        "Check whether the add-in depends on a network service, authentication or vendor backend."
+      ],
+      "rollback": "Document each add-in disabled during testing and re-enable only the known-good add-ins after isolating the fault."
+    },
+    "troubleshoot-outlook-search": {
+      "prechecks": [
+        "Test search in Outlook on the web to separate mailbox/service-side search from local indexing.",
+        "Check Windows Search/indexing status and whether the mailbox/data scope is indexed.",
+        "Check mailbox quota and client health before rebuilding an index."
+      ],
+      "rollback": "Index rebuild is a regeneration action rather than a reversible configuration change. Warn the user about temporary incomplete search/performance impact and do not delete mailbox data as part of search remediation."
+    },
+    "troubleshoot-outlook-send-and-receive": {
+      "prechecks": [
+        "Test send/receive in Outlook on the web to confirm mailbox/service health.",
+        "Check mailbox quota, message-size limits and whether Outlook is working offline.",
+        "Check exact send/receive error, account state and network path before recreating a profile."
+      ],
+      "rollback": "Record the current client/profile/update state before change. Revert only the specific approved client/update/configuration change that caused regression; preserve mailbox data."
+    },
+    "troubleshoot-outlook-that-will-not-open": {
+      "prechecks": [
+        "Try Outlook Safe Mode before profile recreation.",
+        "Check navigation-pane/profile and Office activation/licensing state.",
+        "Use the Outlook decision links to route launch, send/receive, credential, add-in and search failures to the correct child procedure."
+      ],
+      "rollback": "Record the current supported Outlook profile/account configuration before recreating it. Restore the previous supported configuration if the replacement fails; do not import untrusted registry/profile material."
+    },
+    "troubleshoot-proxy-configuration": {
+      "prechecks": [
+        "Capture system, browser and managed proxy/PAC settings before modification.",
+        "Confirm the PAC URL is reachable and evaluate whether the expected route is returned.",
+        "Compare direct access only where organisational policy explicitly permits it; do not bypass a required security proxy merely to test."
+      ],
+      "rollback": "Restore the previous approved proxy/PAC configuration through the authoritative management source if a change breaks connectivity."
+    },
+    "troubleshoot-recurring-outlook-credential-prompts": {
+      "prechecks": [
+        "Check identity/service health and account/MFA state before deleting cached credentials.",
+        "Check the authentication method and whether legacy/basic authentication is being attempted.",
+        "Inspect Credential Manager only for relevant stale entries; do not remove unrelated saved credentials."
+      ],
+      "rollback": "Record relevant credential/cache changes. Restore policy/configuration only through the approved identity/Microsoft 365 configuration path; never restore a compromised or expired credential."
+    },
+    "troubleshoot-scan-to-network-folder": {
+      "prechecks": [
+        "Check scanner/MFP network and DNS reachability to the file server.",
+        "Check the scanner/service account's share and NTFS write permissions.",
+        "Check destination disk/quota capacity and exact SMB/path/authentication error."
+      ],
+      "rollback": "Export or record ACL/share and scanner destination settings before change. Restore the previous permissions/path/configuration if scanning worsens; firmware rollback is only permitted where vendor-supported."
+    },
+    "troubleshoot-slow-internet-access": {
+      "prechecks": [
+        "Determine whether the slowdown is one endpoint, one VLAN/site or provider-wide before treating it as infrastructure.",
+        "Check WAN utilisation, loss/latency and provider circuit health.",
+        "Check QoS/traffic-shaping and recent WAN/firewall changes."
+      ],
+      "rollback": "Capture QoS, traffic-shaping and WAN-routing state before change. Restore the previous known-good configuration or approved failback path if performance worsens."
+    },
+    "troubleshoot-split-tunnel-application-access": {
+      "prechecks": [
+        "Trace the application route from the VPN client and confirm which route should be selected.",
+        "Check VPN gateway/client route tables and split-tunnel include/exclude policy.",
+        "Check firewall/ACL access from the VPN address pool to the application subnet."
+      ],
+      "rollback": "Capture route/split-tunnel/ACL configuration before change. Remove or revert the specific change if access worsens; use the platform's supported rollback safety mechanism for remote routing changes."
+    },
+    "troubleshoot-teams-calling": {
+      "prechecks": [
+        "Check Microsoft 365 / Teams Phone service health before changing client or calling configuration.",
+        "Check licence/calling-plan assignment or Direct Routing/SBC health as applicable.",
+        "Capture call ID/time/user and call diagnostics/client logs before policy or SBC changes."
+      ],
+      "rollback": "Record calling policy, routing and SBC configuration before change. Restore the previous approved policy/routing/SBC configuration if call establishment worsens."
+    },
+    "troubleshoot-teams-camera": {
+      "prechecks": [
+        "Test the camera in the operating system or another approved application.",
+        "Check Teams and OS camera privacy/permission settings.",
+        "Check whether another application has exclusive access to the camera."
+      ],
+      "rollback": "Record driver and device settings before change. Restore the previous approved driver/configuration if an authorised update causes regression."
+    },
+    "troubleshoot-teams-meeting-join-failure": {
+      "prechecks": [
+        "Check Microsoft 365 / Teams service health before local remediation.",
+        "Test joining through the supported web client to distinguish client from service/network failure.",
+        "Check required network/media connectivity and firewall/proxy path, including STUN/TURN-related reachability where relevant."
+      ],
+      "rollback": "Record firewall/proxy/client changes. Revert only the approved change that caused regression and restore the prior policy/configuration."
+    },
+    "troubleshoot-teams-presence": {
+      "prechecks": [
+        "Check Teams/Exchange service health and mailbox/calendar connectivity.",
+        "Check whether the user manually set a presence state and whether it is expected to expire.",
+        "Compare web/client presence before clearing local cache."
+      ],
+      "rollback": "Cache regeneration normally has no meaningful state rollback. Preserve user data and avoid mailbox/calendar deletion; restore the previous client configuration if a configuration change caused the issue."
+    },
+    "troubleshoot-teams-screen-sharing": {
+      "prechecks": [
+        "Check meeting role/presenter permission before client remediation.",
+        "Check OS screen-recording/privacy permission and monitor/application selection.",
+        "Check uplink/media quality and whether application-window sharing works as a controlled comparison."
+      ],
+      "rollback": "Record client/permission configuration before change. Restore the previous approved Teams/client configuration if an authorised update or policy change causes regression."
+    },
+    "clear-a-stuck-windows-print-queue": {
+      "prechecks": [
+        "Determine whether the queue is local or shared and identify the affected jobs/users.",
+        "Check print-server/local disk free space and Print Spooler state before clearing anything.",
+        "Capture queue/driver/printer state before stopping services or moving spool files."
+      ],
+      "rollback": "Do not immediately delete spool files. Move/copy the affected spool files to an approved temporary evidence/backup location where policy permits, clear only the affected queue, and restore the prior queue/service state or escalate if the fault persists."
+    },
+    "collect-linux-logs-for-escalation": {
+      "prechecks": [
+        "Identify the failing service and the smallest relevant log/time window before collecting.",
+        "Collect appropriate journal/system/authentication/application logs plus basic system metadata.",
+        "Check whether logs contain secrets, personal data or tokens that require redaction/protected transfer."
+      ],
+      "rollback": "Log collection is read-only and normally needs no rollback. Do not change log retention/rotation merely to collect evidence; remove temporary copies only according to retention policy."
+    },
+    "collect-security-incident-evidence": {
+      "prechecks": [
+        "Step 0: establish chain of custody: incident/ticket ID, asset, collector, date/time/timezone, evidence source and transfer location.",
+        "Preserve volatile evidence before reboot/destructive remediation where authorised; capture memory only with approved forensic tooling and trained personnel.",
+        "Export relevant EDR/SIEM/event/email/identity/network evidence to an approved protected location and record cryptographic hashes."
+      ],
+      "rollback": "Evidence preservation is intentionally non-reversible. Do not modify original evidence to undo collection. Protect originals, hash copies with SHA-256 or the organisation's approved algorithm, and document every custody transfer."
+    },
+    "configure-corporate-email-on-android": {
+      "prechecks": [
+        "Confirm the device is enrolled/eligible for the organisation's MDM and mobile-email policy.",
+        "Check required licence and mobile-access/Conditional Access entitlement.",
+        "Check Android OS/device compliance and approved Outlook/managed-email app requirements."
+      ],
+      "rollback": "Record the existing managed account/profile state before configuration. If provisioning fails, remove only the profile/account created by this procedure and redeploy the approved configuration through MDM/Company Portal."
+    }
+  },
+  "merge_policy": {
+    "troubleshoot-dns-name-resolution": {
+      "canonical": "triage-a-dns-service-issue",
+      "action": "deprecate_and_redirect",
+      "preserve_priority": "P1"
+    }
+  },
+  "outlook_routing": {
+    "parent": "troubleshoot-outlook-that-will-not-open",
+    "related": [
+      "troubleshoot-outlook-send-and-receive",
+      "troubleshoot-recurring-outlook-credential-prompts",
+      "troubleshoot-outlook-add-ins",
+      "troubleshoot-outlook-search"
+    ]
+  }
+}

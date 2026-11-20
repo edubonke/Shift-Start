@@ -1,0 +1,40 @@
+schema_version: 1
+procedure:
+  slug: bsod-0x0000007b
+  title: Resolve BSOD stop error 0x0000007B
+  priority: P0
+  category: Windows Endpoints
+  queue_rank: 17
+  batch: A
+status: pending
+tester:
+  name: ''
+  role: ''
+  organisation: ''
+test_started_at: ''
+test_completed_at: ''
+environment_notes: ''
+verification_evidence:
+  diagnostic_tested: false
+  remediation_tested: false
+  rollback_confirmed: false
+  irreversible_change: false
+  irreversibility_approved_by: ''
+  stop_conditions_confirmed: false
+  escalation_confirmed: false
+  time_validated: false
+  expected_result_confirmed: false
+  negative_path_tested: false
+  owner_signoff: ''
+  peer_reviewers: []
+  test_environments: []
+source_provenance: []
+tested_platforms: []
+actual_duration_minutes: null
+observations: ''
+defects_found: []
+blockers: ''
+evidence_attachments: []
+declaration:
+  actual_test_performed: false
+  evidence_is_not_fabricated: false

@@ -1,0 +1,59 @@
+# ShiftStart Verification Evidence v2 template
+# Do not mark fields true unless the activity was actually performed and evidence exists.
+
+verification_schema_version: 2
+
+# Optional. P4 must only be used for genuinely low-risk informational/self-service content.
+# verification_priority_override: P4
+
+execution_required: true
+
+verification_evidence:
+  diagnostic_tested: false
+  remediation_tested: false
+  rollback_confirmed: false
+
+  # Alternative to rollback_confirmed=true for a genuinely irreversible change:
+  irreversible_change: false
+  irreversibility_approved_by: ''
+  stop_conditions_confirmed: false
+
+  escalation_confirmed: false
+  time_validated: false
+  expected_result_confirmed: false
+  negative_path_tested: false
+
+  owner_signoff: ''
+
+  peer_reviewers:
+    # For P0/P1, at least two independent reviewers must have sme: true.
+    # For P2, at least one reviewer must have sme: true.
+    # For P3/P4, at least one reviewer must have technical: true or sme: true.
+    - name: ''
+      role: ''
+      sme: false
+      technical: false
+      organisation: ''
+
+  test_environments:
+    - environment: ''
+      platform: ''
+      result: pending
+      tested_at: ''
+      evidence_ref: ''
+      notes: ''
+
+source_provenance:
+  - publisher: ''
+    title: ''
+    url: ''
+    document_ref: ''
+    retrieved_at: ''
+    authoritative: false
+
+last_tested: ''
+tested_platforms: []
+
+owner_team: ''
+support_tier: ''
+estimated_time: ''

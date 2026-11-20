@@ -1,0 +1,62 @@
+start: q1
+nodes:
+  q1:
+    question: Is the issue mainly about signing in, passwords or MFA?
+    "yes": q2
+    "no": q3
+  q2:
+    question: Is the user specifically unable to complete MFA setup or approval?
+    "yes": mfa
+    "no": password
+  q3:
+    question: Is the device unable to reach a network or VPN?
+    "yes": q4
+    "no": q5
+  q4:
+    question: Does normal internet work while the corporate VPN fails?
+    "yes": vpn
+    "no": dock
+  q5:
+    question: Is the problem in Outlook or email?
+    "yes": outlook
+    "no": q6
+  q6:
+    question: Is Windows showing a blue-screen stop error?
+    "yes": bsod
+    "no": q7
+  q7:
+    question: Is the issue a printer showing Offline or refusing jobs?
+    "yes": printer
+    "no": general
+  password:
+    title: Reset or unlock a user password
+    summary: Verify identity, check lockout state and reset through the approved identity platform.
+    procedure: procedures/password-reset/
+  mfa:
+    title: Resolve MFA setup failure
+    summary: Confirm time sync, registration state and approved authentication method.
+    procedure: procedures/mfa-setup-fails/
+  vpn:
+    title: VPN not connecting
+    summary: Validate internet, client state, DNS and credentials before reinstalling.
+    procedure: procedures/vpn-not-connecting/
+  dock:
+    title: No network on docking station
+    summary: Isolate cable, dock, adapter and driver layers in that order.
+    procedure: procedures/no-network-docking-station/
+  outlook:
+    title: Outlook crashes or will not open
+    summary: Start safe mode, disable add-ins and repair the profile or Office installation.
+    procedure: procedures/outlook-crashes/
+  bsod:
+    title: BSOD 0x0000007B
+    summary: Treat as a boot-storage path failure and preserve evidence before changes.
+    procedure: procedures/bsod-0x0000007b/
+  printer:
+    title: Printer is offline
+    summary: Confirm reachability, clear the queue and restart the spooler safely.
+    procedure: procedures/printer-offline/
+  general:
+    title: General workstation triage
+    summary: Capture impact and evidence, then isolate account, device, network or application.
+    procedure: procedures/general-workstation-triage/

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+<title id="title">ShiftStart mark</title><desc id="desc">Stylised S with forward motion arrows for fast structured IT support.</desc>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M45 14H26c-7 0-12 4-12 10s5 10 12 10h12c7 0 12 4 12 10s-5 10-12 10H19" stroke="#F4F8FC" stroke-width="7"/>
+<path d="M35 15l8-8 8 8" stroke="#23B995" stroke-width="5"/>
+<path d="M29 49l-8 8-8-8" stroke="#23B995" stroke-width="5"/>
+<path d="M43 22h10l-5-5" stroke="#5BC9B0" stroke-width="4"/>
+<path d="M21 42H11l5 5" stroke="#5BC9B0" stroke-width="4"/>
+</g></svg>

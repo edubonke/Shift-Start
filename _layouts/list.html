@@ -1,0 +1,53 @@
+---
+layout: default
+---
+{% case page.collection_name %}
+  {% when 'procedures' %}{% assign items = site.procedures %}
+  {% when 'symptoms' %}{% assign items = site.symptoms %}
+  {% when 'causes' %}{% assign items = site.causes %}
+  {% when 'commands' %}{% assign items = site.commands %}
+{% endcase %}
+<section class="shell rd-list-page" data-catalog-root data-collection="{{ page.collection_name }}">
+  <nav class="rd-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">{{ page.title }}</span></nav>
+
+  <div class="rd-list-heading">
+    <div><p class="rd-eyebrow">{% if page.collection_name == 'procedures' %}Knowledge base{% else %}Complete catalogue{% endif %}</p><h1>{{ page.title }}</h1><p>{{ page.description }}</p></div>
+    <div class="rd-list-total"><strong>{{ items | size }}</strong><span>{{ page.collection_name }}</span></div>
+  </div>
+
+  <section class="catalog-filter-panel rd-filter-panel" aria-label="Catalogue filters">
+    <div class="rd-filter-grid">
+      <label class="rd-filter-search"><span>Search</span><input class="wizard-input" type="search" data-catalog-search placeholder="Title, symptom, platform, tag or description"></label>
+      <label><span>Domain</span><select class="wizard-input" data-catalog-category><option value="all">All domains</option>{% assign cats = items | map: 'category' | uniq | sort %}{% for cat in cats %}<option value="{{ cat | escape }}">{{ cat }}</option>{% endfor %}</select></label>
+      {% if page.collection_name == 'procedures' %}
+      <label><span>Risk</span><select class="wizard-input" data-catalog-risk><option value="all">All risk levels</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>
+      <label><span>Status</span><select class="wizard-input" data-catalog-status><option value="all">All statuses</option><option value="verified">Verified</option><option value="revalidation_required">Revalidation required</option><option value="live_validation_pending">Live validation pending</option><option value="under_review">Under review</option><option value="draft">Draft</option><option value="deprecated">Deprecated</option></select></label>
+      <label><span>Tier</span><select class="wizard-input" data-catalog-tier><option value="all">All tiers</option>{% assign tiers = items | map: 'support_tier' | compact | uniq | sort %}{% for tier in tiers %}<option value="{{ tier | escape }}">{{ tier }}</option>{% endfor %}</select></label>
+      <label><span>Sort</span><select class="wizard-input" data-catalog-sort><option value="name">Name A–Z</option><option value="risk">Highest risk first</option><option value="verified">Verified first</option></select></label>
+      {% endif %}
+      <button class="btn-secondary rd-filter-reset" type="button" data-catalog-reset>Reset</button>
+    </div>
+    <div class="rd-active-filters" data-active-filters aria-live="polite"></div>
+    <p class="catalog-count rd-catalog-count" data-catalog-count aria-live="polite">Showing all {{ items | size }} articles.</p>
+  </section>
+
+  <div class="rd-empty-state" data-catalog-empty hidden><span aria-hidden="true">⌕</span><strong>No matching articles</strong><p>Try fewer words or reset one of the filters.</p><button class="btn-secondary" type="button" data-catalog-reset>Reset filters</button></div>
+
+  <div class="catalog-grid rd-catalog-grid" data-catalog-items>
+    {% assign sorted_items = items | sort: 'title' %}
+    {% for item in sorted_items %}
+    {% assign item_status = item.content_status | default: '' %}
+    {% if page.collection_name == 'procedures' and item.verification_governance_state %}{% assign item_status = item.verification_governance_state %}{% endif %}
+    {% if page.collection_name == 'procedures' and item_status == 'verified' and item.verification_v2_complete != true %}{% assign item_status = 'revalidation_required' %}{% endif %}
+    {% if page.collection_name == 'procedures' and item_status == 'verified' and item.verification_promotion_ready != true %}{% assign item_status = 'revalidation_required' %}{% endif %}
+    <a class="card catalog-item rd-procedure-card sp-procedure-card" href="{{ item.url | relative_url }}" data-title="{{ item.title | downcase | escape }}" data-category="{{ item.category | escape }}" data-risk="{{ item.severity | default: '' | downcase | escape }}" data-status="{{ item_status | escape }}" data-tier="{{ item.support_tier | default: '' | escape }}" data-search="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.category | append: ' ' | append: item.tags | append: ' ' | append: item.platforms | append: ' ' | append: item.error_codes | downcase | escape }}">
+      <div class="sp-card-topline"><div class="sp-card-badge-group">{% if item.severity %}<span class="rd-risk rd-risk-{{ item.severity | downcase }}">{{ item.severity }}</span>{% endif %}{% if item_status != '' %}<span class="rd-status status-{{ item_status }}">{{ item_status | replace: '_', ' ' }}</span>{% endif %}</div>{% if item.slug %}<span class="sp-card-id">{{ item.slug | truncate: 24 }}</span>{% endif %}</div>
+      <p class="rd-card-domain">{{ item.category }}</p>
+      <h2>{{ item.title }}</h2>
+      <p class="sp-card-summary">{{ item.description }}</p>
+      <div class="sp-card-meta">{% if item.support_tier %}<span>{{ item.support_tier }}</span>{% endif %}{% if item.estimated_time %}<span>{{ item.estimated_time }}</span>{% endif %}{% if item.platforms and page.collection_name == 'procedures' %}<span>{{ item.platforms | first }}</span>{% endif %}</div>
+      <span class="sp-card-action"><span>Open {{ item.content_type | default: page.collection_name | remove: 's' }}</span><span aria-hidden="true">→</span></span>
+    </a>
+    {% endfor %}
+  </div>
+</section>

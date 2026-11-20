@@ -1,0 +1,50 @@
+name: ShiftStart IT Support KB
+description: Enterprise-scale, technician-first troubleshooting guidance with a complete catalogue, governed content assurance and multi-select symptom matching.
+feedbackEndpoint: ''
+zeroResultEndpoint: ''
+itsm:
+  enabled: false
+  provider: generic
+  ticketUrlTemplate: ''
+  openInNewTab: true
+  placeholders:
+    - title
+    - category
+    - url
+    - severity
+    - owner_team
+    - symptoms
+diagnostics:
+  enabled: false
+  endpoint: ''
+  method: POST
+access:
+  enabled: false
+  defaultRole: technician
+catalogue:
+  enterpriseBaseline: true
+  procedures: 421
+  symptoms: 446
+  noPagination: true
+contentGovernance:
+  enabled: true
+  defaultStatus: under_review
+  verifiedRequiresNamedReviewer: true
+  generatedBaselineCanBeVerified: false
+  qualityReport: /reports/content-audit.json
+  verificationSchemaVersion: 2
+  authoritativeStatusField: verification_governance_state
+
+commercial:
+  enabled: true
+  enquiryEmail: ''
+  responseWindow: 'Scoped after enquiry'
+
+enterprise:
+  enabled: true
+  requestProcedureEndpoint: ''
+  editSuggestionEndpoint: ''
+  errorReportEndpoint: ''
+  analyticsEndpoint: ''
+  affiliateTrackingEndpoint: ''
+  telemetryMode: local_browser

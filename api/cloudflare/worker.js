@@ -1,0 +1,1 @@
+export default { async fetch(request) { if (request.method !== "POST") return new Response("Method not allowed", { status: 405 }); console.log("KB API placeholder", await request.json()); return Response.json({ accepted: true }, { status: 202 }); } };

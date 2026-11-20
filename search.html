@@ -1,0 +1,18 @@
+---
+layout: default
+title: Search
+description: Search procedures, symptoms, error codes and support domains.
+permalink: /search/
+page_kind: search
+---
+<section class="shell rd-tool-page" data-search-page>
+  <nav class="rd-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Search</span></nav>
+  <header class="rd-tool-heading"><div><p class="rd-eyebrow">Knowledge search</p><h1>Search ShiftStart</h1><p>Search across procedures, symptoms, error codes, domains and article content.</p></div></header>
+  <form class="rd-search-page-form" data-search-page-form>
+    <label for="search-page-input">What are you seeing or trying to do?</label>
+    <div class="rd-search-page-field"><input id="search-page-input" class="wizard-input" type="search" name="q" autocomplete="off" placeholder="Example: Outlook keeps asking for password"><button class="btn" type="submit">Search</button></div>
+    <div class="rd-search-type-filter" role="group" aria-label="Result type"><button type="button" class="active" data-search-type="all">All</button><button type="button" data-search-type="procedure">Procedures</button><button type="button" data-search-type="symptom">Symptoms</button><button type="button" data-search-type="command">Commands</button></div>
+  </form>
+  <p class="rd-search-page-status" data-search-page-status aria-live="polite"></p><div class="rd-search-page-results" data-search-page-results></div>
+  <div class="rd-search-help" data-search-help><h2>Search tips</h2><div><strong>Symptoms</strong><p>“VPN disconnects”, “blue screen”, “Teams microphone”.</p></div><div><strong>Error codes</strong><p>Enter the exact code when one is available.</p></div><div><strong>Actions</strong><p>“reset password”, “add group member”, “map printer”.</p></div></div>
+</section>

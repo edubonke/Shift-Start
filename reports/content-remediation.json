@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-08-15T12:35:07.916Z",
+  "applied": true,
+  "procedures": {
+    "total": 421,
+    "verified": 11,
+    "under_review": 398,
+    "draft": 0,
+    "deprecated": 12
+  },
+  "symptoms": {
+    "total": 446,
+    "titlesCorrected": 0
+  },
+  "categoriesCanonicalised": 0,
+  "filesChanged": 0,
+  "notes": [
+    "All procedures remain present; remediation changes metadata, taxonomy and trust signalling without deleting or truncating content.",
+    "Generated baseline procedures are marked under_review until a named technical owner validates commands and expected results in the target environment."
+  ]
+}
