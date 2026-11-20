@@ -1,0 +1,58 @@
+---
+layout: default
+title: Content quality and assurance
+description: Live assurance status for every ShiftStart procedure, including verified, revalidation-required, under-review, draft and deprecated guidance.
+permalink: /content-quality/
+---
+{% assign quality_verified = 0 %}
+{% assign quality_revalidation = 0 %}
+{% assign quality_under_review = 0 %}
+{% assign quality_draft = 0 %}
+{% assign quality_deprecated = 0 %}
+{% for procedure in site.procedures %}
+  {% assign effective_status = procedure.verification_governance_state | default: procedure.content_status | default: 'under_review' %}
+  {% if effective_status == 'verified' and procedure.verification_v2_complete != true %}
+    {% assign effective_status = 'revalidation_required' %}
+  {% endif %}
+  {% if effective_status == 'verified' and procedure.verification_promotion_ready != true %}
+    {% assign effective_status = 'revalidation_required' %}
+  {% endif %}
+  {% case effective_status %}
+    {% when 'verified' %}{% assign quality_verified = quality_verified | plus: 1 %}
+    {% when 'revalidation_required' %}{% assign quality_revalidation = quality_revalidation | plus: 1 %}
+    {% when 'draft' %}{% assign quality_draft = quality_draft | plus: 1 %}
+    {% when 'deprecated' %}{% assign quality_deprecated = quality_deprecated | plus: 1 %}
+    {% else %}{% assign quality_under_review = quality_under_review | plus: 1 %}
+  {% endcase %}
+{% endfor %}
+
+<section class="shell py-10">
+  <p class="font-semibold text-blue-700">Knowledge governance</p>
+  <h1>Content quality and assurance</h1>
+  <p class="mt-3 max-w-4xl text-slate-600">Every procedure remains available, but operational trust is explicit. Verification v2 is authoritative: a procedure is shown as Verified only when the recorded governance state, evidence-complete gate and promotion-readiness gate all agree. Historical verified labels that do not meet the current gate are shown as Revalidation Required.</p>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <div class="card"><p class="text-sm font-semibold text-emerald-700">Verified</p><p class="mt-2 text-4xl font-bold">{{ quality_verified }}</p><p class="mt-2 text-sm text-slate-600">Evidence-complete operational guidance within the current verification gate.</p></div>
+    <div class="card"><p class="text-sm font-semibold text-orange-700">Revalidation required</p><p class="mt-2 text-4xl font-bold">{{ quality_revalidation }}</p><p class="mt-2 text-sm text-slate-600">Historical or expired verification that must pass the current evidence gate again.</p></div>
+    <div class="card"><p class="text-sm font-semibold text-amber-700">Under review</p><p class="mt-2 text-4xl font-bold">{{ quality_under_review }}</p><p class="mt-2 text-sm text-slate-600">Baseline guidance awaiting technical-owner validation or live evidence.</p></div>
+    <div class="card"><p class="text-sm font-semibold text-rose-700">Draft</p><p class="mt-2 text-4xl font-bold">{{ quality_draft }}</p><p class="mt-2 text-sm text-slate-600">Evidence-gathering only until senior review is complete.</p></div>
+    <div class="card"><p class="text-sm font-semibold text-slate-700">Deprecated</p><p class="mt-2 text-4xl font-bold">{{ quality_deprecated }}</p><p class="mt-2 text-sm text-slate-600">Retained for compatibility, redirects or history, not active use.</p></div>
+  </div>
+
+  <section class="mt-10 card">
+    <h2 class="!mt-0">Quality gate</h2>
+    <ul class="mt-4 list-disc space-y-2 pl-6">
+      <li>No procedure, symptom, cause or command article may disappear from the generated catalogue.</li>
+      <li>Duplicate taxonomy categories and known malformed generated titles fail validation.</li>
+      <li>Verified procedures require the authoritative verification-v2 state, complete evidence and promotion readiness; a historical label alone is never sufficient.</li>
+      <li>High-reuse generic commands are reported while the affected guidance remains under review or revalidation.</li>
+      <li>The multi-select wizard, search data and enterprise catalogue expose the same effective governance status.</li>
+      <li>The ITSM button remains disabled until an administrator provides an explicit ticket URL template.</li>
+    </ul>
+  </section>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a class="btn" href="{{ '/procedures/' | relative_url }}">Browse all procedures</a>
+    <a class="btn-secondary" href="{{ '/reports/content-audit.json' | relative_url }}">Open latest machine-readable audit</a>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+---
+layout: default
+title: Operations lab
+description: Safe, interactive simulation of fleet topology, ITSM retries, circuit breakers and dead-letter queues.
+permalink: /operations-lab/
+page_kind: operations-lab
+---
+<section class="shell ot-lab" data-operations-lab>
+  <nav class="rd-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span>/</span><span aria-current="page">Operations lab</span></nav>
+  <p class="rd-eyebrow">Training environment / synthetic fleet</p>
+  <h1>Fleet health &amp; node topology</h1>
+  <p class="ot-notice"><strong>Simulation only.</strong> All nodes, incidents, webhook requests, acknowledgements and log events are fictional. Actions run locally in this browser; no systems, credentials or ITSM services are contacted.</p>
+  <div class="ot-metrics" data-lab-metrics aria-live="polite"></div>
+  <div class="ot-lab-toolbar" aria-label="Simulation controls">
+    <label>Demo destination <select class="wizard-input" data-lab-destination><option>ServiceNow</option><option>Jira Service Management</option></select></label>
+    <button type="button" class="btn" data-lab-action="batch">Simulate fleet sync</button>
+    <button type="button" class="btn-secondary" data-lab-action="retry">Simulate failed retry</button>
+    <button type="button" class="btn-secondary" data-lab-action="probe">Simulate recovery probe</button>
+    <button type="button" class="btn-secondary" data-lab-action="export">Export demo bundle</button>
+    <button type="button" class="btn-secondary" data-lab-action="reset">Reset simulation</button>
+  </div>
+  <div class="ot-lab-grid">
+    <article class="card">
+      <p class="ot-label">Fleet mesh / 18 synthetic endpoints</p><h2>Node topology</h2>
+      <div class="ot-lab-toolbar"><label>Filter <select class="wizard-input" data-lab-filter><option value="all">All nodes</option><option value="healthy">Healthy</option><option value="failed">Failed / quarantined</option><option value="retrying">Retrying</option></select></label><label>Find node <input class="wizard-input" type="search" data-lab-search placeholder="DEMO-18"></label></div>
+      <div class="ot-node-grid" data-lab-nodes></div>
+    </article>
+    <article class="card" aria-label="Node inspector"><p class="ot-label">Incident forensics / local simulation</p><div data-lab-inspector aria-live="polite"></div></article>
+  </div>
+  <article class="card"><p class="ot-label">Simulated event stream</p><h2>Telemetry &amp; audit log</h2><p>Events are generated in this local session, not captured from infrastructure.</p><div class="ot-lab-toolbar"><button class="btn-secondary" type="button" data-lab-action="copy">Copy simulation log</button><label>Severity <select class="wizard-input" data-lab-severity><option>ALL</option><option>INFO</option><option>WARN</option><option>CRITICAL</option></select></label></div><pre class="ot-console" data-lab-log tabindex="0"></pre></article>
+  <dialog data-lab-dialog aria-labelledby="ot-dialog-title"><h2 id="ot-dialog-title">Dead-letter queue inspector</h2><p class="ot-notice">Synthetic payload only. A staging dry run validates the example locally; no network request is made.</p><label>Inspect <select class="wizard-input" data-lab-tab><option value="payload">Payload JSON</option><option value="headers">Example HTTP headers</option><option value="error">Exception trace</option></select></label><pre class="ot-console" data-lab-payload></pre><div class="ot-lab-toolbar"><button class="btn" type="button" data-lab-action="dryrun">Run local dry run</button><button class="btn-secondary" type="button" data-lab-action="payload-export">Download payload</button><button class="btn-secondary" type="button" data-lab-action="close">Close</button></div><p data-dry-run-status aria-live="polite"></p></dialog>
+  <p data-lab-feedback role="status"></p>
+</section>
+<script defer src="{{ '/assets/js/operations-lab.js' | relative_url }}"></script>

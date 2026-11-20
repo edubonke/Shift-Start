@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 104" role="img" aria-labelledby="title desc">
+<title id="title">ShiftStart</title><desc id="desc">ShiftStart IT Support Assistant logo.</desc>
+<g transform="translate(8 12)"><rect width="80" height="80" rx="20" fill="#0B1F35"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(8 8)">
+<path d="M45 14H26c-7 0-12 4-12 10s5 10 12 10h12c7 0 12 4 12 10s-5 10-12 10H19" stroke="#F4F8FC" stroke-width="7"/>
+<path d="M35 15l8-8 8 8" stroke="#23B995" stroke-width="5"/>
+<path d="M29 49l-8 8-8-8" stroke="#23B995" stroke-width="5"/>
+</g></g>
+<text x="108" y="50" fill="#153A62" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="39" font-weight="800" letter-spacing="-1">ShiftStart</text>
+<text x="110" y="75" fill="#5C748E" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="1.8">IT SUPPORT ASSISTANT</text>
+</svg>

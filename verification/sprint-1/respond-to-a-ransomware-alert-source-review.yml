@@ -1,0 +1,89 @@
+schema_version: 1
+sprint: 1
+batch: A
+batch_order: 1
+procedure:
+  slug: respond-to-a-ransomware-alert
+  title: Respond to a ransomware alert
+  priority: P0
+review_date: '2026-08-10'
+review_type: authoritative_source_review
+status: source_review_complete_live_testing_pending
+
+authoritative_sources:
+  - publisher: CISA
+    title: '#StopRansomware Guide'
+    url: https://www.cisa.gov/stopransomware/ransomware-guide
+    retrieved_at: '2026-08-10'
+    authoritative: true
+    supports:
+      - immediate isolation of impacted systems
+      - out-of-band incident coordination
+      - volatile evidence preservation
+      - power-down only when network disconnection is not possible
+  - publisher: Microsoft
+    title: Responding to ransomware attacks - Microsoft Defender XDR
+    url: https://learn.microsoft.com/en-us/defender-xdr/playbook-responding-ransomware-m365-defender
+    retrieved_at: '2026-08-10'
+    authoritative: true
+    supports:
+      - containment before extended investigation
+      - isolate compromised devices without shutting them down where possible
+      - preserve compromised systems for analysis
+      - credential containment and eradication/recovery sequencing
+  - publisher: Microsoft
+    title: Take response actions on a device - Microsoft Defender for Endpoint
+    url: https://learn.microsoft.com/en-us/defender-endpoint/respond-machine-alerts
+    retrieved_at: '2026-08-10'
+    authoritative: true
+    supports:
+      - investigation package collection
+      - device isolation
+      - release from isolation
+      - isolation prerequisites and operational caveats
+  - publisher: NIST
+    title: 'NIST IR 8374 Rev. 1 - Ransomware Risk Management: A Cybersecurity Framework 2.0 Community Profile'
+    url: https://csrc.nist.gov/pubs/ir/8374/r1/final
+    retrieved_at: '2026-08-10'
+    authoritative: true
+    supports:
+      - ransomware governance
+      - detect/respond/recover lifecycle
+      - ransomware countermeasure playbook governance
+
+defects_found:
+  - id: RANSOM-001
+    severity: critical
+    finding: The generic Step 1 instructs the technician to reproduce the original user task.
+    risk: Re-executing suspicious content can worsen encryption, propagation, data loss or evidence contamination.
+    correction: Never reproduce or re-open suspected ransomware payloads. Validate the alert from telemetry and preserved evidence.
+  - id: RANSOM-002
+    severity: high
+    finding: Generic preconditions prioritise unsaved user work before security containment.
+    risk: Containment can be delayed during an active attack.
+    correction: Containment and evidence preservation take precedence; do not shut down unless isolation cannot be achieved or the approved IR plan requires it.
+  - id: RANSOM-003
+    severity: medium
+    finding: The endpoint protection PowerShell command is useful context but insufficient as the primary ransomware diagnostic.
+    risk: A healthy Defender status does not establish ransomware scope or containment.
+    correction: Treat endpoint protection state as one evidence point and require incident/alert, device, identity, network and lateral-movement evidence.
+
+verified_by_source_review:
+  immediate_isolation_required: true
+  preserve_evidence_required: true
+  containment_before_recovery: true
+  release_from_isolation_only_after_mitigation_and_investigation: true
+
+not_yet_verified:
+  diagnostic_tested: false
+  remediation_tested: false
+  rollback_confirmed: false
+  escalation_confirmed: false
+  time_validated: false
+  expected_result_confirmed: false
+  owner_signoff: false
+  minimum_peer_reviewers: false
+  minimum_sme_reviewers: false
+  minimum_test_records: false
+  minimum_distinct_environments: false
+  negative_path_tested: false

@@ -1,0 +1,69 @@
+---
+layout: default
+title: Technician dashboard
+description: Find governed IT support procedures quickly by symptom, domain, risk and support tier.
+permalink: /
+page_kind: dashboard
+---
+{% assign verified = site.procedures | where: 'content_status', 'verified' %}
+{% assign domains = site.procedures | group_by: 'category' | sort: 'name' %}
+
+<section class="shell rd-home-hero">
+  <div class="rd-home-hero-copy">
+    <p class="rd-eyebrow"><span aria-hidden="true"></span>Operational IT support library</p>
+    <h1>Find the right procedure.<br><span>Resolve with confidence.</span></h1>
+    <p class="rd-hero-lead">ShiftStart is the single source of truth for technicians who need clear, accountable and evidence-based support procedures under pressure.</p>
+    <div class="rd-hero-actions" aria-label="Quick start">
+      <button class="btn rd-primary-cta" type="button" data-command-trigger><span aria-hidden="true">⌕</span> Open command palette</button>
+      <a class="btn-secondary rd-secondary-cta" href="{{ '/wizard/' | relative_url }}"><span aria-hidden="true">✓</span> Launch symptom wizard</a>
+      <a class="rd-text-action" href="{{ '/procedures/' | relative_url }}">Open 3-pane procedure workspace <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <aside class="rd-hero-trust-cue" aria-label="Content trust guide">
+      <strong>Knowledge trust guide</strong>
+      <span><span class="verified">✓ Evidence-complete Verified</span> Current validation gate complete.</span>
+      <span><span class="review">◷ Under review / revalidation</span> Use with technical-owner judgement.</span>
+      <a class="rd-text-action" href="{{ '/content-quality/' | relative_url }}">View verification controls →</a>
+  </aside>
+    <dl class="rd-kpi-strip" aria-label="Knowledge base coverage">
+      <div><dt>Procedures</dt><dd>{{ site.procedures | size }}</dd></div>
+      <div><dt>Symptoms</dt><dd>{{ site.symptoms | size }}</dd></div>
+      <div><dt>Domains</dt><dd>{{ domains | size }}</dd></div>
+      <div><dt>Stored Verified</dt><dd>{{ verified | size }}</dd></div>
+    </dl>
+  <aside class="rd-first-response card">
+    <div class="rd-panel-heading"><div><p class="rd-eyebrow">First response</p><h2>Before you change anything</h2></div><span class="rd-live-chip"><span aria-hidden="true"></span>Controls active</span></div>
+    <ol class="rd-first-response-list">
+      <li><span>01</span><div><strong>Confirm impact</strong><p>User, device, service, scope and urgency.</p></div></li>
+      <li><span>02</span><div><strong>Capture evidence</strong><p>Exact error, timestamp and recent change.</p></div></li>
+      <li><span>03</span><div><strong>Check risk &amp; authority</strong><p>Use least privilege and protect data first.</p></div></li>
+      <li><span>04</span><div><strong>Verify or escalate</strong><p>Record outcome, rollback state and handover evidence.</p></div></li>
+    </ol>
+  </aside>
+</section>
+
+{% include enterprise-dashboard.html %}
+
+<section class="shell rd-dashboard-section" aria-label="Operations simulation">
+  <div class="rd-trust-card">
+    <div><p class="rd-eyebrow">Interactive training environment · simulation</p><h2>Explore fleet health, retry &amp; recovery</h2><p>Practice incident handover, webhook failures, circuit breaking and dead-letter inspection using synthetic endpoints. No live systems are connected.</p></div>
+    <a class="btn" href="{{ '/operations-lab/' | relative_url }}">Launch operations lab →</a>
+  </div>
+</section>
+
+<section class="rd-domain-band">
+  <div class="shell rd-dashboard-section">
+    <div class="rd-section-heading"><div><p class="rd-eyebrow">Browse by domain</p><h2>Start with the busiest support areas</h2></div><a class="rd-text-action" href="{{ '/enterprise-coverage/' | relative_url }}">View coverage map <span aria-hidden="true">→</span></a></div>
+    <div id="priority-domain-grid" class="rd-domain-grid" data-priority-domains>
+      {% for domain in domains %}<a class="rd-domain-card" data-domain-count="{{ domain.items | size }}" data-domain-name="{{ domain.name | escape }}" href="{{ '/procedures/?category=' | append: domain.name | uri_escape | relative_url }}"><span class="rd-domain-index">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span><strong>{{ domain.name }}</strong><span class="rd-domain-volume">{{ domain.items | size }} procedures</span><span class="rd-domain-arrow" aria-hidden="true">→</span></a>{% endfor %}
+    </div>
+    <div class="rd-domain-actions"><button class="btn-secondary rd-domain-toggle" type="button" data-domain-toggle aria-expanded="false" aria-controls="priority-domain-grid">See all domains</button></div>
+  </div>
+</section>
+
+{% include organisations-section.html %}
+{% include readiness-dashboard.html %}
+
+<section class="shell rd-dashboard-section rd-trust-section">
+  <div class="rd-trust-card"><div><p class="rd-eyebrow">Trust &amp; governance</p><h2>Know whether guidance is ready before you act.</h2><p>Stored content status and the current evidence gate are shown separately. Legacy verified labels with incomplete evidence are displayed as revalidation required.</p></div><div class="rd-trust-actions"><a class="btn" href="{{ '/content-quality/' | relative_url }}">Open content quality</a><a class="btn-secondary" href="{{ '/reports/content-audit.json' | relative_url }}">View audit</a></div></div>
+</section>

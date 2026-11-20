@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="{{ page.description | default: site.data.kb.description | escape }}">
+  <meta name="theme-color" content="#090d16">
+  <meta name="color-scheme" content="dark light">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>{% if page.title %}{{ page.title | escape }} · {% endif %}{{ site.data.kb.name | escape }}</title>
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem('shiftstart-theme');
+        document.documentElement.dataset.theme = ['dark', 'light'].includes(saved) ? saved : 'dark';
+      } catch (_) { document.documentElement.dataset.theme = 'dark'; }
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/shiftstart-favicon.svg' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/supportvault-fusion.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/redesign.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/operational-hardening.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/production-readiness.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/brand.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/enterprise-shell.css' | relative_url }}">
+  <script>
+    window.KB_CONFIG = {{ site.data.kb | jsonify }};
+    window.KB_BASE = {{ '/' | relative_url | jsonify }};
+  </script>
+  <link rel="stylesheet" href="{{ '/assets/css/commercial.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/header-enterprise-fix.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/mobile-responsive.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/supportvault-product-polish.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/theme-visibility.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/obsidian-telemetry.css' | relative_url }}">
+</head>
+<body class="min-h-full clay-ui redesigned-kb" data-required-role="{{ page.required_role | default: 'technician' | escape }}" data-content-status="{{ page.content_status | default: '' | escape }}" data-page-kind="{{ page.page_kind | default: page.content_type | default: 'page' | escape }}">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  {% include header.html %}
+  <main id="main-content" tabindex="-1">{{ content }}</main>
+  {% include enterprise-global-controls.html %}
+  {% include enterprise-trust-footer.html %}
+  {% include footer.html %}
+  <div class="toast-region" data-toast-region aria-live="polite" aria-atomic="true"></div>
+  <script src="{{ '/assets/js/lunr.min.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/app.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/search.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/redesign.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/operational-hardening.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/commercial.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/enterprise-shell.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/header-enterprise-fix.js' | relative_url }}"></script>
+</body>
+</html>

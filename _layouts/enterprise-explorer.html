@@ -1,0 +1,105 @@
+---
+layout: default
+---
+{% assign items = site.procedures | sort: 'title' %}
+<section class="ss-explorer" data-enterprise-explorer>
+  <header class="ss-explorer-heading shell">
+    <div>
+      <p class="rd-eyebrow">Enterprise procedure workspace</p>
+      <h1>Procedures</h1>
+      <p>Browse the complete governed knowledge base without losing context. Filter, sort and inspect procedures in one workspace.</p>
+    </div>
+    <div class="ss-explorer-count"><strong>{{ items | size }}</strong><span>procedures</span></div>
+  </header>
+
+  <div class="ss-filter-chips shell" aria-label="Persistent filters" data-filter-chips>
+    <button class="ss-filter-chip is-active" type="button" data-filter-chip="all" aria-pressed="true">All</button>
+    <button class="ss-filter-chip" type="button" data-filter-chip="verified" aria-pressed="false">Verified Only</button>
+    <button class="ss-filter-chip" type="button" data-filter-chip="under_review" aria-pressed="false">Under Review</button>
+    <button class="ss-filter-chip ss-filter-chip-critical" type="button" data-filter-chip="critical" aria-pressed="false">P0/P1 Critical</button>
+    <button class="ss-filter-chip" type="button" data-filter-chip="windows" aria-pressed="false">Windows</button>
+    <button class="ss-filter-chip" type="button" data-filter-chip="linux" aria-pressed="false">Linux</button>
+    <button class="ss-filter-chip" type="button" data-filter-chip="network" aria-pressed="false">Network</button>
+    <button class="ss-filter-chip" type="button" data-filter-chip="security" aria-pressed="false">Security</button>
+  </div>
+
+  <div class="ss-explorer-search shell">
+    <label>
+      <span class="sr-only">Filter procedure workspace</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <input type="search" data-explorer-search placeholder="Filter title, domain, owner, error code or platform…" autocomplete="off" spellcheck="false">
+    </label>
+    <div class="ss-did-you-mean" data-explorer-correction hidden></div>
+    <div class="ss-result-count" data-explorer-count>Showing {{ items | size }} procedures</div>
+  </div>
+
+  <div class="ss-workbench" data-workbench>
+    <aside class="ss-left-rail" aria-label="Procedure categories">
+      <div class="ss-rail-heading"><div><span>Categories</span><strong>Browse tree</strong></div><button type="button" data-tree-collapse-all>Collapse</button></div>
+      <div class="ss-category-tree" data-category-tree></div>
+    </aside>
+
+    <section class="ss-middle-rail" aria-label="Procedure result grid">
+      <div class="ss-grid-scroll" tabindex="0">
+        <table class="ss-procedure-grid">
+          <thead>
+            <tr>
+              <th><button type="button" data-sort-key="title">Title <span aria-hidden="true">↕</span></button></th>
+              <th><button type="button" data-sort-key="priority">Severity <span aria-hidden="true">↕</span></button></th>
+              <th><button type="button" data-sort-key="status">Status <span aria-hidden="true">↕</span></button></th>
+              <th><button type="button" data-sort-key="updated">Last Updated <span aria-hidden="true">↕</span></button></th>
+              <th><button type="button" data-sort-key="owner">Owner <span aria-hidden="true">↕</span></button></th>
+            </tr>
+          </thead>
+          <tbody data-procedure-rows>
+            {% for item in items %}
+              {% assign severity = item.severity | default: 'low' | downcase %}
+              {% assign priority = item.verification_priority | default: 'P3' %}
+              {% case priority %}
+                {% when 'P0' %}{% assign priority_order = 0 %}
+                {% when 'P1' %}{% assign priority_order = 1 %}
+                {% when 'P2' %}{% assign priority_order = 2 %}
+                {% when 'P3' %}{% assign priority_order = 3 %}
+                {% else %}{% assign priority_order = 4 %}
+              {% endcase %}
+              {% assign governance = item.verification_governance_state | default: 'under_review' %}
+              {% assign updated = item.last_updated | default: item.last_tested | default: item.date | default: '' %}
+              <tr class="ss-procedure-row"
+                  data-procedure-row
+                  data-url="{{ item.url | relative_url }}"
+                  data-id="{{ item.slug | escape }}"
+                  data-title="{{ item.title | downcase | escape }}"
+                  data-title-display="{{ item.title | escape }}"
+                  data-category="{{ item.category | default: 'Uncategorised' | escape }}"
+                  data-priority="{{ priority }}"
+                  data-priority-order="{{ priority_order }}"
+                  data-severity="{{ severity }}"
+                  data-status="{{ governance | escape }}"
+                  data-updated="{{ updated | date: '%Y-%m-%d' }}"
+                  data-owner="{{ item.owner_team | default: 'Not assigned' | escape }}"
+                  data-search="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.category | append: ' ' | append: item.tags | append: ' ' | append: item.platforms | append: ' ' | append: item.error_codes | append: ' ' | append: item.owner_team | downcase | escape }}">
+                <td><button type="button" class="ss-row-open" data-open-procedure><strong>{{ item.title }}</strong><small>{{ item.category }}</small></button></td>
+                <td><span class="ss-priority ss-priority-{{ priority | downcase }}">{{ priority }}</span></td>
+                <td>{% if governance == 'verified' %}<span class="ss-status-pill ss-status-verified">✓ Verified</span>{% elsif governance == 'revalidation_required' %}<span class="ss-status-pill ss-status-revalidation">◷ Revalidation Required</span>{% elsif governance == 'live_validation_pending' %}<span class="ss-status-pill ss-status-under_review">◷ Live Validation Pending</span>{% elsif governance == 'deprecated' %}<span class="ss-status-pill ss-status-deprecated">× Deprecated</span>{% else %}<span class="ss-status-pill ss-status-under_review">◷ {{ governance | replace: '_', ' ' }}</span>{% endif %}</td>
+                <td><time{% if updated %} datetime="{{ updated | date: '%Y-%m-%d' }}"{% endif %}>{{ updated | date: '%Y-%m-%d' | default: 'Not recorded' }}</time></td>
+                <td>{{ item.owner_team | default: 'Not assigned' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="ss-grid-empty" data-grid-empty hidden><strong>No matching procedures</strong><p>Clear a filter or try a broader search term.</p><button class="btn-secondary" type="button" data-reset-explorer>Reset filters</button></div>
+    </section>
+
+    <aside class="ss-right-rail" data-detail-rail aria-live="polite" aria-label="Procedure detail">
+      <div class="ss-detail-placeholder" data-detail-placeholder>
+        <div class="ss-detail-illustration" aria-hidden="true">→</div>
+        <p class="rd-eyebrow">Detail pane</p>
+        <h2>Select a procedure</h2>
+        <p>Choose a row to load the procedure here without leaving the workspace.</p>
+        <kbd>Ctrl</kbd> + <kbd>K</kbd> also opens the global command palette.
+      </div>
+      <div data-detail-content hidden></div>
+    </aside>
+  </div>
+</section>

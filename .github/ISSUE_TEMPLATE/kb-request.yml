@@ -1,0 +1,31 @@
+name: KB Request
+description: Suggest a missing or improved support article
+title: "[KB Request]: "
+labels: [knowledge-base, requested]
+body:
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptom or task
+      description: What does the technician or user observe?
+    validations: { required: true }
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Devices, operating systems, applications, sites or user groups affected.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Error text and evidence
+      description: Exact errors, logs, screenshots and diagnostic output. Remove secrets and personal data.
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Known workaround or proposed fix
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      options: [Low, Medium, High, Critical]
+    validations: { required: true }

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-15T12:08:02.114Z",
+  "policyVersion": 2,
+  "totalProcedures": 421,
+  "rawVerified": 11,
+  "evidenceCompleteVerified": 0,
+  "targetEvidenceComplete": 337,
+  "remainingToTarget": 337,
+  "governanceStateCounts": {
+    "under_review": 398,
+    "revalidation_required": 11,
+    "deprecated": 12
+  },
+  "newlyPromotedThisRun": 0,
+  "note": "verification_governance_state is the authoritative public state. A raw content_status of verified is not sufficient."
+}

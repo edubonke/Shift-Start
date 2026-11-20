@@ -1,0 +1,20 @@
+/* === ShiftStart production readiness dashboard === */
+.rd-readiness-dashboard{padding-top:1rem;padding-bottom:2rem}
+.rd-readiness-panel{border:1px solid rgba(92,120,154,.2);border-radius:1.1rem;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(231,239,248,.94));padding:1rem;box-shadow:var(--clay-raised-small)}
+.rd-readiness-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:.8rem}
+.rd-readiness-head h2{margin:.3rem 0 0;font-size:1.25rem}
+.rd-readiness-head p{max-width:40rem;color:#66798e;font-size:.74rem;line-height:1.45}
+.rd-readiness-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin-top:.9rem}
+.rd-readiness-stat{display:grid;gap:.15rem;border:1px solid rgba(102,128,160,.16);border-radius:.85rem;background:rgba(255,255,255,.68);padding:.75rem}
+.rd-readiness-stat span{color:#76879b;font-size:.59rem;font-weight:850;letter-spacing:.05em;text-transform:uppercase}
+.rd-readiness-stat strong{color:#183d69;font-size:1.3rem}
+.rd-readiness-stat small{color:#7d8da0;font-size:.62rem}
+.rd-readiness-stat.verified strong{color:#0e7957}
+.rd-readiness-stat.review strong{color:#9a6808}
+.rd-readiness-stat.missing strong{color:#ad243d}
+.rd-readiness-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.65rem;margin-top:.8rem;padding-top:.7rem;border-top:1px solid rgba(100,126,164,.14);color:#65778b;font-size:.68rem}
+@media(max-width:980px){.rd-readiness-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.rd-readiness-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:390px){.rd-readiness-grid{grid-template-columns:minmax(0,1fr)}}
+@media(forced-colors:active){.rd-readiness-panel,.rd-readiness-stat{background:Canvas;color:CanvasText;border:1px solid CanvasText}}
+/* === End ShiftStart production readiness dashboard === */

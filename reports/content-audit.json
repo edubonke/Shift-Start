@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-15T12:32:49.916Z",
+  "counts": {
+    "procedures": 421,
+    "symptoms": 446,
+    "causes": 10,
+    "commands": 3
+  },
+  "statusCounts": {
+    "under_review": 398,
+    "revalidation_required": 11,
+    "deprecated": 12
+  },
+  "legacyStatusCounts": {
+    "under_review": 398,
+    "verified": 11,
+    "deprecated": 12
+  },
+  "errors": [],
+  "warnings": [
+    "_procedures/bsod-0x0000007b.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/general-workstation-triage.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/mapped-drive-missing.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/mfa-setup-fails.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/no-network-docking-station.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/outlook-crashes.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/password-reset.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/printer-offline.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/slow-windows-pc.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/teams-microphone-not-working.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "_procedures/vpn-not-connecting.md: legacy content_status verified is non-authoritative; effective status is 'revalidation_required'",
+    "Generic command block reused by 44 under-review procedures: Get-ComputerInfo | Select CsName,WindowsProductName,WindowsVersion,OsBuildNumber; Get-CimInstance Win32_OperatingSystem ...",
+    "Generic command block reused by 23 under-review procedures: Get-Service | Where-Object Status -ne Running | Select -First 30 Name,Status,StartType; Get-Volume | Select DriveLetter,...",
+    "Generic command block reused by 14 under-review procedures: Get-Printer | Select Name,PrinterStatus,DriverName,PortName; Get-Service Spooler; Get-PrintJob -PrinterName \"Printer nam...",
+    "Generic command block reused by 39 under-review procedures: dsregcmd /status...",
+    "Generic command block reused by 29 under-review procedures: Get-NetAdapter | Select Name,Status,LinkSpeed; Get-NetIPConfiguration; Resolve-DnsName example.com; Test-NetConnection 1...",
+    "Generic command block reused by 18 under-review procedures: uname -a; uptime; df -h; free -h; systemctl --failed; journalctl -p err -b --no-pager | tail -80...",
+    "Generic command block reused by 17 under-review procedures: sw_vers; system_profiler SPHardwareDataType SPSoftwareDataType | head -80; profiles status -type enrollment...",
+    "Generic command block reused by 22 under-review procedures: Get-MpComputerStatus | Select AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanAge,Full..."
+  ],
+  "checks": {
+    "malformedTitles": {
+      "detected": 0,
+      "passed": true
+    },
+    "duplicateTaxonomy": {
+      "detected": 0,
+      "passed": true
+    },
+    "reusedGenericCommands": {
+      "detected": 8,
+      "passed": false
+    },
+    "procedureAssuranceBanner": {
+      "passed": true
+    },
+    "globalQualityNavigation": {
+      "passed": true
+    }
+  }
+}

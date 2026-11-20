@@ -1,0 +1,499 @@
+{
+  "schema_version": 1,
+  "batch": "B-6",
+  "audit_date": "2026-08-13",
+  "source": "Pasted markdown(7).md",
+  "corrected_summary": {
+    "keep_p1": 12,
+    "demote_p2": 11,
+    "demote_p3": 5,
+    "promote_p0": 0,
+    "explicit_blocked_individual_verdicts": 6,
+    "source_summary_keep_p1": 9,
+    "source_summary_blocked": 8,
+    "duplicate_merge_groups": 4,
+    "governance_failures_listed": 5
+  },
+  "procedures": {
+    "troubleshoot-no-dial-tone-on-a-desk-phone": {
+      "number": 1,
+      "title": "Troubleshoot no dial tone on a desk phone",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check handset/cabling, device power/PoE and whether the phone is registered to the expected voice/Teams service.",
+        "Check Microsoft 365/Teams Phone or the organisation's PBX/voice service health before changing the physical phone.",
+        "Check the assigned device profile, line/extension/account state and network reachability before reset or firmware action."
+      ],
+      "rollback": "Record the current approved phone profile and firmware/update state. Revert only where the vendor/platform supports an approved rollback; otherwise restore the previous profile/configuration or use the supported recovery process.",
+      "symptom_match": "\"Voice/Telephony is degraded\", \"Teams Phone is not working\".",
+      "duplication": "Related to Batch B-2 #1 (Teams Phone Device). Merge with that procedure; this is a child branch for the \"no dial tone\" symptom.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-offline-files-synchronisation": {
+      "number": 2,
+      "title": "Troubleshoot Offline Files synchronisation",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Confirm network/VPN reachability to the authoritative file server/share and verify the server copy is accessible.",
+        "Check Windows Offline Files/Sync Center state, cache capacity and exact conflict/error rather than deleting the CSC cache.",
+        "Identify file locks/conflicts and establish which copy is authoritative before reconciling data."
+      ],
+      "rollback": "Preserve unsynchronised local data before reset. If an authorised GPO/configuration change caused the issue, restore the previous policy. Resolve conflicts from a verified authoritative copy or backup; do not overwrite local/server data blindly.",
+      "symptom_match": "\"Network drive is not accessible\", \"File sync is failing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-one-way-audio": {
+      "number": 3,
+      "title": "Troubleshoot one-way audio",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check the applicable voice/UC provider service health before changing firewall, client or endpoint configuration.",
+        "Capture call/session ID, direction of failed media and affected parties, then verify RTP/SRTP/STUN/TURN/media path as appropriate to the platform.",
+        "Confirm local microphone/speaker/device selection works outside the call so endpoint hardware is not confused with network/media failure."
+      ],
+      "rollback": "Capture the relevant firewall/NAT/media policy before change. If an authorised policy change causes regression, restore the previous approved policy immediately and re-test two-way media.",
+      "symptom_match": "\"Audio or microphone is not working\", \"Voice/Telephony is degraded\".",
+      "duplication": "Related to #4 (macOS audio) and #10 (Citrix audio) \u2013 this is the generic parent.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-onedrive-synchronisation": {
+      "number": 4,
+      "title": "Troubleshoot OneDrive synchronisation",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Step 0: check Microsoft 365/OneDrive service health before local-client remediation.",
+        "Verify OneDrive web access, storage quota, client sync status and the exact blocked/conflicted items.",
+        "Establish the local/cloud source of truth and preserve unsynchronised local data before unlinking, resetting or moving files."
+      ],
+      "rollback": "Use OneDrive version history/recycle bin or preserved local data to recover a confirmed bad sync result. If a managed OneDrive/KFM policy change caused the issue, restore the previous approved policy; do not overwrite cloud data to force synchronisation.",
+      "symptom_match": "\"Microsoft 365 feature is not working\", \"OneDrive sync is failing\".",
+      "duplication": "Related to Batch B-5 #20 (Google Drive sync) \u2013 keep distinct for platform-specific steps.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-pop-ups-required-by-a-business-application": {
+      "number": 5,
+      "title": "Troubleshoot pop-ups required by a business application",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Confirm the business application's approved URL/domain and whether the block comes from browser settings, an extension or managed browser/GPO policy.",
+        "Allow pop-ups only for the minimum approved site scope required by the application.",
+        "Use private/incognito testing only to isolate extensions/session state; do not bypass a corporate security policy without approval."
+      ],
+      "rollback": "Remove the site exception or restore the previous approved browser policy if the change causes unwanted pop-ups or weakens security.",
+      "symptom_match": "\"Application is not accessible\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-powerpoint-presentation-display": {
+      "number": 6,
+      "title": "Troubleshoot PowerPoint presentation display",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Confirm the external display/projector is detected and works outside PowerPoint.",
+        "Check Duplicate/Extend mode, Presenter View, slide-show monitor selection and supported resolution/scaling.",
+        "Test the presentation on the primary display or another approved output path to isolate PowerPoint from OS/display hardware."
+      ],
+      "rollback": "Record display/PowerPoint settings before change. Restore the previous approved display/graphics configuration if a confirmed change caused regression; use supported driver rollback only where available.",
+      "symptom_match": "\"Display is not working\", \"Application is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-printing-from-macos": {
+      "number": 7,
+      "title": "Troubleshoot printing from macOS",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Confirm the printer is reachable/available and can be used by another authorised client before treating the issue as macOS-specific.",
+        "Check the macOS printer queue, selected driver/PPD or AirPrint path and test from another application.",
+        "Check print-server/printer logs and network/DNS reachability when the queue is network-based."
+      ],
+      "rollback": "Record the current queue/driver configuration. Restore the previous approved printer/driver configuration if a confirmed change caused regression; use vendor-supported packages rather than arbitrary driver downgrades.",
+      "symptom_match": "\"Printing or scanning is not working\", \"Apple macOS device is not working correctly\".",
+      "duplication": "Unique. Related to \"application printing\" (#3 B-5) but macOS-specific.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-remote-desktop-connection-failure": {
+      "number": 8,
+      "title": "Troubleshoot Remote Desktop connection failure",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1 (for servers).",
+      "prechecks": [
+        "Determine whether the target is a server or workstation and confirm the approved management path and business impact.",
+        "Test DNS/network reachability and TCP 3389 (or the organisation's configured RDP path); ICMP success is not required.",
+        "Check Remote Desktop service/configuration, firewall policy and user/group entitlement. For servers/VMs, ensure an approved console or out-of-band management path is available before remote policy changes."
+      ],
+      "rollback": "Capture firewall/GPO/RDP configuration before change. If an authorised change causes lockout, restore the previous configuration through the approved console/out-of-band/hypervisor management path; do not describe that path as a security bypass.",
+      "symptom_match": "\"Cannot sign in\", \"Windows device is not working correctly\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-scan-to-email": {
+      "number": 9,
+      "title": "Troubleshoot scan to email",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Confirm the MFP has network/DNS reachability to the approved SMTP relay or mail service.",
+        "Check SMTP relay/connector authentication, TLS/certificate requirements and exact delivery error/log.",
+        "Check message/attachment size and recipient/mail-flow restrictions relevant to the failed scan."
+      ],
+      "rollback": "Export or record the MFP SMTP/relay settings before change. Restore the previous approved SMTP configuration if an authorised change causes regression.",
+      "symptom_match": "\"Scanning is not working\", \"Email is not being delivered\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-secure-or-follow-me-printing": {
+      "number": 10,
+      "title": "Troubleshoot secure or follow-me printing",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check the print-management platform/release service health and whether the user's held job exists.",
+        "Verify badge/PIN/identity mapping and release-station/printer connectivity.",
+        "Check print-server queue, management-agent/client and recent policy/software changes before deleting jobs."
+      ],
+      "rollback": "Capture print-management policy/version and queue configuration before change. Restore the previous approved policy/software/configuration if a confirmed update causes regression; preserve required job evidence.",
+      "symptom_match": "\"Printing or scanning is not working\".",
+      "duplication": "Related to \"print server outage\" but specific to secure printing. Keep distinct.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-server-high-cpu": {
+      "number": 11,
+      "title": "Troubleshoot server high CPU",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "This compatibility page is a duplicate of the canonical high-CPU runbook and must route to it.",
+        "Preserve the historical server-specific URL while the canonical procedure gains an explicit server/service scope branch."
+      ],
+      "rollback": "No independent remediation is permitted after deprecation; rollback and verification belong to the canonical high-CPU utilisation procedure.",
+      "symptom_match": "Same as B-5 #22.",
+      "duplication": "**CRITICAL DUPLICATE.**\u00a0This is\u00a0**exactly**\u00a0the same as Batch B-5 #22. Merge immediately.",
+      "final_verdict": "Blocked until merged."
+    },
+    "troubleshoot-server-high-memory": {
+      "number": 12,
+      "title": "Troubleshoot server high memory",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "This compatibility page is a duplicate of the canonical high-memory runbook and must route to it.",
+        "Preserve the historical server-specific URL while the canonical procedure gains an explicit server/service scope branch."
+      ],
+      "rollback": "No independent remediation is permitted after deprecation; rollback and verification belong to the canonical high-memory utilisation procedure.",
+      "symptom_match": "Same as B-5 #24.",
+      "duplication": "**CRITICAL DUPLICATE.**\u00a0This is\u00a0**exactly**\u00a0the same as Batch B-5 #24. Merge immediately.",
+      "final_verdict": "Blocked until merged."
+    },
+    "troubleshoot-sharepoint-access": {
+      "number": 13,
+      "title": "Troubleshoot SharePoint access",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Check Microsoft 365/SharePoint service health and whether the issue affects one user, one site/library or multiple users.",
+        "Verify site/group/permission state and whether the site is locked/read-only or access is restricted by Conditional Access/sharing policy.",
+        "Test SharePoint web access from a clean browser session before changing permissions."
+      ],
+      "rollback": "Capture existing permissions/site policy before change. Restore the previous approved permission/policy if an authorised change broadens or removes access incorrectly.",
+      "symptom_match": "\"Access is denied or missing\", \"SharePoint is not accessible\".",
+      "duplication": "Unique. Related to Batch B-5 #14 (Directory sync) but specific to SharePoint.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-sharepoint-document-synchronisation": {
+      "number": 14,
+      "title": "Troubleshoot SharePoint document synchronisation",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "This compatibility page is being consolidated into the OneDrive synchronisation runbook because SharePoint library sync uses the OneDrive sync client.",
+        "Preserve the historical SharePoint-specific URL while the canonical OneDrive procedure gains a SharePoint-library branch."
+      ],
+      "rollback": "No independent sync reset is permitted after deprecation; source-of-truth, rollback and verification belong to the canonical OneDrive synchronisation procedure.",
+      "symptom_match": "\"OneDrive sync is failing\", \"SharePoint is not accessible\".",
+      "duplication": "**Duplicate of #4 (OneDrive synchronisation).**\u00a0They are the same underlying sync engine. Merge these two.",
+      "final_verdict": "Blocked until merged."
+    },
+    "troubleshoot-sharepoint-external-sharing": {
+      "number": 15,
+      "title": "Troubleshoot SharePoint external sharing",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: verify the external-sharing request, data owner/sponsor and required approval before creating or expanding external access.",
+        "Check tenant/site external-sharing policy, sensitivity/retention controls and the intended recipient identity/domain.",
+        "Check existing link type, expiration, access scope and whether a more restrictive sharing method can satisfy the business need."
+      ],
+      "rollback": "If a share/link was created incorrectly, revoke the specific link/access immediately through the approved SharePoint administration path, preserve the audit trail and assess whether exposure occurred.",
+      "symptom_match": "\"A security or compliance concern is reported\", \"Access is denied or missing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-single-sign-on-failure": {
+      "number": 16,
+      "title": "Troubleshoot single sign-on failure",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check Microsoft Entra/identity-provider and application/service-provider health before changing SSO configuration.",
+        "Review sign-in/federation logs for the exact SAML/OIDC/OAuth error, request/correlation ID and affected scope.",
+        "Check federation metadata, redirect/ACS URI, issuer/entity ID, certificate/secret expiry and clock/time validity as appropriate."
+      ],
+      "rollback": "Export/capture the working SSO/federation configuration before change. If an authorised metadata/certificate/secret configuration change causes failure, restore the previous approved configuration through the identity/application administration path.",
+      "symptom_match": "\"Cannot sign in\", \"Application is not accessible\".",
+      "duplication": "Related to Batch B-4 #9 (SAML error) \u2013 this is the broader SSO parent.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-ssh-access": {
+      "number": 17,
+      "title": "Troubleshoot SSH access",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Test DNS/network reachability and TCP 22 (or the configured SSH port); ICMP success is not required.",
+        "Check sshd/service state and authentication logs using an approved local, hypervisor or out-of-band console when remote SSH is unavailable.",
+        "Verify the account/key, home/.ssh ownership and permissions, and relevant PAM/SSSD/identity-provider state before editing sshd_config."
+      ],
+      "rollback": "Back up SSH/authentication configuration before change and maintain an approved console/out-of-band recovery path. Validate configuration syntax before reload/restart; restore the previous approved configuration if access worsens.",
+      "symptom_match": "\"Cannot sign in\", \"Linux device is not working correctly\".",
+      "duplication": "Related to Batch B-5 #27 (Linux sign-in) \u2013 this is the SSH-specific branch of that.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-usb-storage-not-detected": {
+      "number": 18,
+      "title": "Troubleshoot USB storage not detected",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Check Device Manager/Disk Management and test the device/port on a known-good authorised system where policy permits.",
+        "Check endpoint security, DLP and Group Policy/MDM for intentional USB-storage restrictions before treating the block as a fault.",
+        "Check for hardware/media failure and stop if the device may contain required evidence or damaged business data."
+      ],
+      "rollback": "Do not revert a security policy merely to enable USB storage. If an authorised policy change caused unintended blocking, restore the previous approved policy. Restore driver/configuration only through supported endpoint-management controls.",
+      "symptom_match": "\"USB device is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-vdi-multi-monitor-support": {
+      "number": 19,
+      "title": "Troubleshoot VDI multi-monitor support",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Confirm the physical monitors work locally using the canonical external-monitor procedure before treating this as VDI-specific.",
+        "Check Citrix/VMware/AVD client multi-monitor capability, client version and relevant session/policy limits.",
+        "Compare single-monitor and multi-monitor sessions and check resolution/scaling/GPU/display policy constraints."
+      ],
+      "rollback": "Record client and VDI display policy before change. Restore the previous approved client/policy if an authorised update causes regression; keep the generic physical-monitor remediation separate.",
+      "symptom_match": "\"Display is not working\", \"VDI session is not working\".",
+      "duplication": "**Related to Batch B-4 #27-29 & B-5 #30 (External Monitors).**\u00a0This is the VDI-specific branch. Keep distinct but cross-reference to the generic external monitor parent.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-vdi-performance": {
+      "number": 20,
+      "title": "Troubleshoot VDI performance",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine whether performance affects one session, one host, one pool/site or all users.",
+        "Check host CPU, memory, storage I/O, session density and broker/VDA/agent health.",
+        "Check client-to-gateway/host latency, packet loss and bandwidth plus recent image/policy/host changes."
+      ],
+      "rollback": "Capture host/image/policy state before change. If a confirmed patch/image/configuration change causes degradation, restore the previous approved image/policy or drain/migrate sessions to a known-good host under change control.",
+      "symptom_match": "\"VDI session is not working\", \"Application is slow or unresponsive\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-vdi-usb-redirection": {
+      "number": 21,
+      "title": "Troubleshoot VDI USB redirection",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Confirm the USB device works locally and identify its device class.",
+        "Check Citrix/VMware/AVD USB redirection policy, client/agent version and whether the device class is intentionally restricted.",
+        "Distinguish generic USB redirection from optimised smart-card, security-token, scanner or storage redirection and follow the appropriate security policy."
+      ],
+      "rollback": "Capture the existing VDI redirection policy/client state. Restore the previous approved policy/client if a confirmed change causes regression; do not weaken device-control policy to make an unsupported USB device redirect.",
+      "symptom_match": "\"VDI session is not working\", \"USB device is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-voicemail-access": {
+      "number": 22,
+      "title": "Troubleshoot voicemail access",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check the applicable voice/Teams/PBX service health and the user's voicemail entitlement/licensing.",
+        "Verify voicemail/call-routing policy, mailbox/voicemail provisioning and whether the issue is access, greeting, deposit or notification.",
+        "Use a controlled test message/call and review provider/admin diagnostics where available."
+      ],
+      "rollback": "Capture the current voicemail/call policy before change. Restore the previous approved policy/provisioning state if an authorised change causes regression.",
+      "symptom_match": "\"Voice/Telephony is degraded\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-windows-audio-output": {
+      "number": 23,
+      "title": "Troubleshoot Windows audio output",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Check selected playback device, volume/mute and Windows audio service/device state.",
+        "Test audio in another application and with a known-good output device to separate application, driver and hardware scope.",
+        "Check Device Manager and recent driver/update changes."
+      ],
+      "rollback": "Record the current driver/device configuration. Restore the previous approved driver/configuration if a confirmed supported driver change caused regression.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Audio or microphone is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-wsl": {
+      "number": 24,
+      "title": "Troubleshoot WSL",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check `wsl --status`, installed distributions and Windows virtualization/WSL feature state.",
+        "Check disk space, WSL service/runtime errors and distribution health before reset/reinstall.",
+        "Export or otherwise preserve the affected distribution/data before unregistering or reinstalling it."
+      ],
+      "rollback": "Do not unregister/delete a distribution before an export/backup exists. If an approved WSL/runtime update causes regression, use the supported Windows/WSL recovery path or import the preserved distribution into a known-good runtime.",
+      "symptom_match": "\"Developer environment is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "unlock-a-user-account": {
+      "number": 25,
+      "title": "Unlock a user account",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "This standard access-recovery page must route to the canonical user-account access-recovery procedure.",
+        "Verify identity before any unlock/password action and distinguish a one-time lockout from repeated lockouts, brute force or suspected compromise."
+      ],
+      "rollback": "There is no meaningful 'undo' for an unlock. If the account immediately relocks, stop repeated unlocking and trace the lockout source. Suspected malicious lockout activity must route to Security Operations.",
+      "symptom_match": "\"Cannot sign in\", \"Access is denied or missing\".",
+      "duplication": "Related to Batch B-1 #9 (Password Reset) and B-1 #21 (Account Lockout). Merge these into a unified \"User Account Access Recovery\" procedure.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "validate-a-backup-restore-request": {
+      "number": 26,
+      "title": "Validate a backup restore request",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: verify the restore request, data owner/requester, approval, exact source data, requested restore point and retention/legal constraints before any restore.",
+        "Validate that the backup/restore point is catalogued and usable; perform an isolated test/verification where policy or criticality requires it.",
+        "Prefer an alternate restore destination or protected recovery location so current production data is not overwritten until the restored data is validated."
+      ],
+      "rollback": "A destructive overwrite may be irreversible. Preserve/snapshot the current destination where supported, stop immediately if the restore targets the wrong data/location, and restore/cut back to the preserved known-good state under the approved recovery plan.",
+      "symptom_match": "\"Business data is missing, corrupted or requires recovery\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "validate-accessories-issued-with-a-device": {
+      "number": 27,
+      "title": "Validate accessories issued with a device",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Check the authoritative asset record for expected accessories and ownership/custody.",
+        "Verify the physical accessories and identifiers where applicable, recording discrepancies without fabricating missing evidence.",
+        "Route missing/damaged accessories to the organisation's asset/loss process rather than treating inventory validation as an incident."
+      ],
+      "rollback": "Inventory validation itself has no technical rollback. Correct an erroneous asset-record update through the approved asset-management audit trail rather than deleting history.",
+      "symptom_match": "Indirect \u2013 no direct incident symptom.",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "verify-data-after-a-migration": {
+      "number": 28,
+      "title": "Verify data after a migration",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Compare source and destination object/file counts, aggregate sizes and migration-tool success/error reports.",
+        "Validate representative or risk-based samples using hashes/checksums where practical, plus open/read tests for critical file types.",
+        "Verify permissions/ownership, timestamps/metadata and application-specific integrity before final cutover."
+      ],
+      "rollback": "If verification fails, halt/fail back the cutover and keep the source environment/data protected and authoritative until discrepancies are reconciled. Do not decommission or overwrite the source until acceptance criteria pass.",
+      "symptom_match": "\"Business data is missing, corrupted or requires recovery\" (indirect).",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    }
+  },
+  "merge_policy": {
+    "troubleshoot-no-dial-tone-on-a-desk-phone": {
+      "canonical": "troubleshoot-a-teams-phone-device",
+      "action": "deprecate_and_redirect"
+    },
+    "troubleshoot-server-high-cpu": {
+      "canonical": "troubleshoot-high-cpu-utilisation",
+      "action": "deprecate_and_redirect"
+    },
+    "troubleshoot-server-high-memory": {
+      "canonical": "troubleshoot-high-memory-utilisation",
+      "action": "deprecate_and_redirect"
+    },
+    "troubleshoot-sharepoint-document-synchronisation": {
+      "canonical": "troubleshoot-onedrive-synchronisation",
+      "action": "deprecate_and_redirect"
+    },
+    "unlock-a-user-account": {
+      "canonical": "password-reset",
+      "action": "deprecate_and_redirect"
+    }
+  },
+  "relationship_policy": {
+    "user_account_access_recovery": {
+      "canonical": "password-reset",
+      "lockout_diagnostic": "trace-an-active-directory-account-lockout-source"
+    },
+    "sso": {
+      "parent": "troubleshoot-single-sign-on-failure",
+      "saml_child": "troubleshoot-a-saml-application-error"
+    },
+    "vdi_display": {
+      "generic_parent": "troubleshoot-an-external-monitor",
+      "vdi_child": "troubleshoot-vdi-multi-monitor-support"
+    }
+  }
+}

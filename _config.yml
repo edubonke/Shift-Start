@@ -1,0 +1,75 @@
+title: ShiftStart IT Support KB
+description: Fast, trusted troubleshooting guidance for internal IT technicians.
+url: ""
+baseurl: ""
+markdown: kramdown
+highlighter: rouge
+strict_front_matter: true
+
+collections:
+  procedures:
+    output: true
+  symptoms:
+    output: true
+  causes:
+    output: true
+  commands:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: procedures
+    values:
+      layout: article
+  - scope:
+      path: ""
+      type: symptoms
+    values:
+      layout: article
+  - scope:
+      path: ""
+      type: causes
+    values:
+      layout: article
+  - scope:
+      path: ""
+      type: commands
+    values:
+      layout: article
+
+exclude:
+  - node_modules
+  - src
+  - public
+  - .eleventy.js
+  - vendor
+  - scripts
+  - templates
+  - api
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - MIGRATION.md
+  - tailwind.config.js
+  - netlify.toml
+  - wrangler.toml
+  - _assets
+  # Preserve the historical Eleventy source in the new repository, but never
+  # include its files or its original archive in the public Pages artifact.
+  - shiftstart-it-support-kb-main
+  - shiftstart-it-support-kb-main.zip
+  - docs
+  - verification
+  - schemas
+
+keep_files:
+  - assets/css/site.css
+  - assets/data
+
+liquid:
+  error_mode: strict
+  strict_filters: true
+  strict_variables: false

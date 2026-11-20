@@ -1,0 +1,12 @@
+---
+layout: default
+title: Symptom wizard
+description: Select multiple observed symptoms and rank the most relevant IT support procedures.
+permalink: /wizard/
+page_kind: wizard
+---
+<section class="shell rd-tool-page">
+  <nav class="rd-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Symptom wizard</span></nav>
+  <header class="rd-tool-heading"><div><p class="rd-eyebrow">Guided triage</p><h1>Symptom wizard</h1><p>Select every symptom that applies. ShiftStart ranks procedures by evidence match and gives verified guidance priority.</p></div><aside><strong>Use this when</strong><p>The report is vague, symptoms overlap, or you are not yet sure which domain owns the issue.</p></aside></header>
+  <div id="wizard-root" class="card rd-wizard-shell" data-source="{{ '/assets/data/wizard-data.json' | relative_url }}"><p>Loading all symptoms and procedures…</p></div>
+</section>

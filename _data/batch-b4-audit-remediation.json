@@ -1,0 +1,519 @@
+{
+  "schema_version": 1,
+  "batch": "B-4",
+  "audit_date": "2026-08-13",
+  "source": "Pasted markdown(5).md",
+  "corrected_summary": {
+    "keep_p1": 13,
+    "demote_p2": 15,
+    "demote_p3": 2,
+    "promote_p0": 0,
+    "explicit_blocked_individual_verdicts": 7,
+    "duplicate_relationship_groups": 3
+  },
+  "procedures": {
+    "troubleshoot-a-java-based-business-application": {
+      "number": 1,
+      "title": "Troubleshoot a Java-based business application",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine scope by testing more than one approved client before treating the fault as application-server-wide.",
+        "Check the application/server logs for memory, connection-pool, dependency, class-loading or startup errors relevant to the incident window.",
+        "Check application server, database/dependency health and recent deployment/configuration changes before restarting components."
+      ],
+      "rollback": "Record/export the current deployment and configuration. If a confirmed recent deployment/configuration caused the incident, use the application's approved deployment manager/change process to restore the previous known-good release/configuration and verify dependencies.",
+      "symptom_match": "\"Application is not accessible\", \"Business application is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-a-label-printer": {
+      "number": 2,
+      "title": "Troubleshoot a label printer",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check the printer's display for errors (out of labels, media mismatch).",
+        "Verify the printer's network connectivity (ping the IP).",
+        "Check the printer driver and ZPL/PCL command configuration."
+      ],
+      "rollback": "If a driver update broke the printer, roll back to the previous driver version via Print Management.",
+      "symptom_match": "\"Printing or scanning is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-laptop-display-with-no-image": {
+      "number": 3,
+      "title": "Troubleshoot a laptop display with no image",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Connect an external monitor to isolate internal display failure vs. GPU/video driver issue.",
+        "Check the display brightness and function keys (Fn+Fx).",
+        "Boot into BIOS/UEFI to confirm hardware POST completes."
+      ],
+      "rollback": "If a driver update broke the display, roll back the display driver via Device Manager. If the panel is physically damaged, initiate a hardware replacement ticket.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Display is not working\".",
+      "duplication": "Related to #28 and #29 (external monitors) \u2013 but this is the internal display. Keep distinct.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-local-development-port-conflict": {
+      "number": 4,
+      "title": "Troubleshoot a local development port conflict",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Run\u00a0`netstat -ano`\u00a0to identify the process using the conflicted port.",
+        "Check if the conflicting process can be stopped or reconfigured.",
+        "Verify the developer has administrative rights to stop the offending service."
+      ],
+      "rollback": "If you stop a critical process to free the port, restart it immediately after the conflicting application is re-configured.",
+      "symptom_match": "\"Application is not accessible\", \"Developer environment is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-mobile-work-profile": {
+      "number": 5,
+      "title": "Troubleshoot a mobile work profile",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Verify the device is enrolled in Intune/MDM and the work profile is provisioned.",
+        "Check the user's compliance status and app protection policies.",
+        "Confirm the work profile apps (Outlook, Teams) are up to date."
+      ],
+      "rollback": "If the work profile becomes corrupted, remove and re-provision the profile via the Company Portal.",
+      "symptom_match": "\"Mobile device is not working\", \"Corporate access on a mobile device is not working\".",
+      "duplication": "Related to Batch B-2 #10 (mobile Outlook sync) and Batch B-3 #1 (iOS email config). Keep distinct for work profile-specific steps.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-pdf-that-will-not-open": {
+      "number": 6,
+      "title": "Troubleshoot a PDF that will not open",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Try opening the PDF in a different reader (Edge, Chrome, Foxit) to isolate the application.",
+        "Check if the PDF is corrupted \u2013 attempt to open a known good PDF.",
+        "Verify the PDF reader is up to date."
+      ],
+      "rollback": "If a PDF reader update broke compatibility, roll back to the previous version via the application's installer or reinstall an older version.",
+      "symptom_match": "\"File will not open\", \"Application is not working\".",
+      "duplication": "Related to Batch B-3 #2 (broken file association) \u2013 but this is PDF-specific. Consider merging into a generic \"File won't open\" parent.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-a-print-server-outage": {
+      "number": 7,
+      "title": "Troubleshoot a print server outage",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check print-server system/spool volume free space before clearing queues or restarting the Print Spooler.",
+        "Confirm whether the server itself is unreachable versus the Spooler, one queue, driver, port or downstream printer.",
+        "Check PrintService/System logs, Spooler dependencies and network/RPC reachability; preserve queued-job evidence before destructive cleanup."
+      ],
+      "rollback": "Export/capture printer queues, ports and drivers before changes. Restore the previous approved print configuration if service worsens; do not mass-delete queued jobs without preserving required evidence and owner approval.",
+      "symptom_match": "\"A print server outage\", \"Printing or scanning is not working\".",
+      "duplication": "**Critical duplication detected.**\u00a0This is a duplicate of Batch A, #17 (\"Troubleshoot a print server outage\") \u2013 that procedure was already audited and demoted to P1 in Batch A. Merge these two, keeping the Batch A version as the definitive parent.",
+      "final_verdict": "Blocked until merged with Batch A #17."
+    },
+    "troubleshoot-a-room-mailbox": {
+      "number": 8,
+      "title": "Troubleshoot a room mailbox",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check the room mailbox's calendar processing settings (auto-accept/decline).",
+        "Verify the room resource is not double-booked or overbooked.",
+        "Confirm the room's delegate/owner permissions."
+      ],
+      "rollback": "If a calendar processing rule change broke booking, revert the rule to the previous state via Exchange Admin Center.",
+      "symptom_match": "\"Meeting room system is not working\", \"Exchange/M365 feature is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-saml-application-error": {
+      "number": 9,
+      "title": "Troubleshoot a SAML application error",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check the identity-provider and application-provider service health before changing federation configuration.",
+        "Review sign-in/SAML diagnostic evidence for assertion, audience, recipient/ACS, issuer/entity-ID, clock-skew or signature/certificate errors.",
+        "Compare the Service Provider configuration with the authoritative IdP metadata, including certificate validity and endpoints."
+      ],
+      "rollback": "Export/capture the working federation configuration before change. If a new federation configuration caused failure, restore the previous approved metadata/certificate/endpoints through the provider's supported administration process.",
+      "symptom_match": "\"Application is not accessible\", \"Cannot sign in\", \"SAML authentication is failing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-a-scanner-not-detected": {
+      "number": 10,
+      "title": "Troubleshoot a scanner not detected",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check the scanner's network connectivity (ping the IP) or USB connection.",
+        "Verify the scanner driver is installed and the TWAIN/WIA service is running.",
+        "Test the scanner from another computer to isolate the device vs. the workstation."
+      ],
+      "rollback": "If a driver update broke scanning, roll back the driver via Device Manager.",
+      "symptom_match": "\"Scanning is not working\", \"Printing or scanning is not working\".",
+      "duplication": "Related to Batch B-2 #19 (scan to network folder) \u2013 that is the workflow, this is hardware detection. Keep distinct.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-service-account": {
+      "number": 11,
+      "title": "Troubleshoot a service account",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check whether the service identity is disabled, expired, locked or affected by password/secret/certificate expiry.",
+        "Check exact service/application authentication logs and all dependent services/tasks that use the identity before rotating credentials.",
+        "Review group/delegated permissions and confirm least privilege; identify whether the identity is a managed service account, vault-managed secret or traditional account."
+      ],
+      "rollback": "Do not roll back to an old secret merely because it is known. If credential rotation causes failure, restore service using the organisation's approved secret-management/rotation process, update all dependent consumers consistently, and revoke superseded credentials only after verification.",
+      "symptom_match": "\"Access is denied or missing\", \"A server or infrastructure service is degraded\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-a-shared-mailbox": {
+      "number": 12,
+      "title": "Troubleshoot a shared mailbox",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Verify the user has the correct permissions (Full Access, Send As, Send on Behalf).",
+        "Check if the shared mailbox is visible in Outlook or Outlook on the web.",
+        "Confirm the shared mailbox is licensed correctly (requires a license if it has >50GB data)."
+      ],
+      "rollback": "If a permission change breaks access, revert the permissions immediately via Exchange Admin Center.",
+      "symptom_match": "\"Access is denied or missing\", \"Exchange/M365 feature is not working\".",
+      "duplication": "Related to Batch B-3 #6 (Grant shared mailbox access) \u2013 #6 is provisioning, #12 is troubleshooting. Keep distinct but cross-reference.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-stopped-windows-server-service": {
+      "number": 13,
+      "title": "Troubleshoot a stopped Windows Server service",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Review System/Application/service-specific event logs for the stop/failure reason before restarting the service.",
+        "Check service dependencies and dependency health.",
+        "Check the service identity/credential, required permissions, resource capacity and recent configuration/update changes."
+      ],
+      "rollback": "Capture the service configuration and recent change record. If a confirmed configuration/update caused the stop, revert only that approved change or restore the prior known-good service configuration; do not repeatedly restart a crashing service without diagnosis.",
+      "symptom_match": "\"A server or infrastructure service is degraded\", \"A Windows Server is unreachable\" (indirect).",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-a-usb-peripheral": {
+      "number": 14,
+      "title": "Troubleshoot a USB peripheral",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check Device Manager for driver errors (yellow exclamation mark).",
+        "Try the USB device on another computer to isolate device vs. workstation.",
+        "Test different USB ports and check USB root hub power."
+      ],
+      "rollback": "If a driver update broke the peripheral, roll back the driver via Device Manager. If a Windows Update caused it, uninstall the specific update.",
+      "symptom_match": "\"USB device is not working\", \"Windows device is not working correctly\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-vdi-profile-issue": {
+      "number": 15,
+      "title": "Troubleshoot a VDI profile issue",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check broker/session health and profile-management logs for the exact user/session.",
+        "Check profile-store reachability, quota/disk capacity, locks and whether the issue follows the user across hosts.",
+        "Test an approved alternate host/pool to separate host, profile and user scope."
+      ],
+      "rollback": "Preserve the existing user profile before any reset. If a profile policy/configuration change caused regression, restore the previous policy; if a profile rebuild is required, retain the original until user data and settings are verified.",
+      "symptom_match": "\"Cannot sign in\", \"VDI session is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-a-webcam-on-windows": {
+      "number": 16,
+      "title": "Troubleshoot a webcam on Windows",
+      "priority": "P3",
+      "severity": "low",
+      "classification_verdict": "Demote to P3.",
+      "prechecks": [
+        "Test the camera in the Windows Camera app to separate OS/hardware failure from Teams/application failure.",
+        "Check Windows camera privacy permissions and Device Manager status.",
+        "Check whether another process has exclusive camera use and test a known-good USB/internal camera path where applicable."
+      ],
+      "rollback": "Record the existing driver/device settings. Restore the previous approved driver/configuration if an authorised driver change causes regression.",
+      "symptom_match": "\"Teams camera is not working\", \"Video/Camera is not working\".",
+      "duplication": "Duplicate of Batch B-2 #23 (\"Troubleshoot Teams camera\"). Merge these two \u2013 #16 is the generic Windows webcam procedure, #23 is the Teams-specific branch. The Teams procedure should call this one for hardware diagnostics.",
+      "final_verdict": "Needs rewrite and immediate P3 reclassification."
+    },
+    "troubleshoot-a-windows-certificate-service-request": {
+      "number": 17,
+      "title": "Troubleshoot a Windows certificate service request",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check Certificate Authority and enrollment-service health before changing the requestor/client.",
+        "Verify certificate template publication, enrollment permissions and intended EKU/subject requirements.",
+        "Confirm time synchronization, trust chain and whether auto-enrollment/NDES/SCEP/web enrollment dependencies are healthy where applicable."
+      ],
+      "rollback": "Preserve the prior valid certificate until the replacement is verified where possible. If an incorrectly issued certificate causes failure, revoke it through the CA according to policy and reissue a valid certificate; do not export/reuse private keys as a rollback shortcut.",
+      "symptom_match": "\"Cannot sign in\", \"A security or compliance concern is reported\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-a-windows-device-that-will-not-power-on": {
+      "number": 18,
+      "title": "Troubleshoot a Windows device that will not power on",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check known-good power adapter/cable/dock and battery/charging indicators before opening hardware.",
+        "Disconnect nonessential peripherals and perform the vendor-approved power reset.",
+        "Check POST/diagnostic LED/beep codes and stop for battery swelling, liquid, overheating, smoke or electrical damage."
+      ],
+      "rollback": "Hardware power diagnosis generally has no software rollback. If a firmware/BIOS update is confirmed causal, use only the vendor-supported recovery mechanism; otherwise route to authorised hardware repair/replacement.",
+      "symptom_match": "\"Windows device is not working correctly\", \"Device will not power on\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-a-windows-update-failure": {
+      "number": 19,
+      "title": "Troubleshoot a Windows Update failure",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Check free disk space and the exact Windows Update error code before clearing update components.",
+        "Confirm the device can reach the organisation's configured update source (Windows Update for Business/WSUS/management service).",
+        "Review Windows Update/Event logs and update history for the failed KB/build and recent servicing-stack/reboot state."
+      ],
+      "rollback": "If an installed update is confirmed to cause regression, use the organisation's supported uninstall/known-issue rollback or recovery process. Preserve user data and record the KB/build; do not remove security updates without change/security approval.",
+      "symptom_match": "\"Windows Update is failing\", \"Windows device is not working correctly\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-adobe-acrobat-sign-in": {
+      "number": 20,
+      "title": "Troubleshoot Adobe Acrobat sign-in",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check Adobe service/admin-console health and the user's licence/entitlement.",
+        "Check the configured identity provider/service health before clearing local credentials.",
+        "Compare browser/web authentication with the Acrobat client and inspect the exact federation/client error before cache reset."
+      ],
+      "rollback": "Capture federation/client configuration before change. If an approved SSO/federation configuration change causes regression, restore the previous provider configuration; do not restore expired or compromised credentials.",
+      "symptom_match": "\"Cannot sign in\", \"Application is not accessible\".",
+      "duplication": "Related to #9 (SAML application error) \u2013 this is the Acrobat-specific branch.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-an-application-that-will-not-install": {
+      "number": 21,
+      "title": "Troubleshoot an application that will not install",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2 (default).",
+      "prechecks": [
+        "Check disk space and system requirements.",
+        "Verify the user has administrative rights to install.",
+        "Check for conflicting software (old versions, antivirus blocking)."
+      ],
+      "rollback": "If a previously working app was broken by the installation, uninstall the new app via Control Panel and restore the previous version from backup or endpoint management.",
+      "symptom_match": "\"Application is not accessible\", \"Software install is failing\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-an-application-timeout": {
+      "number": 22,
+      "title": "Troubleshoot an application timeout",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine single-user versus multi-user scope from multiple clients/locations.",
+        "Check application and database/server resource health, dependency latency and connection/thread-pool exhaustion.",
+        "Measure network latency/loss and correlate with the timeout timestamps before changing QoS or application settings."
+      ],
+      "rollback": "Capture the deployment/configuration/network policy before change. Revert the confirmed causal application/configuration/QoS change through the approved change process if timeouts worsen.",
+      "symptom_match": "\"Application is not accessible\", \"Application is slow or unresponsive\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-an-aws-ec2-instance-that-is-unreachable": {
+      "number": 23,
+      "title": "Troubleshoot an AWS EC2 instance that is unreachable",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check AWS Health / service events for the affected account/region before changing the instance or network.",
+        "Check instance state plus EC2 system/instance status checks and recent events.",
+        "Check security groups, subnet route tables, NACLs and the intended management path before changing guest networking."
+      ],
+      "rollback": "Record security-group, route and NACL state before change. If a network-policy change causes lockout, restore the prior approved cloud-network configuration directly through AWS/IaC/control-plane access. Use Systems Manager only when it is already configured and reachable; do not assume it bypasses network controls.",
+      "symptom_match": "\"A cloud or virtual resource is degraded\", \"A Windows Server that is unreachable\" (if Windows).",
+      "duplication": "Unique. Keep distinct from Azure VM (#24) for provider-specific steps.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-an-azure-virtual-machine-that-is-unreachable": {
+      "number": 24,
+      "title": "Troubleshoot an Azure virtual machine that is unreachable",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Step 0: check Azure Service Health/resource health for the affected region/subscription before changing the VM or network.",
+        "Check VM power/provisioning state, Resource Health and Boot Diagnostics.",
+        "Check NSG, route, firewall and NIC configuration plus the intended management path before guest-OS changes."
+      ],
+      "rollback": "Export/capture NSG, route and VM/network configuration before change. If an Azure network-policy change causes lockout, restore the previous approved configuration through Azure control-plane/IaC access; use Serial Console/Boot Diagnostics for guest-OS diagnosis, not as a substitute for restoring an incorrect NSG.",
+      "symptom_match": "\"A cloud or virtual resource is degraded\", \"A Windows Server that is unreachable\" (if Windows).",
+      "duplication": "Unique. Keep distinct from AWS EC2 (#23) for provider-specific steps.",
+      "final_verdict": "Blocked."
+    },
+    "troubleshoot-an-electronic-signature-workflow": {
+      "number": 25,
+      "title": "Troubleshoot an electronic-signature workflow",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Check the e-signature provider's official service health before modifying templates/workflows.",
+        "Verify user entitlement/role, envelope/document state and recipient identity/status.",
+        "Review the workflow/audit trail for the exact failed step, timestamp and provider error before retrying or voiding."
+      ],
+      "rollback": "Version/capture workflow/template configuration before changes. Restore the previous approved template/workflow if a change caused failure. Void an erroneously sent envelope only under the authorised business/legal process; do not delete its audit trail.",
+      "symptom_match": "\"Application is not accessible\", \"Business workflow is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-an-erp-client": {
+      "number": 26,
+      "title": "Troubleshoot an ERP client",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine whether the problem is client-specific or affects multiple users/sites.",
+        "Check ERP application/server/database dependency health and relevant connection/session limits.",
+        "Verify user role/authorisation and recent client/server changes before reinstalling the client."
+      ],
+      "rollback": "Record the current supported ERP client/configuration. If a confirmed client patch/configuration change caused failure, deploy the previous approved version/configuration through the enterprise software/ERP management process.",
+      "symptom_match": "\"Application is not accessible\", \"Business application is not working\".",
+      "duplication": "Unique.",
+      "final_verdict": "Needs rewrite."
+    },
+    "troubleshoot-an-external-display-on-macos": {
+      "number": 27,
+      "title": "Troubleshoot an external display on macOS",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check monitor power/input selection, cable/adapter/dock and physical connection using a known-good compatible path.",
+        "Determine whether the fault follows the monitor/cable/dock or the endpoint, and whether it occurs before sign-in/OS where testable.",
+        "Use the platform branch: Windows display/driver settings or macOS Displays/system information, without assuming an OS update rollback is available."
+      ],
+      "rollback": "Record display/driver/dock configuration before changes. Restore the previous approved driver/display configuration if a change causes regression; replace faulty cable/adapter/dock/monitor through hardware support rather than attempting unsupported OS rollback.",
+      "symptom_match": "\"Apple macOS device is not working correctly\", \"Display is not working\".",
+      "duplication": "**Duplicate of #28 and #29 (external monitor issues).**\u00a0Merge these three into one definitive \"Troubleshoot an external monitor\" procedure.",
+      "final_verdict": "Needs rewrite and P2 reclassification."
+    },
+    "troubleshoot-an-external-monitor": {
+      "number": 28,
+      "title": "Troubleshoot an external monitor",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check monitor power/input selection, cable/adapter/dock and physical connection using a known-good compatible path.",
+        "Determine whether the fault follows the monitor/cable/dock or the endpoint, and whether it occurs before sign-in/OS where testable.",
+        "Use the platform branch: Windows display/driver settings or macOS Displays/system information, without assuming an OS update rollback is available."
+      ],
+      "rollback": "Record display/driver/dock configuration before changes. Restore the previous approved driver/display configuration if a change causes regression; replace faulty cable/adapter/dock/monitor through hardware support rather than attempting unsupported OS rollback.",
+      "symptom_match": "Same as #27.",
+      "duplication": "**Duplicate of #27 and #29.**\u00a0Merge into one definitive procedure.",
+      "final_verdict": "Blocked until merged."
+    },
+    "troubleshoot-an-external-monitor-with-no-signal": {
+      "number": 29,
+      "title": "Troubleshoot an external monitor with no signal",
+      "priority": "P2",
+      "severity": "medium",
+      "classification_verdict": "Demote to P2.",
+      "prechecks": [
+        "Check monitor power/input selection, cable/adapter/dock and physical connection using a known-good compatible path.",
+        "Determine whether the fault follows the monitor/cable/dock or the endpoint, and whether it occurs before sign-in/OS where testable.",
+        "Use the platform branch: Windows display/driver settings or macOS Displays/system information, without assuming an OS update rollback is available."
+      ],
+      "rollback": "Record display/driver/dock configuration before changes. Restore the previous approved driver/display configuration if a change causes regression; replace faulty cable/adapter/dock/monitor through hardware support rather than attempting unsupported OS rollback.",
+      "symptom_match": "Same as #27.",
+      "duplication": "**Duplicate of #27 and #28.**\u00a0Merge into one definitive procedure.",
+      "final_verdict": "Blocked until merged."
+    },
+    "troubleshoot-an-http-403-error": {
+      "number": 30,
+      "title": "Troubleshoot an HTTP 403 error",
+      "priority": "P1",
+      "severity": "high",
+      "classification_verdict": "Keep P1.",
+      "prechecks": [
+        "Determine scope with another authorised user/client and capture the exact URL, identity, timestamp and 403 substatus/error detail.",
+        "Check reverse proxy/web/WAF/IIS or application logs to identify the layer returning 403.",
+        "Review identity/group membership and the relevant application/web/NTFS/ACL policy before granting additional access."
+      ],
+      "rollback": "Export/capture the relevant ACL/web/application configuration before change. If an authorised permission/configuration change broadens access or worsens the fault, restore the previous approved ACL/configuration immediately and verify least privilege.",
+      "symptom_match": "\"Access is denied\", \"Application is not accessible\".",
+      "duplication": "Unique.",
+      "final_verdict": "Blocked."
+    }
+  },
+  "merge_policy": {
+    "troubleshoot-an-external-display-on-macos": {
+      "canonical": "troubleshoot-an-external-monitor",
+      "action": "deprecate_and_redirect"
+    },
+    "troubleshoot-an-external-monitor-with-no-signal": {
+      "canonical": "troubleshoot-an-external-monitor",
+      "action": "deprecate_and_redirect"
+    }
+  },
+  "relationship_policy": {
+    "teams_camera": {
+      "generic": "troubleshoot-a-webcam-on-windows",
+      "app_specific": "troubleshoot-teams-camera"
+    },
+    "shared_mailbox": {
+      "request": "grant-shared-mailbox-access",
+      "troubleshooting": "troubleshoot-a-shared-mailbox"
+    }
+  },
+  "cross_batch_existing": {
+    "troubleshoot-a-print-server-outage": "Same procedure already audited in earlier Sprint/Batch A; preserve and augment, do not self-merge."
+  }
+}

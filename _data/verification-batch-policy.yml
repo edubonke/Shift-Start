@@ -1,0 +1,66 @@
+schema_version: 1
+model: verification-batch-v1
+
+priority_floors:
+  P0:
+    minimum_score: 70
+    queue_band: immediate
+  P1:
+    minimum_score: 50
+    queue_band: next
+  P2:
+    minimum_score: 30
+    queue_band: planned
+
+batches:
+  A:
+    name: Critical P0 verification
+    description: All actionable P0 procedures, ordered by corrected verification priority score.
+    selector:
+      priorities: [P0]
+      governance_states:
+        - under_review
+        - live_validation_pending
+        - revalidation_required
+    maximum_items: 25
+
+  B:
+    name: High-demand P1 verification
+    description: Highest-ranked actionable P1 procedures after Batch A.
+    selector:
+      priorities: [P1]
+      governance_states:
+        - under_review
+        - live_validation_pending
+        - revalidation_required
+    maximum_items: 15
+
+  C:
+    name: Historical verification revalidation
+    description: Procedures carrying historical verified metadata that now require verification-v2 revalidation.
+    selector:
+      governance_states:
+        - revalidation_required
+    maximum_items: 25
+
+evidence_work_item:
+  schema_version: 1
+  statuses:
+    - pending
+    - in_test
+    - blocked
+    - completed
+  completed_requires:
+    - tester
+    - test_started_at
+    - test_completed_at
+    - diagnostic_tested
+    - remediation_tested
+    - rollback_or_irreversibility_confirmed
+    - escalation_confirmed
+    - time_validated
+    - expected_result_confirmed
+    - owner_signoff
+    - authoritative_source_provenance
+    - required_test_records
+    - required_reviewers

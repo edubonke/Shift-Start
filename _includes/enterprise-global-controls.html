@@ -1,0 +1,48 @@
+<div class="ss-load-progress" data-load-progress hidden><span></span></div>
+<div class="ss-toast-region" data-ss-toast-region aria-live="polite" aria-atomic="true"></div>
+
+<button class="ss-request-fab" type="button" data-open-request-modal><span aria-hidden="true">＋</span><span>Request New Procedure</span></button>
+
+<dialog class="ss-command-dialog" data-command-dialog aria-labelledby="ss-command-title">
+  <div class="ss-command-shell">
+    <header><div><p class="rd-eyebrow">Global command palette</p><h2 id="ss-command-title">Find anything in ShiftStart</h2></div><button type="button" class="ss-icon-button" data-close-dialog aria-label="Close command palette">×</button></header>
+    <label class="ss-command-input-wrap"><span class="sr-only">Search ShiftStart</span><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" data-command-input placeholder="Symptom, procedure name or error code…" autocomplete="off" spellcheck="false"><kbd data-command-key>Ctrl K</kbd></label>
+    <div class="ss-command-correction" data-command-correction hidden></div>
+    <div class="ss-command-results" data-command-results><div class="ss-command-hint"><strong>Start typing to search</strong><p>Results are grouped by symptom, procedure name and error code. Fuzzy matching handles common typos.</p></div></div>
+    <footer><span>↑↓ Navigate</span><span>Enter Open</span><span>Esc Close</span></footer>
+  </div>
+</dialog>
+
+<dialog class="ss-form-dialog" data-request-dialog aria-labelledby="ss-request-title">
+  <form method="dialog" data-request-form>
+    <header><div><p class="rd-eyebrow">Knowledge request</p><h2 id="ss-request-title">Request a new procedure</h2></div><button type="button" class="ss-icon-button" data-close-dialog aria-label="Close">×</button></header>
+    <label><span>Procedure or issue title</span><input name="title" required></label>
+    <label><span>Business impact</span><select name="impact" required><option value="">Select impact</option><option>P0 — Global / critical outage</option><option>P1 — High impact</option><option>P2 — Medium impact</option><option>P3 — Low impact</option><option>P4 — Informational / self-service</option></select></label>
+    <label><span>Environment / product</span><input name="system" placeholder="Example: Entra ID, VPN, Windows Server"></label>
+    <label><span>What should the procedure help resolve?</span><textarea name="description" rows="5" required></textarea></label>
+    <div class="ss-dialog-actions"><button class="btn" type="submit">Submit request</button><button class="btn-secondary" type="button" data-close-dialog>Cancel</button></div>
+    <p class="ss-form-note">If no central intake endpoint is configured, the request is saved in this browser and copied for manual submission.</p>
+  </form>
+</dialog>
+
+<dialog class="ss-form-dialog" data-edit-dialog aria-labelledby="ss-edit-title">
+  <form method="dialog" data-edit-form>
+    <header><div><p class="rd-eyebrow">Governance feedback</p><h2 id="ss-edit-title">Suggest an edit</h2></div><button type="button" class="ss-icon-button" data-close-dialog aria-label="Close">×</button></header>
+    <input type="hidden" name="procedureId" data-modal-procedure-id>
+    <label><span>Section or step</span><input name="section" placeholder="Example: Step 4 — DNS flush"></label>
+    <label><span>Suggested change</span><textarea name="suggestion" rows="6" required></textarea></label>
+    <label><span>Reason / evidence</span><textarea name="evidence" rows="4" placeholder="Error observed, vendor documentation, tested outcome, etc."></textarea></label>
+    <div class="ss-dialog-actions"><button class="btn" type="submit">Submit suggestion</button><button class="btn-secondary" type="button" data-close-dialog>Cancel</button></div>
+  </form>
+</dialog>
+
+<dialog class="ss-form-dialog" data-error-dialog aria-labelledby="ss-error-title">
+  <form method="dialog" data-error-form>
+    <header><div><p class="rd-eyebrow">Report an error</p><h2 id="ss-error-title">Report procedure issue</h2></div><button type="button" class="ss-icon-button" data-close-dialog aria-label="Close">×</button></header>
+    <label><span>Procedure ID</span><input name="procedureId" data-modal-procedure-id readonly></label>
+    <label><span>Error type</span><select name="errorType" required><option value="">Choose one</option><option>Incorrect technical step</option><option>Unsafe / missing rollback</option><option>Outdated command or product</option><option>Broken link or missing evidence</option><option>Accessibility / readability issue</option><option>Other</option></select></label>
+    <label><span>What is wrong?</span><textarea name="description" rows="6" required></textarea></label>
+    <label><span>Evidence or expected correction</span><textarea name="evidence" rows="4"></textarea></label>
+    <div class="ss-dialog-actions"><button class="btn" type="submit">Report error</button><button class="btn-secondary" type="button" data-close-dialog>Cancel</button></div>
+  </form>
+</dialog>

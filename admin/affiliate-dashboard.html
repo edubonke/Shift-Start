@@ -1,0 +1,15 @@
+---
+layout: default
+title: Affiliate Tracking Dashboard
+permalink: /admin/affiliate-dashboard/
+page_kind: admin
+---
+<section class="shell ss-admin-shell" data-affiliate-admin>
+  <nav class="rd-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span>/</span><span>Affiliate dashboard</span></nav>
+  <p class="rd-eyebrow">Commercial transparency</p><h1>Affiliate Tracking Dashboard</h1>
+  <p>This static dashboard shows affiliate click events stored in this browser. Configure a secure analytics endpoint for shared enterprise reporting and commission reconciliation.</p>
+  <div class="ss-admin-cards"><div class="ss-admin-card"><span>Local tracked clicks</span><strong data-affiliate-total>0</strong></div><div class="ss-admin-card"><span>Affiliate IDs seen</span><strong data-affiliate-unique>0</strong></div><div class="ss-admin-card"><span>Central endpoint</span><strong>{% if site.data.kb.enterprise.affiliateTrackingEndpoint %}Configured{% else %}Not configured{% endif %}</strong></div></div>
+  <button class="btn-secondary" type="button" data-export-affiliate>Export local click CSV</button>
+  <div class="ss-grid-scroll"><table class="ss-admin-table"><thead><tr><th>Clicked At</th><th>Affiliate ID</th><th>Procedure ID</th><th>Commission Model</th></tr></thead><tbody data-affiliate-admin-rows></tbody></table></div>
+  <aside class="rd-assurance-callout status-under_review"><strong>Commission management boundary</strong><p>Client-side tracking is suitable for prototyping and transparency, not authoritative payout accounting. Production commission reconciliation requires authenticated server-side records or a trusted affiliate platform.</p></aside>
+</section>

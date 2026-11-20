@@ -1,0 +1,16 @@
+- slug: procedures
+  title: Procedures
+  description: Step-by-step troubleshooting with expected outcomes and escalation.
+  content_type: procedure
+- slug: symptoms
+  title: Symptoms
+  description: Observable user and device symptoms linked to likely causes and procedures.
+  content_type: symptom
+- slug: causes
+  title: Causes
+  description: Likely root causes, probabilities and diagnostic evidence.
+  content_type: cause
+- slug: commands
+  title: Diagnostic commands
+  description: Reusable commands for safe evidence gathering.
+  content_type: command

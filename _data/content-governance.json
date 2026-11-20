@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "canonicalCategories": {
+    "Desktop": "Windows Endpoints",
+    "Identity": "Identity & Access Management",
+    "Network": "Network & Connectivity",
+    "Microsoft 365": "Microsoft 365 & Collaboration",
+    "Printing": "Printing & Scanning",
+    "Windows Recovery": "Windows Endpoints",
+    "Collaboration": "Microsoft 365 & Collaboration"
+  },
+  "verifiedProcedures": [
+    "bsod-0x0000007b",
+    "general-workstation-triage",
+    "mapped-drive-missing",
+    "mfa-setup-fails",
+    "no-network-docking-station",
+    "outlook-crashes",
+    "password-reset",
+    "printer-offline",
+    "slow-windows-pc",
+    "teams-microphone-not-working",
+    "vpn-not-connecting"
+  ],
+  "highRiskCategories": [
+    "Identity & Access Management",
+    "Security & Compliance",
+    "Data Protection, Backup & Recovery",
+    "Servers & Core Infrastructure",
+    "Cloud & Virtualisation",
+    "Lifecycle & Asset Management"
+  ],
+  "statuses": {
+    "verified": "Reviewed, technically specific guidance approved for operational use.",
+    "under_review": "Complete baseline guidance that still requires technical-owner validation in the target environment.",
+    "draft": "Incomplete guidance that must not be used for production changes without senior review.",
+    "deprecated": "Retained for history or redirects and not recommended for active use."
+  }
+}

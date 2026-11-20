@@ -1,0 +1,193 @@
+name: Build and deploy governed Jekyll KB to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Install Ruby dependencies
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Install Node dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Apply deterministic content remediation
+        run: npm run remediate:apply
+
+      - name: Vendor browser dependencies
+        run: npm run vendor
+
+      - name: Validate governed knowledge-base content
+        run: npm run check
+
+      - name: Generate search and governed wizard data
+        run: npm run generate
+        env:
+          BASEURL: /${{ github.event.repository.name }}
+
+      - name: Build Tailwind CSS
+        run: npm run css
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
+        env:
+          JEKYLL_ENV: production
+
+      - name: Remove development patch artifacts from Pages output
+        run: npm run site:artifact:clean
+
+      - name: Verify complete enterprise build
+        run: |
+          test -s _site/index.html
+          test -s _site/assets/css/site.css
+          test -s _site/assets/data/search-index.json
+          test -s _site/assets/data/search-documents.json
+          test -s _site/assets/data/wizard-data.json
+          test -s _site/assets/data/enterprise-catalog.json
+          test -s _site/assets/js/lunr.min.js
+          test -s _site/assets/css/obsidian-telemetry.css
+          test -s _site/assets/js/operations-lab.js
+          test -s _site/operations-lab/index.html
+          test -s _site/wizard/index.html
+          test ! -e _site/shiftstart-it-support-kb-main
+          test ! -e _site/shiftstart-it-support-kb-main.zip
+          node --check assets/js/operations-lab.js
+          test -s reports/content-audit.json
+          python3 scripts/clean-pages-artifact.py --check
+          node - <<'NODE'
+          const data = require('./assets/data/wizard-data.json');
+          if (data.counts.procedures !== 421) throw new Error(`Expected 421 procedures, found ${data.counts.procedures}`);
+          if (data.counts.symptoms !== 446) throw new Error(`Expected 446 symptoms, found ${data.counts.symptoms}`);
+          const statuses = data.counts.statuses || {};
+
+          if (!statuses.under_review) {
+            throw new Error('Under-review procedures were not labelled');
+          }
+
+          const statusTotal = Object.values(statuses)
+            .reduce((sum, count) => sum + Number(count || 0), 0);
+
+          if (statusTotal !== data.counts.procedures) {
+            throw new Error(
+              `Procedure status counts total ${statusTotal}, expected ${data.counts.procedures}`
+            );
+          }
+
+          const verifiedProcedures = data.procedures.filter(
+            procedure => procedure.contentStatus === 'verified'
+          );
+
+          const invalidVerified = verifiedProcedures.filter(
+            procedure =>
+              procedure.verificationV2Complete !== true ||
+              procedure.verificationPromotionReady !== true
+          );
+
+          if (invalidVerified.length) {
+            throw new Error(
+              `Found ${invalidVerified.length} procedure(s) marked Verified without complete Verification v2 evidence`
+            );
+          }
+
+          const enterprise = require('./_site/assets/data/enterprise-catalog.json');
+          if (enterprise.procedures.length !== data.counts.procedures) {
+            throw new Error(
+              `Enterprise catalogue has ${enterprise.procedures.length} procedures, expected ${data.counts.procedures}`
+            );
+          }
+
+          const enterpriseStatuses = enterprise.procedures.reduce((counts, procedure) => {
+            counts[procedure.contentStatus] = (counts[procedure.contentStatus] || 0) + 1;
+            return counts;
+          }, {});
+
+          for (const [status, count] of Object.entries(statuses)) {
+            if (Number(enterpriseStatuses[status] || 0) !== Number(count)) {
+              throw new Error(
+                `Enterprise catalogue status ${status}=${enterpriseStatuses[status] || 0}, wizard=${count}`
+              );
+            }
+          }
+
+          const invalidEnterpriseVerified = enterprise.procedures.filter(
+            procedure =>
+              procedure.contentStatus === 'verified' &&
+              (
+                procedure.governanceStatus !== 'verified' ||
+                procedure.verificationV2Complete !== true ||
+                procedure.evidenceComplete !== true ||
+                procedure.promotionReady !== true
+              )
+          );
+
+          if (invalidEnterpriseVerified.length) {
+            throw new Error(
+              `Enterprise catalogue exposes ${invalidEnterpriseVerified.length} invalid Verified procedure(s)`
+            );
+          }
+
+          console.log(
+            `Governed status validation passed. Evidence-complete Verified=${verifiedProcedures.length}`
+          );
+          console.log(data.counts);
+          console.log('Enterprise catalogue status counts:', enterpriseStatuses);
+          NODE
+
+      - name: Upload content audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: shiftstart-content-audit
+          path: reports/content-audit.json
+          if-no-files-found: error
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

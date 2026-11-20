@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: YOUR-ORG/YOUR-REPO
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: procedures
+    label: Procedures
+    folder: _procedures
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Slug, name: slug, widget: string}
+      - {label: Description, name: description, widget: text}
+      - {label: Content type, name: content_type, widget: hidden, default: procedure}
+      - {label: Category, name: category, widget: string}
+      - {label: Severity, name: severity, widget: select, options: [low, medium, high, critical]}
+      - {label: Tags, name: tags, widget: list}
+      - {label: TLDR, name: tldr, widget: text}
+      - {label: Escalation, name: escalation, widget: text}
+      - {label: Body, name: body, widget: markdown}

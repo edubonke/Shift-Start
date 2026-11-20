@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-10T05:14:03.875Z",
+  "totalProcedures": 421,
+  "riskModel": "impact-v1",
+  "riskCounts": {
+    "critical": 17,
+    "high": 228,
+    "medium": 175,
+    "low": 1
+  },
+  "statusCounts": {
+    "under_review": 410,
+    "verified": 11
+  },
+  "verificationQueueCounts": {
+    "P0": 16,
+    "P1": 224,
+    "P2": 170,
+    "P3": 0
+  },
+  "evidenceCompleteVerified": 0,
+  "targetVerified80Percent": 337,
+  "newlyPromotedThisRun": 0,
+  "note": "Under-review procedures are never promoted unless all live-test, rollback, escalation, time-validation and owner-signoff evidence fields are complete."
+}

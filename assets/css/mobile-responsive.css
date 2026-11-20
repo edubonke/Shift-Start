@@ -1,0 +1,593 @@
+/* ShiftStart mobile layout — loaded last so it safely overrides desktop layers. */
+
+.ss-css-menu-toggle {
+  position: absolute;
+  inline-size: 0.0625rem;
+  block-size: 0.0625rem;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ss-command-launch svg,
+.ss-mobile-search > .rd-search-icon {
+  inline-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  block-size: clamp(1.125rem, 1.5vw, 1.25rem);
+}
+
+.ss-menu-button svg {
+  inline-size: clamp(1.25rem, 5vw, 1.5rem);
+  block-size: clamp(1.25rem, 5vw, 1.5rem);
+}
+
+/* Desktop safeguard: retain the full two-level navigation and desktop grids. */
+.ss-mobile-nav {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .ss-menu-button {
+    display: none !important;
+  }
+
+  .ss-header-secondary,
+  .desktop-nav.ss-primary-nav {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  html,
+  body {
+    max-inline-size: 100%;
+    overflow-x: clip;
+  }
+
+  html {
+    font-size: 100%;
+  }
+
+  body {
+    font-size: clamp(1rem, 3.7vw, 1.0625rem);
+    line-height: 1.6;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :where(
+    main,
+    section,
+    article,
+    aside,
+    header,
+    footer,
+    nav,
+    div,
+    form,
+    fieldset
+  ) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  :where(img, svg, video, canvas, iframe) {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  :where(pre, code, kbd, samp, td, th, p, li, dd, a, button) {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  pre,
+  code {
+    white-space: pre-wrap;
+  }
+
+  .shell {
+    inline-size: min(100%, 100vw);
+    max-inline-size: 100%;
+    padding-inline: clamp(1rem, 4.5vw, 1.5rem);
+  }
+
+  /* Readable type: content stays at or above 16px; compact labels remain distinct. */
+  :where(
+    p,
+    li,
+    dd,
+    .rd-hero-lead,
+    .rd-first-response-list p,
+    .ss-dashboard-widget,
+    .ss-dashboard-widget p,
+    .org-home-card p,
+    .rd-readiness-head p,
+    .rd-trust-card p,
+    .ss-detail-placeholder p
+  ) {
+    font-size: 1rem !important;
+    line-height: 1.6;
+  }
+
+  h1,
+  .rd-home-hero-copy h1,
+  .rd-article-heading h1,
+  .ss-explorer-heading h1 {
+    font-size: clamp(2rem, 9.5vw, 3rem) !important;
+    line-height: 1.05;
+  }
+
+  h2,
+  .rd-section-heading h2 {
+    font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+  }
+
+  .rd-eyebrow,
+  :where(small, dt, .ss-tree-count, .ss-priority, .ss-status-pill) {
+    font-size: clamp(0.8125rem, 3.3vw, 0.9375rem) !important;
+  }
+
+  /* Every interactive control meets the 44px minimum touch target. */
+  :where(
+    a,
+    button,
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea,
+    summary,
+    [role="button"]
+  ) {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    font-size: 1rem;
+  }
+
+  :where(a, button, summary, [role="button"]) {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  :where(input, select, textarea) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  /* CSS-only mobile navigation. */
+  .ss-header-primary {
+    grid-template-columns: minmax(0, 1fr) repeat(3, auto) !important;
+    gap: clamp(0.25rem, 1.8vw, 0.5rem) !important;
+    min-block-size: clamp(4rem, 17vw, 4.75rem) !important;
+    padding-block: clamp(0.4rem, 2vw, 0.65rem) !important;
+  }
+
+  .ss-header-brand {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    min-inline-size: 0;
+  }
+
+  .ss-brand-copy strong {
+    font-size: clamp(0.875rem, 4vw, 1rem) !important;
+  }
+
+  .ss-brand-copy small,
+  .ss-command-launch-copy,
+  .ss-command-launch kbd,
+  .ss-header-actions .ss-user-avatar {
+    display: none !important;
+  }
+
+  .rd-brand-mark {
+    inline-size: clamp(2rem, 10vw, 2.75rem) !important;
+    block-size: clamp(2rem, 10vw, 2.75rem) !important;
+    flex-basis: clamp(2rem, 10vw, 2.75rem) !important;
+  }
+
+  .rd-brand-mark img {
+    inline-size: clamp(1.4rem, 7vw, 2rem) !important;
+    block-size: clamp(1.4rem, 7vw, 2rem) !important;
+  }
+
+  .ss-command-launch {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+
+  .ss-header-actions {
+    display: contents !important;
+  }
+
+  .ss-command-launch,
+  .ss-header-icon,
+  .ss-menu-button {
+    inline-size: clamp(2.75rem, 12vw, 3.25rem) !important;
+    min-inline-size: clamp(2.75rem, 12vw, 3.25rem) !important;
+    block-size: clamp(2.75rem, 12vw, 3.25rem) !important;
+    min-block-size: clamp(2.75rem, 12vw, 3.25rem) !important;
+    padding: 0 !important;
+    place-items: center;
+    justify-content: center;
+  }
+
+  .ss-theme-toggle {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+  }
+
+  .ss-menu-button {
+    display: grid !important;
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+  }
+
+  .ss-menu-button .menu-close-icon {
+    display: none;
+  }
+
+  .ss-css-menu-toggle:focus-visible ~ .ss-header-topline .ss-menu-button {
+    outline: 0.1875rem solid #75dcc1;
+    outline-offset: 0.1875rem;
+  }
+
+  .ss-css-menu-toggle:checked ~ .ss-header-topline .menu-open-icon {
+    display: none;
+  }
+
+  .ss-css-menu-toggle:checked ~ .ss-header-topline .menu-close-icon {
+    display: block;
+  }
+
+  .ss-header-navline {
+    border-block-start: 0 !important;
+  }
+
+  .ss-header-secondary,
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .ss-mobile-nav {
+    display: none;
+    inline-size: 100%;
+    max-block-size: calc(100dvh - clamp(4rem, 17vw, 4.75rem));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .ss-css-menu-toggle:checked ~ .ss-header-navline .ss-mobile-nav {
+    display: block;
+  }
+
+  .ss-mobile-nav-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: clamp(0.5rem, 2vw, 0.75rem) !important;
+    padding-block: clamp(0.75rem, 3vw, 1.25rem) !important;
+  }
+
+  .ss-mobile-nav-grid a,
+  .ss-mobile-nav-grid button {
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    padding: clamp(0.65rem, 3vw, 0.9rem) !important;
+    font-size: 1rem !important;
+  }
+
+  .ss-mobile-nav-grid button:last-child {
+    grid-column: auto !important;
+  }
+
+  .ss-mobile-search {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    inline-size: 100%;
+  }
+
+  .ss-mobile-search-input,
+  .ss-mobile-search-clear {
+    min-block-size: 2.75rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Stack the dashboard, cards, sidebar and content into one fluid column. */
+  :where(
+    .rd-home-hero,
+    .ss-dashboard-grid,
+    .rd-featured-grid,
+    .rd-domain-grid,
+    .rd-readiness-grid,
+    .org-home-grid,
+    .org-service-grid,
+    .org-process,
+    .org-field-grid,
+    .rd-trust-card,
+    .rd-onboarding-card,
+    .rd-onboarding-steps,
+    .rd-filter-grid,
+    .rd-search-page-results,
+    .rd-search-help,
+    .rd-about-grid,
+    .rd-swatches,
+    .rd-footer-grid,
+    .rd-article-layout,
+    .rd-tool-heading,
+    .ss-workbench,
+    .ss-executive-summary,
+    .ss-governance-grid,
+    .ss-affiliate-grid,
+    .ss-metadata-strip,
+    .ss-health-matrix,
+    .ss-admin-cards,
+    .ss-trust-footer-grid
+  ) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .rd-home-hero {
+    gap: clamp(1.5rem, 7vw, 2.5rem) !important;
+    padding-block: clamp(1.5rem, 7vw, 3rem) !important;
+  }
+
+  .rd-home-hero-copy h1 {
+    max-inline-size: 100%;
+  }
+
+  .rd-hero-actions,
+  .rd-trust-actions,
+  .org-home-actions,
+  .rd-domain-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    inline-size: 100%;
+  }
+
+  .rd-hero-actions > *,
+  .rd-trust-actions > *,
+  .org-home-actions > *,
+  .rd-domain-actions > * {
+    inline-size: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .rd-kpi-strip {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .rd-kpi-strip div {
+    inline-size: 100%;
+    justify-content: space-between !important;
+    border-radius: clamp(0.75rem, 3vw, 1rem) !important;
+    padding: clamp(0.7rem, 3vw, 0.95rem) !important;
+  }
+
+  .rd-panel-heading,
+  .rd-section-heading,
+  .rd-readiness-head,
+  .rd-readiness-foot,
+  .ss-dashboard-widget > header,
+  .org-home-intro {
+    align-items: flex-start !important;
+    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  :where(
+    .rd-first-response,
+    .ss-dashboard-widget,
+    .rd-domain-card,
+    .rd-readiness-stat,
+    .org-home-card,
+    .rd-trust-card,
+    .card
+  ) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  .rd-first-response-list li {
+    grid-template-columns: clamp(2.75rem, 12vw, 3.25rem) minmax(0, 1fr) !important;
+  }
+
+  .rd-first-response-list li > span {
+    inline-size: clamp(2.75rem, 12vw, 3.25rem) !important;
+    block-size: clamp(2.75rem, 12vw, 3.25rem) !important;
+  }
+
+  .ss-widget-row {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+  }
+
+  .ss-widget-row :where(small, time) {
+    grid-column: 1 / -1;
+  }
+
+  /* Three-pane procedure workspace becomes three vertical regions. */
+  .ss-workbench {
+    display: grid !important;
+    block-size: auto !important;
+    min-block-size: 0 !important;
+    overflow: visible !important;
+  }
+
+  .ss-left-rail,
+  .ss-middle-rail,
+  .ss-right-rail {
+    position: static !important;
+    inset: auto !important;
+    display: block !important;
+    inline-size: 100% !important;
+    block-size: auto !important;
+    min-block-size: 0 !important;
+    max-block-size: none !important;
+    overflow: visible !important;
+    border-inline-end: 0 !important;
+    border-block-end: 0.0625rem solid var(--ss-border);
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .ss-category-tree {
+    max-block-size: min(48vh, 24rem);
+    overflow-y: auto;
+  }
+
+  .ss-grid-scroll {
+    block-size: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Turn the wide desktop procedure table into stacked mobile cards. */
+  .ss-procedure-grid,
+  .ss-procedure-grid tbody,
+  .ss-procedure-grid tr,
+  .ss-procedure-grid td {
+    display: block;
+    inline-size: 100% !important;
+    min-inline-size: 0 !important;
+  }
+
+  .ss-procedure-grid {
+    border-collapse: separate;
+    border-spacing: 0 clamp(0.75rem, 3vw, 1rem);
+  }
+
+  .ss-procedure-grid thead {
+    position: absolute;
+    inline-size: 0.0625rem;
+    block-size: 0.0625rem;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+
+  .ss-procedure-row {
+    overflow: hidden;
+    border: 0.0625rem solid var(--ss-border);
+    border-radius: clamp(0.75rem, 3vw, 1rem);
+    background: var(--ss-surface);
+  }
+
+  .ss-procedure-grid td {
+    display: grid;
+    grid-template-columns: minmax(7rem, 34%) minmax(0, 1fr);
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+    align-items: center;
+    min-block-size: 2.75rem;
+    border-block-end: 0.0625rem solid rgba(130, 151, 175, 0.18);
+    padding: clamp(0.65rem, 3vw, 0.9rem) !important;
+    font-size: 1rem !important;
+  }
+
+  .ss-procedure-grid td:first-child {
+    display: block;
+    background: var(--ss-surface-2);
+  }
+
+  .ss-procedure-grid td:last-child {
+    border-block-end: 0;
+  }
+
+  .ss-procedure-grid td:not(:first-child)::before {
+    color: var(--ss-muted);
+    font-size: clamp(0.8125rem, 3.3vw, 0.9375rem);
+    font-weight: 800;
+  }
+
+  .ss-procedure-grid td:nth-child(2)::before {
+    content: "Severity";
+  }
+
+  .ss-procedure-grid td:nth-child(3)::before {
+    content: "Status";
+  }
+
+  .ss-procedure-grid td:nth-child(4)::before {
+    content: "Last updated";
+  }
+
+  .ss-procedure-grid td:nth-child(5)::before {
+    content: "Owner";
+  }
+
+  .ss-row-open {
+    min-block-size: 2.75rem;
+    font-size: 1rem;
+  }
+
+  .ss-row-open strong,
+  .ss-row-open small {
+    font-size: 1rem !important;
+  }
+
+  .ss-right-rail {
+    padding: clamp(1rem, 4.5vw, 1.5rem) !important;
+  }
+
+  .ss-detail-placeholder {
+    min-block-size: clamp(15rem, 65vw, 24rem);
+  }
+
+  .ss-filter-chips {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+  }
+
+  .ss-filter-chip {
+    inline-size: 100%;
+    justify-content: center;
+  }
+
+  .ss-explorer-search {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .ss-result-count,
+  .ss-did-you-mean {
+    grid-column: auto !important;
+    white-space: normal !important;
+  }
+
+  .ss-request-fab {
+    right: clamp(0.75rem, 4vw, 1.25rem);
+    bottom: clamp(0.75rem, 4vw, 1.25rem);
+    inline-size: clamp(2.75rem, 14vw, 3.5rem) !important;
+    block-size: clamp(2.75rem, 14vw, 3.5rem) !important;
+    min-inline-size: clamp(2.75rem, 14vw, 3.5rem) !important;
+    min-block-size: clamp(2.75rem, 14vw, 3.5rem) !important;
+  }
+
+  .ss-request-fab span:last-child {
+    display: none;
+  }
+
+  .ss-sticky-action-bar,
+  .rd-quick-glance {
+    position: static !important;
+    inset: auto !important;
+  }
+}
+
+@media (forced-colors: active) and (max-width: 47.999rem) {
+  .ss-menu-button {
+    border: 0.0625rem solid CanvasText !important;
+  }
+}
+
+@media print {
+  .ss-css-menu-toggle,
+  .ss-menu-button,
+  .ss-mobile-nav {
+    display: none !important;
+  }
+}

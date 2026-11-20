@@ -1,0 +1,141 @@
+---
+layout: default
+---
+{% assign assurance_status = page.content_status | default: 'under_review' %}
+{% assign is_procedure = false %}{% if page.content_type == 'procedure' %}{% assign is_procedure = true %}{% endif %}
+{% assign ev = page.verification_evidence %}
+{% assign ev_count = 0 %}
+{% if ev.diagnostic_tested %}{% assign ev_count = ev_count | plus: 1 %}{% endif %}
+{% if ev.remediation_tested %}{% assign ev_count = ev_count | plus: 1 %}{% endif %}
+{% if ev.rollback_confirmed %}{% assign ev_count = ev_count | plus: 1 %}{% endif %}
+{% if ev.escalation_confirmed %}{% assign ev_count = ev_count | plus: 1 %}{% endif %}
+{% if ev.time_validated %}{% assign ev_count = ev_count | plus: 1 %}{% endif %}
+{% if ev.owner_signoff %}{% assign ev_count = ev_count | plus: 1 %}{% endif %}
+{% assign evidence_complete = false %}{% if ev_count == 6 %}{% assign evidence_complete = true %}{% endif %}
+{% assign display_status = page.verification_governance_state | default: assurance_status %}
+{% assign confidence_percent = ev_count | times: 100 | divided_by: 6 %}
+{% if page.verification_v2_score_percent %}{% assign confidence_percent = page.verification_v2_score_percent %}{% elsif page.success_rate %}{% assign confidence_percent = page.success_rate %}{% endif %}
+{% assign verification_missing_count = page.verification_v2_missing | size %}
+{% assign root_cause_summary = page.root_cause | default: page.likely_root_cause | default: 'No structured root-cause summary is recorded yet. Follow the diagnostic section before concluding cause.' %}
+{% assign workaround_summary = page.immediate_workaround | default: page.tldr | default: 'No safe immediate workaround is recorded. Use the diagnostic and remediation controls below.' %}
+
+<article class="shell rd-article-shell ss-procedure-detail{% if assurance_status == 'deprecated' %} is-deprecated{% endif %}"
+         data-article-page
+         data-procedure="{{ is_procedure }}"
+         data-procedure-id="{{ page.slug | escape }}"
+         data-title="{{ page.title | escape }}"
+         data-owner="{{ page.owner_team | default: 'Not assigned' | escape }}"
+         data-status="{{ display_status }}"
+         data-evidence-count="{{ ev_count }}">
+  <nav class="rd-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span aria-hidden="true">/</span>{% if is_procedure %}<a href="{{ '/procedures/' | relative_url }}">Procedures</a>{% elsif page.content_type == 'symptom' %}<a href="{{ '/symptoms/' | relative_url }}">Symptoms</a>{% endif %}<span aria-hidden="true">/</span><span aria-current="page">{{ page.title }}</span></nav>
+  {% if is_procedure %}<a class="rd-back-link" href="{{ '/procedures/' | relative_url }}" data-back-to-results>← Back to procedure workspace</a>{% endif %}
+
+  <header class="rd-article-header ss-article-header">
+    <div class="rd-article-heading">
+      <div class="rd-card-badges rd-article-badges">
+        {% if page.severity %}<span class="rd-risk rd-risk-{{ page.severity | downcase }}">{{ page.severity }} risk</span>{% endif %}
+        {% if display_status == 'verified' %}<span class="ss-status-pill ss-status-verified">✓ Verified</span>
+        {% elsif display_status == 'revalidation_required' %}<span class="ss-status-pill ss-status-revalidation">◷ Revalidation Required</span>
+        {% elsif display_status == 'live_validation_pending' %}<span class="ss-status-pill ss-status-under_review">◷ Live Validation Pending</span>
+        {% elsif assurance_status == 'deprecated' %}<span class="ss-status-pill ss-status-deprecated">× Deprecated</span>
+        {% else %}<span class="ss-status-pill ss-status-under_review">◷ {{ assurance_status | replace: '_', ' ' }}</span>{% endif %}
+        {% if page.category %}<span class="badge">{{ page.category }}</span>{% endif %}
+      </div>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p class="rd-article-lead">{{ page.description }}</p>{% endif %}
+    </div>
+  </header>
+
+  {% if is_procedure %}
+  <section class="ss-executive-summary" aria-label="Executive summary">
+    <div><span>Root Cause</span><p>{{ root_cause_summary | truncatewords: 49 }}</p></div>
+    <div><span>Immediate Workaround</span><p>{{ workaround_summary | truncatewords: 49 }}</p></div>
+  </section>
+
+  <section class="ss-metadata-strip" aria-label="Procedure governance metadata">
+    <dl><dt>Owner</dt><dd>{{ page.owner_team | default: 'Not assigned' }}</dd></dl>
+    <dl><dt>Last Verified Date</dt><dd>{{ page.last_verified | default: page.last_tested | default: 'Not recorded' }}</dd></dl>
+    <dl><dt>Next Review Due</dt><dd>{{ page.next_review_due | default: 'Not scheduled' }}</dd></dl>
+    <dl><dt>Support Tier</dt><dd>{{ page.support_tier | default: 'Not specified' }}</dd></dl>
+  </section>
+
+  <div class="ss-governance-grid">
+    <section class="ss-confidence-card" aria-label="Confidence score">
+      <div class="ss-confidence-heading"><div><span>Confidence / evidence</span><strong>{{ confidence_percent }}%</strong></div>{% if display_status == 'verified' %}<small>Verification-v2 evidence gate complete</small>{% elsif page.verification_v2_missing %}<small>{{ verification_missing_count }} verification-v2 requirement(s) outstanding</small>{% elsif page.verified_by_smes %}<small>Verified by {{ page.verified_by_smes }} SMEs</small>{% else %}<small>Evidence migration pending</small>{% endif %}</div>
+      <div class="ss-confidence-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ confidence_percent }}"><span style="width:{{ confidence_percent }}%"></span></div>
+    </section>
+    <section class="ss-impact-card" aria-label="Impact scope">
+      <span>Impact Scope</span>
+      <div class="ss-impact-tags">
+        {% if page.impact_scopes %}{% for scope in page.impact_scopes %}<span>{{ scope }}</span>{% endfor %}
+        {% elsif page.impact_scope %}<span>{{ page.impact_scope }}</span>
+        {% elsif page.blast_radius %}<span>{{ page.blast_radius }}</span>
+        {% else %}<span class="ss-impact-unclassified">Scope not classified</span>{% endif %}
+      </div>
+    </section>
+  </div>
+
+  <section class="ss-lifecycle" aria-label="Procedure lifecycle">
+    <div class="ss-lifecycle-step{% if assurance_status == 'draft' %} is-current{% elsif assurance_status != 'draft' %} is-complete{% endif %}"><i>1</i><span>Draft</span></div>
+    <div class="ss-lifecycle-line"></div>
+    <div class="ss-lifecycle-step{% if assurance_status == 'under_review' or display_status == 'revalidation_required' or display_status == 'live_validation_pending' %} is-current{% elsif assurance_status == 'verified' or assurance_status == 'deprecated' %} is-complete{% endif %}"><i>2</i><span>Peer Review</span></div>
+    <div class="ss-lifecycle-line"></div>
+    <div class="ss-lifecycle-step{% if display_status == 'verified' %} is-current{% elsif assurance_status == 'deprecated' %} is-complete{% endif %}"><i>3</i><span>Verified</span></div>
+    <div class="ss-lifecycle-line"></div>
+    <div class="ss-lifecycle-step{% if assurance_status == 'deprecated' %} is-current{% endif %}"><i>4</i><span>Deprecated</span></div>
+  </section>
+
+  <section class="assurance-banner rd-assurance-callout status-{{ assurance_status }}" aria-label="Content assurance">
+    <div class="rd-assurance-icon" aria-hidden="true">{% if display_status == 'verified' %}✓{% else %}◷{% endif %}</div>
+    <div>
+      <strong>{% if display_status == 'verified' %}Evidence-complete operational guidance{% elsif display_status == 'revalidation_required' %}Revalidation required — verification-v2 evidence incomplete or expired{% elsif display_status == 'live_validation_pending' %}Documentation ready — live validation pending{% elsif assurance_status == 'draft' %}Draft — senior review required{% elsif assurance_status == 'deprecated' %}Deprecated — use replacement guidance{% else %}Technical review in progress{% endif %}</strong>
+      <p>{% if display_status == 'verified' %}This procedure passed the verification-v2 evidence gate and is within its review SLA. Continue to follow organisational change controls.{% elsif display_status == 'revalidation_required' %}A stored verified status exists, but verification-v2 evidence is incomplete or the review SLA has expired. Do not rely on the historical label alone.{% elsif display_status == 'live_validation_pending' %}The runbook structure is ready, but operational evidence or formal promotion is still pending. Use technical-owner judgement.{% elsif assurance_status == 'under_review' %}Technical or documentation review is still incomplete. Do not treat this content as production approval.{% else %}Review content quality and organisational approvals before applying production changes.{% endif %}</p>
+      <span>Reviewed by: {{ page.reviewed_by | default: 'Not recorded' }} · Last tested: {{ page.last_tested | default: 'Not recorded' }}</span>
+      <span>Governance: <a href="{{ '/reports/content-audit.json' | relative_url }}">Open machine-readable audit report</a></span>
+    </div><a href="{{ '/content-quality/' | relative_url }}">Quality details</a>
+  </section>
+
+  <nav class="ss-sticky-action-bar" aria-label="Procedure actions">
+    <button type="button" data-copy-procedure>Copy to Clipboard</button>
+    <button type="button" data-export-pdf data-print-procedure>Export as PDF</button>
+    <button type="button" data-print-procedure>Print</button>
+    <button type="button" data-open-edit-modal>Suggest Edit</button>
+    <button type="button" data-feedback="up">Mark as Helpful</button>
+  </nav>
+  {% endif %}
+
+  <div class="rd-article-layout">
+    {% if is_procedure %}<aside class="rd-article-sidebar" data-article-sidebar><div class="rd-toc-panel"><p class="rd-eyebrow">On this page</p><nav data-article-toc aria-label="Procedure sections"></nav></div><div class="rd-trust-legend"><strong>Risk &amp; trust</strong><span><i class="rd-dot rd-dot-red"></i> Critical/high risk</span><span><i class="rd-dot rd-dot-green"></i> Evidence-complete verified</span><span><i class="rd-dot rd-dot-amber"></i> Review/revalidation pending</span></div></aside>{% endif %}
+    <div class="rd-article-main" data-enterprise-detail-source>
+      {% if page.tldr %}<section class="tldr rd-tldr"><span class="rd-eyebrow">Quick answer</span><h2>TL;DR</h2><p>{{ page.tldr }}</p></section>{% endif %}
+
+      {% if is_procedure and page.sponsor and page.sponsor.name %}
+      <aside class="ss-sponsor" data-sponsored-procedure>
+        {% if page.sponsor.logo %}<img src="{{ page.sponsor.logo | escape }}" alt="{{ page.sponsor.name | escape }} logo">{% endif %}
+        <div><span>Sponsored procedure</span><strong>Brought to you by {{ page.sponsor.name }}</strong><p>{{ page.sponsor.disclosure | default: 'Sponsorship supports publication only. It does not influence ShiftStart risk classification, review status, verification evidence, remediation guidance or escalation decisions.' }}</p></div>
+      </aside>
+      {% endif %}
+
+      <div class="article-body rd-article-body" data-article-body>{{ content }}</div>
+      {% if page.escalation %}<section class="escalation rd-escalation"><p class="rd-eyebrow">When resolution stops here</p><h2>Escalation path</h2><p>{{ page.escalation }}</p></section>{% endif %}
+
+      {% if is_procedure and page.affiliate_links %}
+      <section class="ss-affiliates" aria-label="Affiliate-supported tools">
+        <div><p class="rd-eyebrow">Optional tools</p><h2>Related products &amp; diagnostic tools</h2><p>Commercial links are separated from technical remediation. Purchasing through an affiliate link may generate commission for ShiftStart and does not affect procedure status.</p></div>
+        <div class="ss-affiliate-grid">{% for link in page.affiliate_links %}<a href="{{ link.url | escape }}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-link data-affiliate-id="{{ link.id | default: link.label | slugify }}" data-commission-model="{{ link.commission_model | default: 'not recorded' | escape }}"><strong>{{ link.label }}</strong>{% if link.description %}<span>{{ link.description }}</span>{% endif %}<small>Affiliate link ↗</small></a>{% endfor %}</div>
+      </section>
+      {% endif %}
+
+      {% assign has_related = false %}{% if page.related_symptoms or page.related_causes or page.related_procedures or page.related_commands or page.next_steps %}{% assign has_related = true %}{% endif %}
+      {% if has_related %}<section class="related-section rd-related-section"><div class="rd-section-heading"><div><p class="rd-eyebrow">Keep context</p><h2>Related procedures &amp; knowledge</h2></div></div><div class="related-grid">
+        {% for slug in page.related_symptoms %}{% assign item = site.symptoms | where: "slug", slug | first %}{% if item %}<a class="card" href="{{ item.url | relative_url }}"><strong>{{ item.title }}</strong><p>Symptom</p></a>{% endif %}{% endfor %}
+        {% for slug in page.related_causes %}{% assign item = site.causes | where: "slug", slug | first %}{% if item %}<a class="card" href="{{ item.url | relative_url }}"><strong>{{ item.title }}</strong><p>Cause</p></a>{% endif %}{% endfor %}
+        {% for slug in page.related_procedures %}{% assign item = site.procedures | where: "slug", slug | first %}{% if item %}{% assign related_status = item.verification_governance_state | default: item.content_status | default: 'under_review' %}{% if related_status == 'verified' and item.verification_v2_complete != true %}{% assign related_status = 'revalidation_required' %}{% endif %}{% if related_status == 'verified' and item.verification_promotion_ready != true %}{% assign related_status = 'revalidation_required' %}{% endif %}<a class="card" href="{{ item.url | relative_url }}"><strong>{{ item.title }}</strong><p>Procedure · {{ related_status | replace: '_', ' ' }}</p></a>{% endif %}{% endfor %}
+        {% for slug in page.next_steps %}{% assign item = site.procedures | where: "slug", slug | first %}{% if item %}<a class="card" href="{{ item.url | relative_url }}"><strong>{{ item.title }}</strong><p>Next procedure</p></a>{% endif %}{% endfor %}
+        {% for slug in page.related_commands %}{% assign item = site.commands | where: "slug", slug | first %}{% if item %}<a class="card" href="{{ item.url | relative_url }}"><strong>{{ item.title }}</strong><p>Command</p></a>{% endif %}{% endfor %}
+      </div></section>{% endif %}
+
+      {% if is_procedure %}<section class="rd-resolution-footer"><div><p class="rd-eyebrow">Close the loop</p><h2>Resolved, verified or ready to escalate?</h2><p>Record the outcome, evidence and rollback state before moving to the next ticket.</p></div><div class="procedure-actions" data-procedure-actions><a class="btn" data-ticket-link data-title="{{ page.title | escape }}" data-category="{{ page.category | escape }}" data-severity="{{ page.severity | escape }}" data-owner-team="{{ page.owner_team | escape }}">Create pre-filled ITSM ticket</a><button class="btn-secondary" type="button" data-feedback="up">👍 Helpful</button><button class="btn-secondary" type="button" data-feedback="down">👎 Not helpful</button></div><p id="feedback-status" class="feedback-status" aria-live="polite"></p></section>{% endif %}
+    </div>
+  </div>
+</article>

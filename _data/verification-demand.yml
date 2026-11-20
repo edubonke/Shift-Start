@@ -1,0 +1,25 @@
+schema_version: 1
+generated_from: manual_and_future_telemetry
+note: >
+  Add real search, incident and escalation demand here as it becomes available.
+  Do not invent counts. Values below are intentionally empty so the queue engine
+  falls back to the explicitly-labelled temporary topic proxy.
+
+procedures: {}
+
+categories: {}
+
+symptoms: {}
+
+# Example structure only:
+# procedures:
+#   vpn-not-connecting:
+#     search_demand: very_high
+#     escalation_frequency: high
+#     business_criticality: high
+#     source: "Support analytics export 2026-W33"
+#
+# categories:
+#   Identity & Access Management:
+#     search_demand: high
+#     source: "Ticket analytics"
